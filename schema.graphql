@@ -1,0 +1,6 @@
+type TransferEntity @entity {
+  id: ID!
+  from: Bytes!
+  to: Bytes
+  value: BigDecimal!
+}

@@ -1,0 +1,4 @@
+{
+  "extends": "./node_modules/graph-cli/tsconfig.json",
+  "files": ["mapping/erc20-token.ts"]
+}
