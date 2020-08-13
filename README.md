@@ -7,7 +7,7 @@ Please take a look at [Graph protocol](https://github.com/graphprotocol/graph-no
 
 ## Endpoints
 - Graph node: `54.173.110.169:8020`
-- GraphQL endpoint: `http://54.173.110.169:8000/subgraphs/name/<YOUR_GITHUB_USERNAME>/<SUBGRAPH_NAME>/graphql`
+- GraphQL endpoint: `http://54.173.110.169/subgraphs/name/<YOUR_GITHUB_USERNAME>/<SUBGRAPH_NAME>/graphql`
 - ipfs endpoint: `https://ipfs.infura.io:5001/`
 
 ### Installation
@@ -19,8 +19,11 @@ $ yarn
 
 $ graph codegen subgraph.yaml 
 $ graph build --ipfs https://ipfs.infura.io:5001/ subgraph.yaml
-$ graph deploy nglglhtr/token-subgraph-2 --node http://54.173.110.169:8020/ --ipfs https://ipfs.infura.io:5001/
+$ graph deploy nglglhtr/token-subgraph --node https://mumbai-graph.matic.today/ --ipfs https://ipfs.infura.io:5001/
 ```
+
+### Queries
+- (HTTP): https://api.mumbai-graph.matic.today/subgraphs/name/nglglhtr/token-subgraph
 
 ### Run local graph node
 
@@ -33,19 +36,3 @@ $ cargo run -p graph-node --release -- \
 ```
 
 You can open graphiQL UI at http://localhost:8000
-
-### How to query?
-
-```
-{
-  transferEntities (first: 10) {
-    from
-    to
-    amount
-  }
-}
-```
-
-### License
-
-MIT

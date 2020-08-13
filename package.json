@@ -4,9 +4,9 @@
   "description": "Subgraphs mapping for Graph-node protocol - Matic Network",
   "scripts": {
     "codegen": "graph codegen subgraph.yaml",
-    "build": "graph build --ipfs https://ipfs.infura.io:5001/ subgraph.yaml",
-    "create": "graph create nglglhtr/token-subgraph --node http://54.173.110.169:8020/",
-    "deploy": "graph deploy nglglhtr/token-subgraph --node http://54.173.110.169:8020/ --ipfs https://ipfs.infura.io:5001/"
+    "build": "graph build subgraph.yaml",
+    "create": "graph create nglglhtr/token-subgraph --node https://mumbai-graph.matic.today/",
+    "deploy": "graph deploy nglglhtr/token-subgraph --node https://mumbai-graph.matic.today/ --ipfs https://ipfs.infura.io:5001/"
   },
   "repository": {
     "type": "git",
@@ -14,6 +14,8 @@
   },
   "keywords": [
     "ethereum",
+    "matic",
+    "mumbai",
     "token",
     "graphql",
     "graph"
