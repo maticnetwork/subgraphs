@@ -3,11 +3,11 @@
 Please take a look at [Graph protocol](https://github.com/graphprotocol/graph-node) for more information.
 
 ## Token Subgraph
-- `nglglhtr/token-subgraph-2`: http://54.173.110.169/subgraphs/name/nglglhtr/token-subgraph-2/graphql
+- `nglglhtr/token-subgraph`: http://api.mumbai-graph.matic.today/subgraphs/name/nglglhtr/token-subgraph/graphql
 
 ## Endpoints
-- Graph node: `54.173.110.169:8020`
-- GraphQL endpoint: `http://54.173.110.169/subgraphs/name/<YOUR_GITHUB_USERNAME>/<SUBGRAPH_NAME>/graphql`
+- Graph node: `https://mumbai-graph.matic.today`
+- GraphQL endpoint: `https://api.mumbai-graph.matic.today/subgraphs/name/<YOUR_GITHUB_USERNAME>/<SUBGRAPH_NAME>/graphql`
 - ipfs endpoint: `https://ipfs.infura.io:5001/`
 
 ### Installation
