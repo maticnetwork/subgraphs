@@ -1,4 +1,5 @@
 # Subgraphs
+Subgraph for Matic contracts
 
 Please take a look at [Graph protocol](https://github.com/graphprotocol/graph-node) for more information.
 
@@ -17,7 +18,7 @@ $ yarn
 
 # change token address in `subgraph.yaml`
 
-$ graph codegen subgraph.yaml 
+$ graph codegen subgraph.yaml
 $ graph build --ipfs https://ipfs.infura.io:5001/ subgraph.yaml
 $ graph deploy nglglhtr/token-subgraph --node https://mumbai-graph.matic.today/ --ipfs https://ipfs.infura.io:5001/
 ```
