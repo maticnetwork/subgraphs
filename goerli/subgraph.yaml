@@ -1,0 +1,25 @@
+specVersion: 0.0.2
+description: Indexes checkpoints and new deposits on root chain
+repository: https://github.com/maticnetwork/subgraphs
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Rootchain
+    network: goerli
+    source:
+      address: "0x2890bA17EfE978480615e330ecB65333b880928e"
+      abi: Rootchain
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - NewHeaderBlock
+      abis:
+        - name: Rootchain
+          file: ./abis/Rootchain.json
+      eventHandlers:
+        - event: NewHeaderBlock(indexed address,indexed uint256,indexed uint256,uint256,uint256,bytes32)
+          handler: handleNewHeaderBlock
+      file: ./src/mapping.ts
