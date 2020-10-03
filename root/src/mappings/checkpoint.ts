@@ -2,14 +2,12 @@ import { BigInt } from '@graphprotocol/graph-ts'
 import { NewHeaderBlock } from '../../generated/Rootchain/Rootchain'
 import { Checkpoint } from '../../generated/schema'
 
-let MAX_DEPOSITS = new BigInt(1000)
-
 export function handleNewHeaderBlock(event: NewHeaderBlock): void {
   // checkpoint number is `header block / max_deposits`
-  let checkpointNumber = event.params.headerBlockId.div(MAX_DEPOSITS)
+  let checkpointNumber = event.params.headerBlockId.div(new BigInt(10000))
 
   // use checkpoint number as id
-  let entity = new Checkpoint(checkpointNumber.toString())
+  let entity = new Checkpoint("checkpoint:" + checkpointNumber.toString())
   entity.proposer = event.params.proposer
   entity.headerBlockId = event.params.headerBlockId
   entity.checkpointNumber = checkpointNumber
