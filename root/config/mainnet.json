@@ -1,7 +1,13 @@
 {
   "network": "mainnet",
   "contracts": {
-    "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-    "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+    "rootChain": {
+      "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+      "startBlock": 3506320
+    },
+    "stateSender": {
+      "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
+      "startBlock": 3506320
+    }
   }
 }
