@@ -13,7 +13,7 @@ export function handleStateSynced(event: StateSynced): void {
 }
 
 export function handleNewRegistration(event: NewRegistration): void {
-  let id = "registration:" + event.params.receiver.toString()
+  let id = "registration:" + event.params.receiver.toHexString()
   
   let entity = StateRegistration.load(id)
   if (entity == null) {
@@ -28,7 +28,7 @@ export function handleNewRegistration(event: NewRegistration): void {
 }
 
 export function handleRegistrationUpdated(event: RegistrationUpdated): void {
-  let id = "registration:" + event.params.receiver.toString()
+  let id = "registration:" + event.params.receiver.toHexString()
   
   let entity = StateRegistration.load(id)
   if (entity == null) {
