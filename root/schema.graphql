@@ -1,7 +1,8 @@
-type NewHeaderBlockEntity @entity {
+type Checkpoint @entity {
   id: ID!
   proposer: Bytes!
   headerBlockId: BigInt!
+  checkpointNumber: BigInt!
   reward: BigInt!
   start: BigInt!
   end: BigInt!

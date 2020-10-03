@@ -1,0 +1,6 @@
+{
+  "network": "mainnet",
+  "contracts": {
+    "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+  }
+}

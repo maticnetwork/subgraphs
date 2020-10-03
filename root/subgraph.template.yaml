@@ -6,9 +6,9 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Rootchain
-    network: goerli
+    network: {{network}}
     source:
-      address: "0x2890bA17EfE978480615e330ecB65333b880928e"
+      address: '{{contracts.rootChain}}'
       abi: Rootchain
     mapping:
       kind: ethereum/events

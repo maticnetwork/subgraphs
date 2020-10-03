@@ -65,5 +65,6 @@ typings/
 
 # IPFS hash
 .ipfs.hash
-mumbai/.DS_Store
+
+# DS Store
 .DS_Store
