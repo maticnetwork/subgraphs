@@ -22,4 +22,4 @@ dataSources:
       eventHandlers:
         - event: NewHeaderBlock(indexed address,indexed uint256,indexed uint256,uint256,uint256,bytes32)
           handler: handleNewHeaderBlock
-      file: ./src/mapping.ts
+      file: ./src/mappings/checkpoint.ts

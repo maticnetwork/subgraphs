@@ -1,6 +1,6 @@
 import { BigInt } from '@graphprotocol/graph-ts'
-import { NewHeaderBlock } from '../generated/Rootchain/Rootchain'
-import { Checkpoint } from '../generated/schema'
+import { NewHeaderBlock } from '../../generated/Rootchain/Rootchain'
+import { Checkpoint } from '../../generated/schema'
 
 let MAX_DEPOSITS = new BigInt(1000)
 

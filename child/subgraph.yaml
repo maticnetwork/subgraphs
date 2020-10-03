@@ -1,0 +1,24 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ChildERC20
+    network: mumbai
+    source:
+      abi: ChildERC20
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/child-erc20.ts
+      entities:
+        - TransactionEntity
+      abis:
+        - name: ChildERC20
+          file: ./abis/ChildERC20.json
+      eventHandlers:
+        - event: LogTransfer(indexed address,indexed address,indexed address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleLogTransfer
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw

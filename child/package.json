@@ -1,0 +1,42 @@
+{
+  "name": "matic-subgraphs",
+  "version": "1.0.0",
+  "description": "Subgraphs mapping for Graph-node protocol - Matic Network",
+  "scripts": {
+    "graph": "graph",
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "create": "graph create --node https://mumbai-graph.matic.today/ nglglhtr/token-subgraph",
+    "deploy": "graph deploy --node https://mumbai-graph.matic.today/ --ipfs https://ipfs.infura.io:5001/ nglglhtr/token-subgraph",
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:mumbai": "mustache config/mumbai.json subgraph.template.yaml > subgraph.yaml",
+    "create-local": "graph create --node http://localhost:8020/ maticnetwork/mumbai-matic-subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ maticnetwork/mumbai-matic-subgraph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 maticnetwork/mumbai-matic-subgraph"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nglglhtr/matic-subgraphs.git"
+  },
+  "keywords": [
+    "ethereum",
+    "matic",
+    "mumbai",
+    "token",
+    "graphql",
+    "graph"
+  ],
+  "author": "Angela Gilhotra <angela.gilhotra@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nglglhtr/matic-subgraphs/issues"
+  },
+  "homepage": "https://github.com/nglglhtr/matic-subgraph#readme",
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "0.18.0",
+    "mustache": "4.0.1"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-ts": "0.18.0"
+  }
+}
