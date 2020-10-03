@@ -2,7 +2,7 @@ import { StateSynced, NewRegistration, RegistrationUpdated } from '../../generat
 import { StateRegistration, StateSync } from '../../generated/schema'
 
 export function handleStateSynced(event: StateSynced): void {
-  let entity = new StateSync(event.params.id.toString())
+  let entity = new StateSync("statesync:" + event.params.id.toString())
   entity.stateId = event.params.id
   entity.contract = event.params.contractAddress
   entity.data = event.params.data
