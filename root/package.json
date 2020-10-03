@@ -1,5 +1,5 @@
 {
-  "name": "root-matic-subgraph",
+  "name": "matic-root-subgraphs",
   "license": "MIT",
   "scripts": {
     "graph": "graph",
@@ -7,10 +7,10 @@
     "build": "graph build",
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
     "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ nglglhtr/token-subgraph",
-    "create-local": "graph create --node http://localhost:8020/ maticnetwork/goerli-matic-subgraph",
-    "remove-local": "graph remove --node http://localhost:8020/ maticnetwork/goerli-matic-subgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 maticnetwork/goerli-matic-subgraph"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ maticnetwork/mumbai-root-subgraphs",
+    "create-local": "graph create --node http://localhost:8020/ maticnetwork/mumbai-root-subgraphs",
+    "remove-local": "graph remove --node http://localhost:8020/ maticnetwork/mumbai-root-subgraphs",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 maticnetwork/mumbai-root-subgraphs"
   },
   "dependencies": {
     "@graphprotocol/graph-ts": "0.18.0"

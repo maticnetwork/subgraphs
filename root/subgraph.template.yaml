@@ -8,8 +8,9 @@ dataSources:
     name: Rootchain
     network: {{network}}
     source:
-      address: '{{contracts.rootChain}}'
+      address: '{{contracts.rootChain.address}}'
       abi: Rootchain
+      startBlock: {{contracts.rootChain.startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -23,3 +24,29 @@ dataSources:
         - event: NewHeaderBlock(indexed address,indexed uint256,indexed uint256,uint256,uint256,bytes32)
           handler: handleNewHeaderBlock
       file: ./src/mappings/checkpoint.ts
+
+  - kind: ethereum/contract
+    name: StateSender
+    network: {{network}}
+    source:
+      address: '{{contracts.stateSender.address}}'
+      abi: StateSender
+      startBlock: {{contracts.stateSender.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - StateSync
+        - StateRegistration
+      abis:
+        - name: StateSender
+          file: ./abis/StateSender.json
+      eventHandlers:
+        - event: StateSynced(indexed uint256,indexed address,bytes)
+          handler: handleStateSynced
+        - event: NewRegistration(indexed address,indexed address,indexed address)
+          handler: handleNewRegistration
+        - event: RegistrationUpdated(indexed address,indexed address,indexed address)
+          handler: handleRegistrationUpdated
+      file: ./src/mappings/state-sync.ts
