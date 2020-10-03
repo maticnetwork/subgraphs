@@ -8,8 +8,9 @@ dataSources:
     name: Rootchain
     network: {{network}}
     source:
-      address: '{{contracts.rootChain}}'
+      address: '{{contracts.rootChain.address}}'
       abi: Rootchain
+      startBlock: {{contracts.rootChain.startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -28,8 +29,9 @@ dataSources:
     name: StateSender
     network: {{network}}
     source:
-      address: '{{contracts.stateSender}}'
+      address: '{{contracts.stateSender.address}}'
       abi: StateSender
+      startBlock: {{contracts.stateSender.startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
