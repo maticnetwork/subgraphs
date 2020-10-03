@@ -1,6 +1,6 @@
 import { LogTransfer, Withdraw } from '../../generated/ChildERC20/ChildERC20'
 import { TransactionEntity } from '../../generated/schema'
-import { toDecimal } from '../../helpers/numbers'
+import { toDecimal } from '../helpers/numbers'
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
