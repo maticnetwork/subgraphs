@@ -1,5 +1,5 @@
 {
-  "name": "matic-subgraphs",
+  "name": "child-matic-subgraphs",
   "version": "1.0.0",
   "description": "Subgraphs mapping for Graph-node protocol - Matic Network",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nglglhtr/matic-subgraphs.git"
+    "url": "git+https://github.com/maticnetwork/subgraphs.git"
   },
   "keywords": [
     "ethereum",
@@ -29,9 +29,9 @@
   "author": "Angela Gilhotra <angela.gilhotra@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nglglhtr/matic-subgraphs/issues"
+    "url": "https://github.com/maticnetwork/subgraphs/issues"
   },
-  "homepage": "https://github.com/nglglhtr/matic-subgraph#readme",
+  "homepage": "https://github.com/maticnetwork/subgraph#readme",
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.18.0",
     "mustache": "4.0.1"
