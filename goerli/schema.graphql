@@ -1,9 +1,0 @@
-type NewHeaderBlockEntity @entity {
-  id: ID!
-  proposer: Bytes!
-  headerBlockId: BigInt!
-  reward: BigInt!
-  start: BigInt!
-  end: BigInt!
-  root: Bytes!
-}
