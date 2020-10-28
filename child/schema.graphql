@@ -10,3 +10,9 @@ type TransactionEntity @entity {
   timestamp: BigInt!
   transaction: Bytes!
 }
+
+type User @entity {
+  id: ID!
+  address: Bytes!
+  amount: BigInt!
+}
