@@ -24,7 +24,7 @@ type StateRegistration @entity {
   sender: Bytes!
 }
 
-type ExitStarted @entity {
+type PlasmaExitStarted @entity {
   id: ID!,
   exitor: Bytes!,
   exitId: BigInt!,
