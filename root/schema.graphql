@@ -32,3 +32,8 @@ type PlasmaExitStarted @entity {
   amount: BigInt!,
   isRegularExit: Boolean!
 }
+
+type PlasmaExitCancelled @entity {
+  id: ID!,
+  exitId: BigInt!
+}
