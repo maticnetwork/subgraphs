@@ -1,9 +1,8 @@
-import { ExitStarted } from '../../generated/WithdrawManager/WithdrawManager'
-import { PlasmaExitStarted } from '../../generated/schema'
+import { ExitStarted, ExitCancelled } from '../../generated/WithdrawManager/WithdrawManager'
+import { PlasmaExitStarted, PlasmaExitCancelled } from '../../generated/schema'
 
 
 export function handleExitStarted(event: ExitStarted): void {
-  // use checkpoint number as id
   let entity = new PlasmaExitStarted("exitstarted:" + event.params.exitId)
   entity.exitor = event.params.exitor
   entity.exitId = event.params.exitId
@@ -12,5 +11,12 @@ export function handleExitStarted(event: ExitStarted): void {
   entity.isRegularExit = event.params.isRegularExit
 
   // save entity
+  entity.save()
+}
+
+export function handleExitCancelled(event: ExitCancelled): void {
+  let entity = new PlasmaExitCancelled("exitcancelled:" + event.params.exitId)
+  entity.exitId = event.param.exitId
+
   entity.save()
 }
