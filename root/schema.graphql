@@ -23,3 +23,12 @@ type StateRegistration @entity {
   receiver: Bytes!
   sender: Bytes!
 }
+
+type ExitStarted @entity {
+  id: ID!,
+  exitor: Bytes!,
+  exitId: BigInt!,
+  token: Bytes!,
+  amount: BigInt!,
+  isRegularExit: Boolean!
+}
