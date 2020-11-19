@@ -8,6 +8,10 @@
     "stateSender": {
       "address": "0xEAa852323826C71cd7920C3b4c007184234c3945",
       "startBlock": 2815588
+    },
+    "withdrawManager": {
+      "address": "0x2923C8dD6Cdf6b2507ef91de74F1d5E0F11Eac53",
+      "startBlock": 3779631
     }
   }
 }
