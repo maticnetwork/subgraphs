@@ -38,6 +38,9 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - ExitStarted
+        - ExitCancelled
+        - ExitUpdated
+        - Withdraw
       abis:
         - name: WithdrawManager
           file: ./abis/WithdrawManager.json
