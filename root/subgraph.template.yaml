@@ -46,6 +46,8 @@ dataSources:
           handler: handleExitStarted
         - event: ExitCancelled(indexed uint256)
           handler: handleExitCancelled
+        - event: ExitUpdated(indexed uint256,indexed uint256,address)
+          handler: handleExitUpdated
       file: ./src/mappings/withdrawManager.ts
 
   - kind: ethereum/contract

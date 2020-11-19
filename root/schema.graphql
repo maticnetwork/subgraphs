@@ -37,3 +37,10 @@ type PlasmaExitCancelled @entity {
   id: ID!,
   exitId: BigInt!
 }
+
+type PlasmaExitUpdated @entity {
+  id: ID!,
+  exitId: BigInt!,
+  age: BigInt!,
+  signer: Bytes!
+}

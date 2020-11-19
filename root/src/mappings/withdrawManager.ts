@@ -1,5 +1,5 @@
-import { ExitStarted, ExitCancelled } from '../../generated/WithdrawManager/WithdrawManager'
-import { PlasmaExitStarted, PlasmaExitCancelled } from '../../generated/schema'
+import { ExitStarted, ExitCancelled, ExitUpdated } from '../../generated/WithdrawManager/WithdrawManager'
+import { PlasmaExitStarted, PlasmaExitCancelled, PlasmaExitUpdated } from '../../generated/schema'
 
 
 export function handleExitStarted(event: ExitStarted): void {
@@ -16,7 +16,16 @@ export function handleExitStarted(event: ExitStarted): void {
 
 export function handleExitCancelled(event: ExitCancelled): void {
   let entity = new PlasmaExitCancelled("exitcancelled:" + event.params.exitId)
-  entity.exitId = event.param.exitId
+  entity.exitId = event.params.exitId
+
+  entity.save()
+}
+
+export function handleExitUpdated(event: ExitUpdated): void {
+  let entity = new PlasmaExitUpdated("exitupdated:" + event.params.exitId)
+  entity.exitId = event.params.exitId
+  entity.age = event.params.age
+  entity.signer = event.params.signer
 
   entity.save()
 }
