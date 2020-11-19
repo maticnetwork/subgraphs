@@ -44,3 +44,11 @@ type PlasmaExitUpdated @entity {
   age: BigInt!,
   signer: Bytes!
 }
+
+type PlasmaExitCompleted @entity {
+  id: ID!,
+  exitId: BigInt!,
+  user: Bytes!,
+  token: Bytes!,
+  amount: BigInt!
+}
