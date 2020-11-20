@@ -51,3 +51,9 @@ type PlasmaExit @entity {
   exitCompletedTxHash: Bytes
   exitCompletedTimeStamp: BigInt
 }
+
+type PredicateRegistered @entity {
+  id: ID!
+  tokenType: Bytes!
+  address: Bytes!
+}
