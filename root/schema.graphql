@@ -24,31 +24,22 @@ type StateRegistration @entity {
   sender: Bytes!
 }
 
-type PlasmaExitStarted @entity {
+# This entity will hold everything regarding 
+type PlasmaExit @entity {
+  # id always created using `plasma-exit-${exitId}`
   id: ID!,
-  exitor: Bytes!,
   exitId: BigInt!,
+  exitInitiator: Bytes!,
+  exitCompleter: Bytes,
   token: Bytes!,
   amount: BigInt!,
-  isRegularExit: Boolean!
-}
-
-type PlasmaExitCancelled @entity {
-  id: ID!,
-  exitId: BigInt!
-}
-
-type PlasmaExitUpdated @entity {
-  id: ID!,
-  exitId: BigInt!,
-  age: BigInt!,
-  signer: Bytes!
-}
-
-type PlasmaExitCompleted @entity {
-  id: ID!,
-  exitId: BigInt!,
-  user: Bytes!,
-  token: Bytes!,
-  amount: BigInt!
+  isRegularExit: Boolean!,
+  exited: Int!,
+  # exited can take 3 possible values
+  # 0 -> exit started
+  # 1 -> exit cancelled
+  # 2 -> exit completed
+  exitStartedTxHash: Bytes!,
+  exitCancelledTxHash: Bytes,
+  exitCompletedTxHash: Bytes
 }
