@@ -48,9 +48,11 @@ export function handleWithdraw(event: Withdraw): void {
     entity = new PlasmaExit(id)
   }
 
-  entity.user = event.params.user
-  entity.token = event.params.token
-  entity.amount = event.params.amount
+  entity.exitCompleter = event.params.user
+  // exit completed state => 2
+  entity.exited = 2
+  entity.exitCompletedTxHash = event.transaction.hash
+  entity.exitCompletedTimeStamp = event.block.timestamp
 
   entity.save()
 }

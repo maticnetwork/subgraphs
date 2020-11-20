@@ -43,6 +43,6 @@ type PlasmaExit @entity {
   exitStartedTimeStamp: BigInt!,
   exitCancelledTxHash: Bytes,
   exitCancelledTimeStamp: BigInt,
-  exitCompletedTxHash: Bytes
+  exitCompletedTxHash: Bytes,
   exitCompletedTimeStamp: BigInt,
 }
