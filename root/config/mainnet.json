@@ -12,6 +12,10 @@
     "withdrawManager": {
       "address": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
       "startBlock": 11286726
+    },
+    "rootChainManager": {
+      "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+      "startBlock": 0
     }
   }
 }
