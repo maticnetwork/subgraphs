@@ -51,6 +51,27 @@ dataSources:
         - event: Withdraw(indexed uint256,indexed address,indexed address,uint256)
           handler: handleWithdraw
       file: ./src/mappings/withdrawManager.ts
+  
+  - kind: ethereum/contract
+    name: RootChainManager
+    network: {{ network }}
+    source:
+      address: "{{contracts.rootChainManager.address}}"
+      abi: RootChainManager
+      startBlock: {{ contracts.rootChainManager.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - PredicateRegistered
+      abis:
+        - name: RootChainManager
+          file: ./abis/RootChainManager.json
+      eventHandlers:
+        - event: PredicateRegistered(indexed bytes32,indexed address)
+          handler: handlePredicateRegistered
+      file: ./src/mappings/rootChainManager.ts
 
   - kind: ethereum/contract
     name: StateSender
