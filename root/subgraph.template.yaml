@@ -39,7 +39,6 @@ dataSources:
       entities:
         - ExitStarted
         - ExitCancelled
-        - ExitUpdated
         - Withdraw
       abis:
         - name: WithdrawManager

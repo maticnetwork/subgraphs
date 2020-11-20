@@ -24,7 +24,11 @@ type StateRegistration @entity {
   sender: Bytes!
 }
 
-# This entity will hold everything regarding 
+# This entity will hold everything regarding
+# plasma exit
+#
+# Not all fields are made compulsory due to the fact,
+# all steps don't happen at a time, rather they will be async ops
 type PlasmaExit @entity {
   # id always created using `plasma-exit-${exitId}`
   id: ID!,
