@@ -14,6 +14,7 @@ type StateSync @entity {
   stateId: BigInt!
   contract: Bytes!
   data: Bytes!
+  transactionHash: Bytes!
   timestamp: BigInt!
 }
 
@@ -31,22 +32,22 @@ type StateRegistration @entity {
 # all steps don't happen at a time, rather they will be async ops
 type PlasmaExit @entity {
   # id always created using `plasma-exit-${exitId}`
-  id: ID!,
-  exitId: BigInt!,
-  exitInitiator: Bytes!,
-  exitCompleter: Bytes,
-  token: Bytes!,
-  amount: BigInt!,
-  isRegularExit: Boolean!,
-  exited: Int!,
+  id: ID!
+  exitId: BigInt!
+  exitInitiator: Bytes!
+  exitCompleter: Bytes
+  token: Bytes!
+  amount: BigInt!
+  isRegularExit: Boolean!
+  exited: Int!
   # exited can take 3 possible values
   # 0 -> exit started
   # 1 -> exit cancelled
   # 2 -> exit completed
-  exitStartedTxHash: Bytes!,
-  exitStartedTimeStamp: BigInt!,
-  exitCancelledTxHash: Bytes,
-  exitCancelledTimeStamp: BigInt,
-  exitCompletedTxHash: Bytes,
-  exitCompletedTimeStamp: BigInt,
+  exitStartedTxHash: Bytes!
+  exitStartedTimeStamp: BigInt!
+  exitCancelledTxHash: Bytes
+  exitCancelledTimeStamp: BigInt
+  exitCompletedTxHash: Bytes
+  exitCompletedTimeStamp: BigInt
 }
