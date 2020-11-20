@@ -40,6 +40,9 @@ type PlasmaExit @entity {
   # 1 -> exit cancelled
   # 2 -> exit completed
   exitStartedTxHash: Bytes!,
+  exitStartedTimeStamp: BigInt!,
   exitCancelledTxHash: Bytes,
+  exitCancelledTimeStamp: BigInt,
   exitCompletedTxHash: Bytes
+  exitCompletedTimeStamp: BigInt,
 }
