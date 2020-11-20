@@ -14,6 +14,7 @@ export function handleExitStarted(event: ExitStarted): void {
   entity.token = event.params.token
   entity.amount = event.params.amount
   entity.isRegularExit = event.params.isRegularExit
+  // exit started state => 0
   entity.exited = 0
   entity.exitStartedTxHash = event.transaction.hash
   entity.exitStartedTimeStamp = event.block.timestamp
@@ -30,7 +31,10 @@ export function handleExitCancelled(event: ExitCancelled): void {
     entity = new PlasmaExit(id)
   }
 
-  entity.exitId = event.params.exitId
+  // exit cancelled state => 1
+  entity.exited = 1
+  entity.exitCancelledTxHash = event.transaction.hash
+  entity.exitCancelledTimeStamp = event.block.timestamp
 
   entity.save()
 }
