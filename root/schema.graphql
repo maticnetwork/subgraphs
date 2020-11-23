@@ -59,3 +59,12 @@ type PredicateRegistration @entity {
   timestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type TokenMapping @entity {
+  id: ID!
+  rootToken: Bytes!
+  childToken: Bytes!
+  tokenType: Bytes!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}

@@ -65,12 +65,15 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - PredicateRegistered
+        - TokenMapped
       abis:
         - name: RootChainManager
           file: ./abis/RootChainManager.json
       eventHandlers:
         - event: PredicateRegistered(indexed bytes32,indexed address)
           handler: handlePredicateRegistered
+        - event: TokenMapped(indexed address,indexed address,indexed bytes32)
+          handler: handleTokenMapped
       file: ./src/mappings/rootChainManager.ts
 
   - kind: ethereum/contract
