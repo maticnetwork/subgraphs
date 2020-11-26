@@ -16,6 +16,10 @@
     "rootChainManager": {
       "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
       "startBlock": 0
+    },
+    "stakingInfo": {
+      "address": "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B",
+      "startBlock": 0
     }
   }
 }
