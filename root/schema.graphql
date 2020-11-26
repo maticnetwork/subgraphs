@@ -68,3 +68,18 @@ type TokenMapping @entity {
   timestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type Validator @entity {
+  id: ID!
+  validatorID: BigInt!
+  signer: Bytes!
+  signerPubKey: Bytes!
+  reward: BigInt!
+  activationEpoch: BigInt!
+  deactivationEpoch: BigInt!
+  jailEndEpoch: BigInt!
+  amount: BigInt! 
+  total: BigInt!
+  commissionRate: BigInt!
+  status: Int!
+}
