@@ -1,4 +1,4 @@
-import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked, Jailed, UnJailed, StakeUpdate, ClaimRewards, StartAuction } from '../../generated/StakingInfo/StakingInfo'
+import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked, Jailed, UnJailed, StakeUpdate, ClaimRewards, StartAuction, ConfirmAuction } from '../../generated/StakingInfo/StakingInfo'
 import { Validator } from '../../generated/schema'
 
 export function handleStaked(event: Staked): void {
@@ -142,6 +142,21 @@ export function handleStartAuction(event: StartAuction): void {
       entity = new Validator(id)
     }
 
+    entity.amount = event.params.amount
+
+    // save entity
+    entity.save()
+}
+
+export function handleConfirmAuction(event: ConfirmAuction): void {
+    let id = "validator-" + event.params.validatorId
+
+    let entity = Validator.load(id)
+    if (entity == null) {
+      entity = new Validator(id)
+    }
+
+    entity.validatorId = event.params.newValidatorId
     entity.amount = event.params.amount
 
     // save entity
