@@ -20,3 +20,19 @@ export function handleStaked(event: Staked): void {
     // save entity
     entity.save()
 }
+
+export function handleUnstaked(event: Staked): void {
+    let id = "validator-" + event.params.validatorId
+
+    let entity = Validator.load(id)
+    if (entity == null) {
+      entity = new Validator(id)
+    }
+
+    entity.signer = event.params.user
+    entity.amount = event.params.amount
+    entity.total = event.params.total
+
+    // save entity
+    entity.save()
+}
