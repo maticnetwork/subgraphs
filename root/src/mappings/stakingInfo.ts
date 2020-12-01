@@ -1,4 +1,4 @@
-import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked, Jailed, UnJailed, StakeUpdate, ClaimRewards, StartAuction, ConfirmAuction, ShareMinted } from '../../generated/StakingInfo/StakingInfo'
+import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked, Jailed, UnJailed, StakeUpdate, ClaimRewards, StartAuction, ConfirmAuction, ShareMinted, ShareBurned } from '../../generated/StakingInfo/StakingInfo'
 import { Validator, Delegator } from '../../generated/schema'
 
 export function handleStaked(event: Staked): void {
@@ -164,6 +164,23 @@ export function handleConfirmAuction(event: ConfirmAuction): void {
 }
 
 export function handleShareMinted(event: ShareMinted): void {
+    let id = "delegator-" + event.params.validatorId + event.params.user.toHexString()
+
+    let entity = Delegator.load(id)
+    if (entity == null) {
+      entity = new Delegator(id)
+    }
+
+    entity.validatorId = event.params.validatorId
+    entity.address = event.params.user
+    entity.amount = event.params.amount
+    entity.tokens = event.params.tokens
+
+    // save entity
+    entity.save()
+}
+
+export function handleShareBurned(event: ShareBurned): void {
     let id = "delegator-" + event.params.validatorId + event.params.user.toHexString()
 
     let entity = Delegator.load(id)
