@@ -2,7 +2,12 @@ import { Staked } from '../../generated/StakingInfo/StakingInfo'
 import { Validator } from '../../generated/schema'
 
 export function handleStaked(event: Staked): void {
-    let entity = new Validator("validator-" + event.params.validatorId)
+    let id = "validator-" + event.params.validatorId
+
+    let entity = Validator.load(id)
+    if (entity == null) {
+      entity = new Validator(id)
+    }
 
     entity.validatorId = event.params.validatorId
     entity.signer = event.params.signer
