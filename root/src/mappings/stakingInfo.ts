@@ -1,4 +1,4 @@
-import { Staked, Unstaked, UnstakeInit, SignerChange } from '../../generated/StakingInfo/StakingInfo'
+import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked } from '../../generated/StakingInfo/StakingInfo'
 import { Validator } from '../../generated/schema'
 
 export function handleStaked(event: Staked): void {
@@ -60,6 +60,21 @@ export function handleSignerChange(event: SignerChange): void {
 
     entity.signer = event.params.newSigner
     entity.signerPubKey = event.params.signerPubKey
+
+    // save entity
+    entity.save()
+}
+
+export function handleRestaked(event: Restaked): void {
+    let id = "validator-" + event.params.validatorId
+
+    let entity = Validator.load(id)
+    if (entity == null) {
+      entity = new Validator(id)
+    }
+
+    entity.amount = event.params.amount
+    entity.total = event.params.total
 
     // save entity
     entity.save()
