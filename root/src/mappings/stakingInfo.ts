@@ -1,4 +1,4 @@
-import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked, Jailed, UnJailed, StakeUpdate, ClaimRewards, StartAuction, ConfirmAuction, ShareMinted, ShareBurned } from '../../generated/StakingInfo/StakingInfo'
+import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked, Jailed, UnJailed, StakeUpdate, ClaimRewards, StartAuction, ConfirmAuction, ShareMinted, ShareBurned, UpdateCommissionRate } from '../../generated/StakingInfo/StakingInfo'
 import { Validator, Delegator } from '../../generated/schema'
 
 export function handleStaked(event: Staked): void {
@@ -192,6 +192,20 @@ export function handleShareBurned(event: ShareBurned): void {
     entity.address = event.params.user
     entity.amount = event.params.amount
     entity.tokens = event.params.tokens
+
+    // save entity
+    entity.save()
+}
+
+export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
+    let id = "validator-" + event.params.validatorId
+
+    let entity = Validator.load(id)
+    if (entity == null) {
+      entity = new Validator(id)
+    }
+
+    entity.commissionRate = event.params.newCommissionRate
 
     // save entity
     entity.save()
