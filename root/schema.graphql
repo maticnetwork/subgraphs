@@ -83,3 +83,11 @@ type Validator @entity {
   commissionRate: BigInt
   status: Int!
 }
+
+type Delegator @entity {
+  id: ID!
+  validatorId: BigInt!
+  address: Bytes!
+  amount: BigInt!
+  tokens: BigInt!
+}
