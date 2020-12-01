@@ -1,4 +1,4 @@
-import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked, Jailed } from '../../generated/StakingInfo/StakingInfo'
+import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked, Jailed, UnJailed } from '../../generated/StakingInfo/StakingInfo'
 import { Validator } from '../../generated/schema'
 
 export function handleStaked(event: Staked): void {
@@ -12,7 +12,6 @@ export function handleStaked(event: Staked): void {
     entity.amount = event.params.amount
     entity.total = event.params.total
     entity.signerPubKey = event.params.signerPubKey
-    entity.status = 0
 
     // save entity
     entity.save()
@@ -89,6 +88,18 @@ export function handleJailed(event: Jailed): void {
     }
 
     entity.jailEndEpoch = event.params.exitEpoch
+
+    // save entity
+    entity.save()
+}
+
+export function handleUnJailed(event: UnJailed): void {
+    let id = "validator-" + event.params.validatorId
+
+    let entity = Validator.load(id)
+    if (entity == null) {
+      entity = new Validator(id)
+    }
 
     // save entity
     entity.save()
