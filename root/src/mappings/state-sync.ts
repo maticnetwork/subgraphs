@@ -6,6 +6,7 @@ export function handleStateSynced(event: StateSynced): void {
   entity.stateId = event.params.id
   entity.contract = event.params.contractAddress
   entity.data = event.params.data
+  entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
 
   // save entity

@@ -14,6 +14,7 @@ type StateSync @entity {
   stateId: BigInt!
   contract: Bytes!
   data: Bytes!
+  transactionHash: Bytes!
   timestamp: BigInt!
 }
 
@@ -22,4 +23,72 @@ type StateRegistration @entity {
   user: Bytes!
   receiver: Bytes!
   sender: Bytes!
+}
+
+# This entity will hold everything regarding
+# plasma exit
+#
+# Not all fields are made compulsory due to the fact,
+# all steps don't happen at a time, rather they will be async ops
+type PlasmaExit @entity {
+  # id always created using `plasma-exit-${exitId}`
+  id: ID!
+  exitId: BigInt!
+  exitInitiator: Bytes!
+  exitCompleter: Bytes
+  token: Bytes!
+  amount: BigInt!
+  isRegularExit: Boolean!
+  exited: Int!
+  # exited can take 3 possible values
+  # 0 -> exit started
+  # 1 -> exit cancelled
+  # 2 -> exit completed
+  exitStartedTxHash: Bytes!
+  exitStartedTimeStamp: BigInt!
+  exitCancelledTxHash: Bytes
+  exitCancelledTimeStamp: BigInt
+  exitCompletedTxHash: Bytes
+  exitCompletedTimeStamp: BigInt
+}
+
+type PredicateRegistration @entity {
+  id: ID!
+  tokenType: Bytes!
+  predicateAddress: Bytes!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenMapping @entity {
+  id: ID!
+  rootToken: Bytes!
+  childToken: Bytes!
+  tokenType: Bytes!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Validator @entity {
+  id: ID!
+  validatorId: BigInt!
+  signer: Bytes!
+  signerPubKey: Bytes!
+  reward: BigInt
+  activationEpoch: BigInt!
+  deactivationEpoch: BigInt
+  jailEndEpoch: BigInt
+  amount: BigInt!
+  total: BigInt!
+  commissionRate: BigInt
+  status: Int!
+}
+
+type Delegator @entity {
+  id: ID!
+  validatorId: BigInt!
+  address: Bytes!
+  amount: BigInt!
+  tokens: BigInt!
+  claimedRewards: BigInt!
 }

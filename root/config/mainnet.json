@@ -8,6 +8,18 @@
     "stateSender": {
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
       "startBlock": 10167763
+    },
+    "withdrawManager": {
+      "address": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
+      "startBlock": 11286726
+    },
+    "rootChainManager": {
+      "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+      "startBlock": 0
+    },
+    "stakingInfo": {
+      "address": "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B",
+      "startBlock": 0
     }
   }
 }
