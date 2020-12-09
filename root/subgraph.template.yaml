@@ -101,3 +101,8 @@ dataSources:
         - event: RegistrationUpdated(indexed address,indexed address,indexed address)
           handler: handleRegistrationUpdated
       file: ./src/mappings/state-sync.ts
+
+# StakingInfo contract's event handlers not being added intentionally
+# because they don't seem to work as they're supposed to be working
+#
+# More investigation required in that front
