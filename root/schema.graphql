@@ -90,4 +90,5 @@ type Delegator @entity {
   address: Bytes!
   amount: BigInt!
   tokens: BigInt!
+  claimedRewards: BigInt!
 }
