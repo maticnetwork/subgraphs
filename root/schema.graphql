@@ -36,8 +36,8 @@ type PlasmaExit @entity {
   exitId: BigInt!
   exitInitiator: Bytes
   exitCompleter: Bytes
-  token: Bytes!
-  amount: BigInt!
+  token: Bytes
+  amount: BigInt
   isRegularExit: Boolean!
   exited: Int!
   # exited can take 3 possible values
