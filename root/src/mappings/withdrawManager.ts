@@ -29,10 +29,20 @@ export function handleExitCancelled(event: ExitCancelled): void {
   let entity = PlasmaExit.load(id)
   if (entity == null) {
     entity = new PlasmaExit(id)
+
+    entity.isRegularExit = true
+    entity.exited = 1
   }
 
+  entity.token = event.params.token
+  entity.amount = event.params.amount
+  entity.exitId = event.params.exitId
+
   // exit cancelled state => 1
-  entity.exited = 1
+  if (entity.exited < 1) {
+    entity.exited = 1
+  }
+
   entity.exitCancelledTxHash = event.transaction.hash
   entity.exitCancelledTimeStamp = event.block.timestamp
 
@@ -46,11 +56,21 @@ export function handleWithdraw(event: Withdraw): void {
   let entity = PlasmaExit.load(id)
   if (entity == null) {
     entity = new PlasmaExit(id)
+
+    entity.isRegularExit = true
+    entity.exited = 2
   }
 
+  entity.token = event.params.token
+  entity.amount = event.params.amount
+  entity.exitId = event.params.exitId
+  
   entity.exitCompleter = event.params.user
   // exit completed state => 2
-  entity.exited = 2
+  if(entity.exited < 2) {
+    entity.exited = 2
+  }
+
   entity.exitCompletedTxHash = event.transaction.hash
   entity.exitCompletedTimeStamp = event.block.timestamp
 
