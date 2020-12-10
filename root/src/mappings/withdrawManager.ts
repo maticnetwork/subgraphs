@@ -34,8 +34,6 @@ export function handleExitCancelled(event: ExitCancelled): void {
     entity.exited = 1
   }
 
-  entity.token = event.params.token
-  entity.amount = event.params.amount
   entity.exitId = event.params.exitId
 
   // exit cancelled state => 1
