@@ -34,7 +34,7 @@ type PlasmaExit @entity {
   # id always created using `plasma-exit-${exitId}`
   id: ID!
   exitId: BigInt!
-  exitInitiator: Bytes!
+  exitInitiator: Bytes
   exitCompleter: Bytes
   token: Bytes!
   amount: BigInt!
@@ -44,8 +44,8 @@ type PlasmaExit @entity {
   # 0 -> exit started
   # 1 -> exit cancelled
   # 2 -> exit completed
-  exitStartedTxHash: Bytes!
-  exitStartedTimeStamp: BigInt!
+  exitStartedTxHash: Bytes
+  exitStartedTimeStamp: BigInt
   exitCancelledTxHash: Bytes
   exitCancelledTimeStamp: BigInt
   exitCompletedTxHash: Bytes
