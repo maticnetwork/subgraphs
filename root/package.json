@@ -2,6 +2,8 @@
   "name": "matic-root-subgraphs",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint --ext .ts src",
+    "lint:fix": "eslint --ext .ts src --fix",
     "graph": "graph",
     "codegen": "graph codegen",
     "build": "graph build",
@@ -17,6 +19,11 @@
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.18.0",
-    "mustache": "4.0.1"
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "eslint": "^7.16.0",
+    "eslint-plugin-unicorn": "^24.0.0",
+    "mustache": "4.0.1",
+    "typescript": "^4.1.3"
   }
 }

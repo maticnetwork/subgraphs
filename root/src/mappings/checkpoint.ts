@@ -9,7 +9,7 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
   let checkpointNumber = event.params.headerBlockId.div(MAX_DEPOSITS)
 
   // use checkpoint number as id
-  let entity = new Checkpoint("checkpoint:" + checkpointNumber.toString())
+  let entity = new Checkpoint('checkpoint:' + checkpointNumber.toString())
   entity.proposer = event.params.proposer
   entity.headerBlockId = event.params.headerBlockId
   entity.checkpointNumber = checkpointNumber

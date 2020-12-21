@@ -1,8 +1,14 @@
-import { Staked, Unstaked, UnstakeInit, SignerChange, Restaked, Jailed, UnJailed, StakeUpdate, ClaimRewards, StartAuction, ConfirmAuction, ShareMinted, ShareBurned, UpdateCommissionRate, DelegatorUnstaked, DelegatorClaimedRewards } from '../../generated/StakingInfo/StakingInfo'
+import { 
+  Staked, Unstaked, UnstakeInit, 
+  SignerChange, Restaked, Jailed, 
+  UnJailed, StakeUpdate, ClaimRewards, 
+  ConfirmAuction, ShareMinted, ShareBurned, 
+  UpdateCommissionRate, DelegatorUnstaked, DelegatorClaimedRewards,
+} from '../../generated/StakingInfo/StakingInfo'
 import { Validator, Delegator } from '../../generated/schema'
 
 export function handleStaked(event: Staked): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = new Validator(id)
 
@@ -18,7 +24,7 @@ export function handleStaked(event: Staked): void {
 }
 
 export function handleUnstaked(event: Unstaked): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {
@@ -34,7 +40,7 @@ export function handleUnstaked(event: Unstaked): void {
 }
 
 export function handleUnstakeInit(event: UnstakeInit): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {
@@ -50,7 +56,7 @@ export function handleUnstakeInit(event: UnstakeInit): void {
 }
 
 export function handleSignerChange(event: SignerChange): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {
@@ -65,7 +71,7 @@ export function handleSignerChange(event: SignerChange): void {
 }
 
 export function handleRestaked(event: Restaked): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {
@@ -80,7 +86,7 @@ export function handleRestaked(event: Restaked): void {
 }
 
 export function handleJailed(event: Jailed): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {
@@ -94,7 +100,7 @@ export function handleJailed(event: Jailed): void {
 }
 
 export function handleUnJailed(event: UnJailed): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {
@@ -106,7 +112,7 @@ export function handleUnJailed(event: UnJailed): void {
 }
 
 export function handleStakeUpdate(event: StakeUpdate): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {
@@ -120,7 +126,7 @@ export function handleStakeUpdate(event: StakeUpdate): void {
 }
 
 export function handleClaimRewards(event: ClaimRewards): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {
@@ -135,7 +141,7 @@ export function handleClaimRewards(event: ClaimRewards): void {
 }
 
 export function handleConfirmAuction(event: ConfirmAuction): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {
@@ -149,7 +155,7 @@ export function handleConfirmAuction(event: ConfirmAuction): void {
 }
 
 export function handleShareMinted(event: ShareMinted): void {
-    let id = "delegator-" + event.params.validatorId + event.params.user.toHexString()
+    let id = 'delegator-' + event.params.validatorId + event.params.user.toHexString()
 
     let entity = Delegator.load(id)
     if (entity == null) {
@@ -166,7 +172,7 @@ export function handleShareMinted(event: ShareMinted): void {
 }
 
 export function handleShareBurned(event: ShareBurned): void {
-    let id = "delegator-" + event.params.validatorId + event.params.user.toHexString()
+    let id = 'delegator-' + event.params.validatorId + event.params.user.toHexString()
 
     let entity = Delegator.load(id)
     if (entity == null) {
@@ -181,7 +187,7 @@ export function handleShareBurned(event: ShareBurned): void {
 }
 
 export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
-    let id = "delegator-" + event.params.validatorId + event.params.user.toHexString()
+    let id = 'delegator-' + event.params.validatorId + event.params.user.toHexString()
 
     let entity = Delegator.load(id)
     if (entity == null) {
@@ -195,7 +201,7 @@ export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
 }
 
 export function handleDelegatorClaimedRewards(event: DelegatorClaimedRewards): void {
-    let id = "delegator-" + event.params.validatorId + event.params.user.toHexString()
+    let id = 'delegator-' + event.params.validatorId + event.params.user.toHexString()
 
     let entity = Delegator.load(id)
     if (entity == null) {
@@ -209,7 +215,7 @@ export function handleDelegatorClaimedRewards(event: DelegatorClaimedRewards): v
 }
 
 export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
-    let id = "validator-" + event.params.validatorId
+    let id = 'validator-' + event.params.validatorId
 
     let entity = Validator.load(id)
     if (entity == null) {

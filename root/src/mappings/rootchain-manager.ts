@@ -3,7 +3,7 @@ import { PredicateRegistration, TokenMapping } from '../../generated/schema'
 
 
 export function handlePredicateRegistered(event: PredicateRegistered): void {
-  let id = "predicate-registered-" + event.params.tokenType.toHexString()
+  let id = 'predicate-registered-' + event.params.tokenType.toHexString()
 
   let entity = PredicateRegistration.load(id)
   if (entity == null) {
@@ -20,7 +20,7 @@ export function handlePredicateRegistered(event: PredicateRegistered): void {
 }
 
 export function handleTokenMapped(event: TokenMapped): void {
-  let id = "token-mapping-" + event.params.rootToken.toHexString()
+  let id = 'token-mapping-' + event.params.rootToken.toHexString()
 
   let entity = TokenMapping.load(id)
   if (entity == null) {
