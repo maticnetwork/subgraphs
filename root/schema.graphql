@@ -92,3 +92,12 @@ type Delegator @entity {
   tokens: BigInt!
   claimedRewards: BigInt!
 }
+
+# Staking Params across all validators
+type StakingParams @entity {
+  id: ID!
+  owner: Bytes!
+  validatorThreshold: BigInt!
+  proposerBonus: BigInt!
+  dynasty: BigInt!
+}
