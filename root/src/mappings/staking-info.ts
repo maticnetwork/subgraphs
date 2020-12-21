@@ -1,5 +1,12 @@
-import { Delegator, Validator, StakingParams } from '../../generated/schema'
+import { Address, BigInt } from '@graphprotocol/graph-ts'
+import { 
+  Delegator, 
+  Validator, 
+  Topup, 
+  StakingParams, 
+} from '../../generated/schema'
 import {
+  ClaimFee,
   ClaimRewards,
   DelegatorClaimedRewards,
   DelegatorUnstaked,
@@ -14,11 +21,14 @@ import {
   StakeUpdate,
   Staked,
   ThresholdChange,
+  TopUpFee,
   UnJailed,
   UnstakeInit,
   Unstaked,
   UpdateCommissionRate,
 } from '../../generated/StakingInfo/StakingInfo'
+
+const STAKING_PARAMS_ID = `staking:params`
 
 export function handleStaked(event: Staked): void {
   const id = `validator:${event.params.validatorId.toString()}`
@@ -162,7 +172,7 @@ export function handleShareMinted(event: ShareMinted): void {
 
   entity.validatorId = event.params.validatorId
   entity.address = event.params.user
-  entity.amount = entity.amount + event.params.amount
+  entity.amount = entity.amount.plus(event.params.amount)
   entity.tokens = event.params.tokens
 
   // save entity
@@ -177,7 +187,7 @@ export function handleShareBurned(event: ShareBurned): void {
     entity = new Delegator(id)
   }
 
-  entity.amount = entity.amount - event.params.amount
+  entity.amount = entity.amount.minus(event.params.amount)
   entity.tokens = event.params.tokens
 
   // save entity
@@ -192,15 +202,12 @@ export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
     entity = new Delegator(id)
   }
 
-  entity.amount = entity.amount - event.params.amount
-
   // save entity
+  entity.amount = entity.amount.minus(event.params.amount)
   entity.save()
 }
 
-export function handleDelegatorClaimedRewards(
-  event: DelegatorClaimedRewards
-): void {
+export function handleDelegatorClaimedRewards(event: DelegatorClaimedRewards): void {
   const id = `delegator:${event.params.validatorId.toString()}:${event.params.user.toHexString()}`
 
   let entity = Delegator.load(id)
@@ -208,9 +215,8 @@ export function handleDelegatorClaimedRewards(
     entity = new Delegator(id)
   }
 
-  entity.claimedRewards = entity.claimedRewards + event.params.rewards
-
-  // save entity
+  // update total claimed rewards by adding claimed rewards
+  entity.claimedRewards = entity.claimedRewards.plus(event.params.rewards)
   entity.save()
 }
 
@@ -222,9 +228,42 @@ export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
     entity = new Validator(id)
   }
 
+  // save validator entity with new commission rate
   entity.commissionRate = event.params.newCommissionRate
+  entity.save()
+}
 
-  // save entity
+//
+// Topup
+//
+
+function loadTopupAccount(user: Address): Topup {
+  const id = `topup:${user.toHexString()}`
+
+  let entity = Topup.load(id)
+  if (entity == null) {
+    entity = new Topup(id)
+    entity.address = user // set user
+    entity.topupAmount = BigInt.fromI32(0) // initialize topup amount
+    entity.withdrawAmount = BigInt.fromI32(0) // initialize topup amount
+  }
+
+  return entity as Topup
+}
+
+export function handleClaimFee(event: ClaimFee): void {
+  let entity = loadTopupAccount(event.params.user)
+
+  // save entity with topup amount
+  entity.topupAmount = entity.topupAmount.plus(event.params.fee)
+  entity.save()
+}
+
+export function handleTopUpFee(event: TopUpFee): void {
+  let entity = loadTopupAccount(event.params.user)
+
+  // save entity with withdraw amount
+  entity.withdrawAmount = entity.withdrawAmount.plus(event.params.fee)
   entity.save()
 }
 
@@ -232,13 +271,17 @@ export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
 // Staking params handlers
 //
 
-export function handleDynastyValueChange(event: DynastyValueChange): void {
-  const id = `staking:params`
-  
-  let entity = StakingParams.load(id)
+function loadStakingParams(): StakingParams {
+  let entity = StakingParams.load(STAKING_PARAMS_ID)
   if (entity == null) {
-    entity = new StakingParams(id)
+    entity = new StakingParams(STAKING_PARAMS_ID)
   }
+
+  return entity as StakingParams
+}
+
+export function handleDynastyValueChange(event: DynastyValueChange): void {
+  let entity = loadStakingParams()
 
   // save entity with dynasty
   entity.dynasty = event.params.newDynasty
@@ -247,12 +290,7 @@ export function handleDynastyValueChange(event: DynastyValueChange): void {
 
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
-  const id = `staking:params`
-  
-  let entity = StakingParams.load(id)
-  if (entity == null) {
-    entity = new StakingParams(id)
-  }
+  let entity = loadStakingParams()
 
   // save entity with owner
   entity.owner = event.params.newOwner
@@ -260,12 +298,7 @@ export function handleOwnershipTransferred(event: OwnershipTransferred): void {
 }
 
 export function handleProposerBonusChange(event: ProposerBonusChange): void {
-  const id = `staking:params`
-  
-  let entity = StakingParams.load(id)
-  if (entity == null) {
-    entity = new StakingParams(id)
-  }
+  let entity = loadStakingParams()
 
   // save entity with proposer bonus
   entity.proposerBonus = event.params.newProposerBonus
@@ -273,12 +306,7 @@ export function handleProposerBonusChange(event: ProposerBonusChange): void {
 }
 
 export function handleThresholdChange(event: ThresholdChange): void {
-  const id = `staking:params`
-  
-  let entity = StakingParams.load(id)
-  if (entity == null) {
-    entity = new StakingParams(id)
-  }
+  let entity = loadStakingParams()
 
   // save entity with validator threshold
   entity.validatorThreshold = event.params.newThreshold

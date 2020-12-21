@@ -116,11 +116,14 @@ dataSources:
       entities:
         - Validator
         - Delegator
+        - StakingParams
+        - Topup
       abis:
         - name: StakingInfo
           file: ./abis/StakingInfo.json
       eventHandlers:
-        # - event: ClaimFee(indexed address,indexed uint256)
+        - event: ClaimFee(indexed address,indexed uint256)
+          handler: handleClaimFee
         - event: ClaimRewards(indexed uint256,indexed uint256,indexed uint256)
           handler: handleClaimRewards
         # - event: ConfirmAuction(indexed uint256,indexed uint256,indexed uint256)
@@ -156,7 +159,8 @@ dataSources:
         # - event: StartAuction(indexed uint256,indexed uint256,indexed uint256)
         - event: ThresholdChange(uint256,uint256)
           handler: handleThresholdChange
-        # - event: TopUpFee(indexed address,indexed uint256)
+        - event: TopUpFee(indexed address,indexed uint256)
+          handler: handleTopUpFee
         - event: UnJailed(indexed uint256,indexed address)
           handler: handleUnJailed
         - event: UnstakeInit(indexed address,indexed uint256,uint256,uint256,indexed uint256)

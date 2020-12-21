@@ -93,6 +93,14 @@ type Delegator @entity {
   claimedRewards: BigInt!
 }
 
+# Heimdall topups
+type Topup @entity {
+  id: ID!
+  address: Bytes!
+  topupAmount: BigInt!
+  withdrawAmount: BigInt!
+}
+
 # Staking Params across all validators
 type StakingParams @entity {
   id: ID!
