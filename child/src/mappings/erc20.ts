@@ -2,7 +2,7 @@ import { Address, BigInt } from '@graphprotocol/graph-ts'
 import { Transfer } from '../../generated/ChildERC20/ChildERC20'
 import { User } from '../../generated/schema'
 
-let ZERO_ADDRESS = Address.fromString("0x0000000000000000000000000000000000000000")
+let ZERO_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
 // handleTransfer handles the transfer for ERC20
 // Each transfer log will update the balance of `to` and `from` address

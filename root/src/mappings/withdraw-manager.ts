@@ -3,7 +3,7 @@ import { PlasmaExit } from '../../generated/schema'
 
 
 export function handleExitStarted(event: ExitStarted): void {
-  let id = "plasma-exit-" + event.params.exitId.toHexString()
+  let id = 'plasma-exit-' + event.params.exitId.toHexString()
   
   // this is first time this entity being created i.e. during plasma
   // exit start step
@@ -24,7 +24,7 @@ export function handleExitStarted(event: ExitStarted): void {
 }
 
 export function handleExitCancelled(event: ExitCancelled): void {
-  let id = "plasma-exit-" + event.params.exitId.toHexString()
+  let id = 'plasma-exit-' + event.params.exitId.toHexString()
   
   let entity = PlasmaExit.load(id)
   if (entity == null) {
@@ -49,7 +49,7 @@ export function handleExitCancelled(event: ExitCancelled): void {
 
 
 export function handleWithdraw(event: Withdraw): void {
-  let id = "plasma-exit-" + event.params.exitId.toHexString()
+  let id = 'plasma-exit-' + event.params.exitId.toHexString()
   
   let entity = PlasmaExit.load(id)
   if (entity == null) {

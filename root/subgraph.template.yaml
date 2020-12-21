@@ -50,7 +50,7 @@ dataSources:
           handler: handleExitCancelled
         - event: Withdraw(indexed uint256,indexed address,indexed address,uint256)
           handler: handleWithdraw
-      file: ./src/mappings/withdrawManager.ts
+      file: ./src/mappings/withdraw-manager.ts
   
   - kind: ethereum/contract
     name: RootChainManager
@@ -74,7 +74,7 @@ dataSources:
           handler: handlePredicateRegistered
         - event: TokenMapped(indexed address,indexed address,indexed bytes32)
           handler: handleTokenMapped
-      file: ./src/mappings/rootChainManager.ts
+      file: ./src/mappings/rootchain-manager.ts
 
   - kind: ethereum/contract
     name: StateSender
