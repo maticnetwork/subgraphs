@@ -30,207 +30,175 @@ import {
 
 const STAKING_PARAMS_ID = `staking:params`
 
+
+//
+// Validator related handlers
+//
+
+function loadValidator(validatorId: BigInt): Validator {
+  const id = `validator:${validatorId.toString()}`
+  let entity = Validator.load(id)
+  if (entity == null) {
+    entity = new Validator(id)
+    entity.validatorId = validatorId
+  }
+
+  return entity as Validator
+}
+
 export function handleStaked(event: Staked): void {
-  const id = `validator:${event.params.validatorId.toString()}`
+  let validator = loadValidator(event.params.validatorId)
 
-  let entity = new Validator(id)
-
-  entity.validatorId = event.params.validatorId
-  entity.signer = event.params.signer
-  entity.activationEpoch = event.params.activationEpoch
-  entity.amount = event.params.amount
-  entity.total = event.params.total
-  entity.signerPubKey = event.params.signerPubkey
+  validator.signer = event.params.signer
+  validator.activationEpoch = event.params.activationEpoch
+  validator.totalStaked = event.params.total
+  validator.signerPubKey = event.params.signerPubkey
+  validator.nonce = event.params.nonce
 
   // save entity
-  entity.save()
+  validator.save()
 }
 
 export function handleUnstaked(event: Unstaked): void {
-  const id = `validator:${event.params.validatorId.toString()}`
+  let validator = loadValidator(event.params.validatorId)
 
-  let entity = Validator.load(id)
-  if (entity == null) {
-    entity = new Validator(id)
-  }
-
-  entity.signer = event.params.user
-  entity.amount = event.params.amount
-  entity.total = event.params.total
-
-  // save entity
-  entity.save()
+  // update unstaked status
+  validator.unstaked = true
+  validator.save()
 }
 
 export function handleUnstakeInit(event: UnstakeInit): void {
-  const id = `validator:${event.params.validatorId.toString()}`
+  let validator = loadValidator(event.params.validatorId)
 
-  let entity = Validator.load(id)
-  if (entity == null) {
-    entity = new Validator(id)
-  }
-
-  entity.signer = event.params.user
-  entity.deactivationEpoch = event.params.deactivationEpoch
-  entity.amount = event.params.amount
-
-  // save entity
-  entity.save()
+  // set deactivation epoch
+  validator.deactivationEpoch = event.params.deactivationEpoch
+  validator.nonce = event.params.nonce
+  validator.save()
 }
 
 export function handleSignerChange(event: SignerChange): void {
-  const id = `validator:${event.params.validatorId.toString()}`
+  let validator = loadValidator(event.params.validatorId)
 
-  let entity = Validator.load(id)
-  if (entity == null) {
-    entity = new Validator(id)
-  }
-
-  entity.signer = event.params.newSigner
-  entity.signerPubKey = event.params.signerPubkey
-
-  // save entity
-  entity.save()
+  // save signer changes
+  validator.signer = event.params.newSigner
+  validator.signerPubKey = event.params.signerPubkey
+  validator.save()
 }
 
 export function handleRestaked(event: Restaked): void {
-  const id = `validator:${event.params.validatorId.toString()}`
+  let validator = loadValidator(event.params.validatorId)
 
-  let entity = Validator.load(id)
-  if (entity == null) {
-    entity = new Validator(id)
-  }
-
-  entity.amount = event.params.amount
-  entity.total = event.params.total
-
-  // save entity
-  entity.save()
+  // update total staked
+  validator.totalStaked = event.params.total
+  validator.save()
 }
 
 export function handleJailed(event: Jailed): void {
-  const id = `validator:${event.params.validatorId.toString()}`
-
-  let entity = Validator.load(id)
-  if (entity == null) {
-    entity = new Validator(id)
-  }
+  let validator = loadValidator(event.params.validatorId)
 
   // save entity with jail end epoch
-  entity.jailEndEpoch = event.params.exitEpoch
-  entity.save()
+  validator.jailEndEpoch = event.params.exitEpoch
+  validator.save()
 }
 
 export function handleUnJailed(event: UnJailed): void {
-  const id = `validator:${event.params.validatorId.toString()}`
+  let validator = loadValidator(event.params.validatorId)
 
-  let entity = Validator.load(id)
-  if (entity == null) {
-    entity = new Validator(id)
-  }
-
-  // save entity
-  entity.save()
+  // save entity with jail end epoch
+  validator.jailEndEpoch = BigInt.fromI32(0)
+  validator.save()
 }
 
 export function handleStakeUpdate(event: StakeUpdate): void {
-  const id = `validator:${event.params.validatorId.toString()}`
+  let validator = loadValidator(event.params.validatorId)
 
-  let entity = Validator.load(id)
-  if (entity == null) {
-    entity = new Validator(id)
-  }
-
-  entity.amount = event.params.newAmount
-
-  // save entity
-  entity.save()
+  // update total staked and nonce
+  validator.totalStaked = event.params.newAmount
+  validator.nonce = event.params.nonce
+  validator.save()
 }
 
 export function handleClaimRewards(event: ClaimRewards): void {
-  const id = `validator:${event.params.validatorId.toString()}`
+  let validator = loadValidator(event.params.validatorId)
 
-  let entity = Validator.load(id)
+  // update rewards for validator
+  validator.liquidatedRewards = validator.liquidatedRewards.plus(event.params.amount)
+  validator.save()
+
+  // update staking params
+  let stakingParams = loadStakingParams()
+  stakingParams.liquidatedRewards = event.params.totalAmount
+  stakingParams.save()
+}
+
+
+
+export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
+  let validator = loadValidator(event.params.validatorId)
+
+  // save validator entity with new commission rate
+  validator.commissionRate = event.params.newCommissionRate
+  validator.save()
+}
+
+//
+// Delegator related handlers
+//
+
+function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
+  const id = `delegator:${validatorId.toString()}:${delegator.toHexString()}`
+  let entity = Delegator.load(id)
   if (entity == null) {
-    entity = new Validator(id)
+    entity = new Delegator(id)
+    entity.validatorId = validatorId
+    entity.address = delegator
   }
 
-  entity.amount = event.params.amount
-  entity.total = event.params.totalAmount
-
-  // save entity
-  entity.save()
+  return entity as Delegator
 }
 
 export function handleShareMinted(event: ShareMinted): void {
-  const id = `delegator:${event.params.validatorId.toString()}:${event.params.user.toHexString()}`
+  let delegator = loadDelegator(event.params.validatorId, event.params.user)
 
-  let entity = Delegator.load(id)
-  if (entity == null) {
-    entity = new Delegator(id)
-  }
-
-  entity.validatorId = event.params.validatorId
-  entity.address = event.params.user
-  entity.amount = entity.amount.plus(event.params.amount)
-  entity.tokens = event.params.tokens
+  // update delegatedAmount and tokens
+  delegator.delegatedAmount = delegator.delegatedAmount.plus(event.params.amount)
+  // this works until tokens are not transaferable
+  delegator.tokens = delegator.tokens.plus(event.params.tokens)
 
   // save entity
-  entity.save()
+  delegator.save()
 }
 
 export function handleShareBurned(event: ShareBurned): void {
-  const id = `delegator:${event.params.validatorId.toString()}:${event.params.user.toHexString()}`
+  let delegator = loadDelegator(event.params.validatorId, event.params.user)
 
-  let entity = Delegator.load(id)
-  if (entity == null) {
-    entity = new Delegator(id)
-  }
-
-  entity.amount = entity.amount.minus(event.params.amount)
-  entity.tokens = event.params.tokens
+  // update claimedAmount and tokens
+  // it is possible to have: claimed amount < amount (when slashing happens)
+  // that's why having claimedAmount would be better
+  delegator.unclaimedAmount = delegator.unclaimedAmount.plus(event.params.amount)
+  // this works until tokens are not transaferable
+  delegator.tokens = delegator.tokens.minus(event.params.tokens)
 
   // save entity
-  entity.save()
+  delegator.save()
 }
 
 export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
-  const id = `delegator:${event.params.validatorId.toString()}:${event.params.user.toHexString()}`
+  let delegator = loadDelegator(event.params.validatorId, event.params.user)
 
-  let entity = Delegator.load(id)
-  if (entity == null) {
-    entity = new Delegator(id)
-  }
-
-  // save entity
-  entity.amount = entity.amount.minus(event.params.amount)
-  entity.save()
+  // update unclaimed amount by deducting total unclaimed amount
+  delegator.unclaimedAmount = delegator.unclaimedAmount.minus(event.params.amount)
+  // update claimed amount
+  delegator.claimedAmount = delegator.claimedAmount.plus(event.params.amount)
+  delegator.save()
 }
 
 export function handleDelegatorClaimedRewards(event: DelegatorClaimedRewards): void {
-  const id = `delegator:${event.params.validatorId.toString()}:${event.params.user.toHexString()}`
+  let delegator = loadDelegator(event.params.validatorId, event.params.user)
 
-  let entity = Delegator.load(id)
-  if (entity == null) {
-    entity = new Delegator(id)
-  }
-
-  // update total claimed rewards by adding claimed rewards
-  entity.claimedRewards = entity.claimedRewards.plus(event.params.rewards)
-  entity.save()
-}
-
-export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
-  const id = `validator:${event.params.validatorId.toString()}`
-
-  let entity = Validator.load(id)
-  if (entity == null) {
-    entity = new Validator(id)
-  }
-
-  // save validator entity with new commission rate
-  entity.commissionRate = event.params.newCommissionRate
-  entity.save()
+  // update total claimed rewards by current event's rewards
+  delegator.claimedRewards = delegator.claimedRewards.plus(event.params.rewards)
+  delegator.save()
 }
 
 //
@@ -252,19 +220,19 @@ function loadTopupAccount(user: Address): Topup {
 }
 
 export function handleClaimFee(event: ClaimFee): void {
-  let entity = loadTopupAccount(event.params.user)
+  let topup = loadTopupAccount(event.params.user)
 
   // save entity with topup amount
-  entity.topupAmount = entity.topupAmount.plus(event.params.fee)
-  entity.save()
+  topup.topupAmount = topup.topupAmount.plus(event.params.fee)
+  topup.save()
 }
 
 export function handleTopUpFee(event: TopUpFee): void {
-  let entity = loadTopupAccount(event.params.user)
+  let topup = loadTopupAccount(event.params.user)
 
   // save entity with withdraw amount
-  entity.withdrawAmount = entity.withdrawAmount.plus(event.params.fee)
-  entity.save()
+  topup.withdrawAmount = topup.withdrawAmount.plus(event.params.fee)
+  topup.save()
 }
 
 //
@@ -281,34 +249,34 @@ function loadStakingParams(): StakingParams {
 }
 
 export function handleDynastyValueChange(event: DynastyValueChange): void {
-  let entity = loadStakingParams()
+  let stakingParams = loadStakingParams()
 
   // save entity with dynasty
-  entity.dynasty = event.params.newDynasty
-  entity.save()
+  stakingParams.dynasty = event.params.newDynasty
+  stakingParams.save()
 }
 
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
-  let entity = loadStakingParams()
+  let stakingParams = loadStakingParams()
 
   // save entity with owner
-  entity.owner = event.params.newOwner
-  entity.save()
+  stakingParams.owner = event.params.newOwner
+  stakingParams.save()
 }
 
 export function handleProposerBonusChange(event: ProposerBonusChange): void {
-  let entity = loadStakingParams()
+  let stakingParams = loadStakingParams()
 
   // save entity with proposer bonus
-  entity.proposerBonus = event.params.newProposerBonus
-  entity.save()
+  stakingParams.proposerBonus = event.params.newProposerBonus
+  stakingParams.save()
 }
 
 export function handleThresholdChange(event: ThresholdChange): void {
-  let entity = loadStakingParams()
+  let stakingParams = loadStakingParams()
 
   // save entity with validator threshold
-  entity.validatorThreshold = event.params.newThreshold
-  entity.save()
+  stakingParams.validatorThreshold = event.params.newThreshold
+  stakingParams.save()
 }
