@@ -28,7 +28,7 @@ import {
   UpdateCommissionRate,
 } from '../../generated/StakingInfo/StakingInfo'
 
-const STAKING_PARAMS_ID = `staking:params`
+const STAKING_PARAMS_ID = 'staking:params'
 
 
 //
@@ -36,11 +36,18 @@ const STAKING_PARAMS_ID = `staking:params`
 //
 
 function loadValidator(validatorId: BigInt): Validator {
-  const id = `validator:${validatorId.toString()}`
+  let id = 'validator:' + validatorId.toString()
   let entity = Validator.load(id)
   if (entity == null) {
     entity = new Validator(id)
     entity.validatorId = validatorId
+    entity.totalStaked = BigInt.fromI32(0)
+    entity.nonce = BigInt.fromI32(0)
+    entity.deactivationEpoch = BigInt.fromI32(0)
+    entity.jailEndEpoch = BigInt.fromI32(0)
+    entity.liquidatedRewards = BigInt.fromI32(0)
+    entity.unstaked = false
+    entity.commissionRate = BigInt.fromI32(0)
   }
 
   return entity as Validator
@@ -146,12 +153,17 @@ export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
 //
 
 function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
-  const id = `delegator:${validatorId.toString()}:${delegator.toHexString()}`
+  let id = 'delegator:' + validatorId.toString() + ':' + delegator.toHexString()
   let entity = Delegator.load(id)
   if (entity == null) {
     entity = new Delegator(id)
     entity.validatorId = validatorId
     entity.address = delegator
+    entity.delegatedAmount = BigInt.fromI32(0)
+    entity.claimedAmount = BigInt.fromI32(0)
+    entity.unclaimedAmount = BigInt.fromI32(0)
+    entity.tokens = BigInt.fromI32(0)
+    entity.claimedRewards = BigInt.fromI32(0)
   }
 
   return entity as Delegator
@@ -206,7 +218,7 @@ export function handleDelegatorClaimedRewards(event: DelegatorClaimedRewards): v
 //
 
 function loadTopupAccount(user: Address): Topup {
-  const id = `topup:${user.toHexString()}`
+  let id = 'topup:' + user.toHexString()
 
   let entity = Topup.load(id)
   if (entity == null) {
@@ -243,6 +255,10 @@ function loadStakingParams(): StakingParams {
   let entity = StakingParams.load(STAKING_PARAMS_ID)
   if (entity == null) {
     entity = new StakingParams(STAKING_PARAMS_ID)
+    entity.dynasty = BigInt.fromI32(0)
+    entity.proposerBonus = BigInt.fromI32(0)
+    entity.validatorThreshold = BigInt.fromI32(0)
+    entity.liquidatedRewards = BigInt.fromI32(0)
   }
 
   return entity as StakingParams

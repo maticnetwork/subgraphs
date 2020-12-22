@@ -110,7 +110,7 @@ type Topup @entity {
 # Staking Params across all validators
 type StakingParams @entity {
   id: ID!
-  owner: Bytes!
+  owner: Bytes
   validatorThreshold: BigInt!
   proposerBonus: BigInt!
   dynasty: BigInt!
