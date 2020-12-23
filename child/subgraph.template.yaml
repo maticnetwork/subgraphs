@@ -16,7 +16,7 @@ dataSources:
         - TransactionEntity
       abis:
         - name: ChildERC20
-          file: ./abis/ChildERC20.json
+          file: ./abis/ChildErc20.json
       eventHandlers:
         - event: LogTransfer(indexed address,indexed address,indexed address,uint256,uint256,uint256,uint256,uint256)
           handler: handleLogTransfer
