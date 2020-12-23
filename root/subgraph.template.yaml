@@ -102,7 +102,71 @@ dataSources:
           handler: handleRegistrationUpdated
       file: ./src/mappings/state-sync.ts
 
-# StakingInfo contract's event handlers not being added intentionally
-# because they don't seem to work as they're supposed to be working
-#
-# More investigation required in that front
+  - kind: ethereum/contract
+    name: StakingInfo
+    network: {{ network }}
+    source:
+      address: "{{contracts.stakingInfo.address}}"
+      abi: StakingInfo
+      startBlock: {{ contracts.stakingInfo.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Validator
+        - Delegator
+        - StakingParams
+        - Topup
+      abis:
+        - name: StakingInfo
+          file: ./abis/StakingInfo.json
+      eventHandlers:
+        - event: ClaimFee(indexed address,indexed uint256)
+          handler: handleClaimFee
+        - event: ClaimRewards(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleClaimRewards
+        # - event: ConfirmAuction(indexed uint256,indexed uint256,indexed uint256)
+          # handler: handleConfirmAuction
+        - event: DelegatorClaimedRewards(indexed uint256,indexed address,indexed uint256)
+          handler: handleDelegatorClaimedRewards
+        # - event: DelegatorRestaked(indexed uint256,indexed address,indexed uint256)
+        #   handler: handleDelegatorRestaked
+        - event: DelegatorUnstaked(indexed uint256,indexed address,uint256)
+          handler: handleDelegatorUnstaked
+        - event: DynastyValueChange(uint256,uint256)
+          handler: handleDynastyValueChange
+        - event: Jailed(indexed uint256,indexed uint256,indexed address)
+          handler: handleJailed
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: ProposerBonusChange(uint256,uint256)
+          handler: handleProposerBonusChange
+        - event: Restaked(indexed uint256,uint256,uint256)
+          handler: handleRestaked
+        # - event: RewardUpdate(uint256,uint256)
+        - event: ShareBurned(indexed uint256,indexed address,indexed uint256,uint256)
+          handler: handleShareBurned
+        - event: ShareMinted(indexed uint256,indexed address,indexed uint256,uint256)
+          handler: handleShareMinted
+        - event: SignerChange(indexed uint256,uint256,indexed address,indexed address,bytes)
+          handler: handleSignerChange
+        # - event: Slashed(indexed uint256,indexed uint256)
+        - event: StakeUpdate(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleStakeUpdate
+        - event: Staked(indexed address,indexed uint256,uint256,indexed uint256,uint256,uint256,bytes)
+          handler: handleStaked
+        # - event: StartAuction(indexed uint256,indexed uint256,indexed uint256)
+        - event: ThresholdChange(uint256,uint256)
+          handler: handleThresholdChange
+        - event: TopUpFee(indexed address,indexed uint256)
+          handler: handleTopUpFee
+        - event: UnJailed(indexed uint256,indexed address)
+          handler: handleUnJailed
+        - event: UnstakeInit(indexed address,indexed uint256,uint256,uint256,indexed uint256)
+          handler: handleUnstakeInit
+        - event: Unstaked(indexed address,indexed uint256,uint256,uint256)
+          handler: handleUnstaked
+        - event: UpdateCommissionRate(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleUpdateCommissionRate
+      file: ./src/mappings/staking-info.ts

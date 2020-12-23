@@ -74,21 +74,45 @@ type Validator @entity {
   validatorId: BigInt!
   signer: Bytes!
   signerPubKey: Bytes!
-  reward: BigInt
+  liquidatedRewards: BigInt!
   activationEpoch: BigInt!
-  deactivationEpoch: BigInt
-  jailEndEpoch: BigInt
-  amount: BigInt!
-  total: BigInt!
-  commissionRate: BigInt
-  status: Int!
+  deactivationEpoch: BigInt!
+  totalStaked: BigInt!
+  commissionRate: BigInt!
+  nonce: BigInt!
+  unstaked: Boolean!
+  jailEndEpoch: BigInt!
 }
 
 type Delegator @entity {
   id: ID!
   validatorId: BigInt!
   address: Bytes!
-  amount: BigInt!
+  # total delegated amount
+  delegatedAmount: BigInt!
+  # total unclaimed amount (after sellVoucher and before claiming it)
+  unclaimedAmount: BigInt!
+  # total claimed amount (after withdraw delay, while claiming unstaked amount)
+  claimedAmount: BigInt!
+  # total current shares (works until tokens are non-transferable)
   tokens: BigInt!
   claimedRewards: BigInt!
+}
+
+# Heimdall topups
+type Topup @entity {
+  id: ID!
+  address: Bytes!
+  topupAmount: BigInt!
+  withdrawAmount: BigInt!
+}
+
+# Staking Params across all validators
+type StakingParams @entity {
+  id: ID!
+  owner: Bytes
+  validatorThreshold: BigInt!
+  proposerBonus: BigInt!
+  dynasty: BigInt!
+  liquidatedRewards: BigInt!
 }

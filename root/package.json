@@ -12,7 +12,7 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ maticnetwork/mumbai-root-subgraphs",
     "create-local": "graph create --node http://localhost:8020/ maticnetwork/mumbai-root-subgraphs",
     "remove-local": "graph remove --node http://localhost:8020/ maticnetwork/mumbai-root-subgraphs",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 maticnetwork/mumbai-root-subgraphs"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs https://ipfs.infura.io:5001 maticnetwork/mumbai-root-subgraphs"
   },
   "dependencies": {
     "@graphprotocol/graph-ts": "0.18.0"
