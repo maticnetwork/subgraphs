@@ -3,6 +3,7 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'unicorn',
+    'json',
   ],
   extends: 'eslint:recommended',
   parserOptions: {
@@ -21,6 +22,7 @@ module.exports = {
     u8: true,
   },
   rules: {
+    'indent': ['error', 2],
     'space-before-function-paren': ['error', 'never'],
     semi: ['error', 'never'],
     'no-underscore-dangle': 0,
@@ -37,7 +39,13 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       rules: {
         '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
-      }
-    }
-  ]
+      },
+    },
+    {
+      files: ['*.json'],
+      rules: {
+        'unicorn/filename-case': ['error', { 'case': 'pascalCase' }],
+      },
+    },
+  ],
 }
