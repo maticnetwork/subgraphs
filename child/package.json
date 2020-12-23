@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Subgraphs mapping for Graph-node protocol - Matic Network",
   "scripts": {
-    "graph": "graph",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts src --fix",
+    "graph": "graph",
+    "codegen": "graph codegen",
+    "build": "graph build",
     "create": "graph create --node https://mumbai-graph.matic.today/ nglglhtr/token-subgraph",
     "deploy": "graph deploy --node https://mumbai-graph.matic.today/ --ipfs https://ipfs.infura.io:5001/ nglglhtr/token-subgraph",
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
