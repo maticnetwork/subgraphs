@@ -117,13 +117,12 @@ type StakingParams @entity {
   liquidatedRewards: BigInt!
 }
 
-# Staking NFT ownership transfer can be tracked
-# by checking this entity
+# Staking NFT's historical ownership
+# can be checked using this entity
 type StakingNFTTransfer @entity {
   id: ID!
-  from: Bytes!
-  to: Bytes!
   tokenId: BigInt!
-  transactionHash: Bytes!
-  timestamp: BigInt!
+  currentOwner: Bytes!
+  previousOwners: [Bytes!]!
+  transactionHashes: [Bytes!]!
 }
