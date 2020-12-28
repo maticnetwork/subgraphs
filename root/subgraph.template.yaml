@@ -172,12 +172,12 @@ dataSources:
       file: ./src/mappings/staking-info.ts
 
   - kind: ethereum/contract
-    name: StakingNFT
+    name: StakingNft
     network: {{ network }}
     source:
       address: "{{contracts.stakingNFT.address}}"
-      abi: StakingNFT
-      startBlock: {{ contracts.stakingNFT.startBlock }}
+      abi: StakingNft
+      startBlock: {{ contracts.stakingNft.startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -186,7 +186,7 @@ dataSources:
         - Transfer
       abis:
         - name: StakingNFT
-          file: ./abis/StakingNFT.json
+          file: ./abis/StakingNft.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
