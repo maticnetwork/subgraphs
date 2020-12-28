@@ -185,7 +185,7 @@ dataSources:
       entities:
         - Transfer
       abis:
-        - name: StakingNFT
+        - name: StakingNft
           file: ./abis/StakingNft.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
