@@ -20,6 +20,10 @@
     "stakingInfo": {
       "address": "0x29C40836C17f22d16a7fE953Fb25DA670C96d69E",
       "startBlock": 2917902
+    },
+    "stakingNft": {
+      "address": "0x532c7020E0F3666f9440B8B9d899A9763BCc5dB7",
+      "startBlock": 2917904
     }
   }
 }
