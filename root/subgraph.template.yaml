@@ -170,3 +170,24 @@ dataSources:
         - event: UpdateCommissionRate(indexed uint256,indexed uint256,indexed uint256)
           handler: handleUpdateCommissionRate
       file: ./src/mappings/staking-info.ts
+
+  - kind: ethereum/contract
+    name: StakingNFT
+    network: {{ network }}
+    source:
+      address: "{{contracts.stakingNFT.address}}"
+      abi: StakingNFT
+      startBlock: {{ contracts.stakingNFT.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: StakingNFT
+          file: ./abis/StakingNFT.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mappings/staking-nft.ts
