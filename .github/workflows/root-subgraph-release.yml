@@ -1,0 +1,41 @@
+name: Root subgraph release
+
+on:
+  release:
+    types: [created]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - SUBGRAPH_NETWORK: goerli
+            SUBGRAPH_NAME: maticnetwork/mumbai-root-subgraphs
+          - SUBGRAPH_NETWORK: mainnet
+            SUBGRAPH_NAME: maticnetwork/mainnet-root-subgraphs
+
+    defaults:
+      run:
+        working-directory: root
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          check-latest: true
+      - run: npm install
+      - name: Prepare subgraph for ${{ matrix.SUBGRAPH_NETWORK }}
+        run: npm run prepare:${{ matrix.SUBGRAPH_NETWORK }}
+      - name: Generate code for subgraph
+        run: npm run codegen
+      - name: Build subgraph
+        run: npm run build
+      - name: Login to thegraph server
+        run: npm run graph -- auth ${{ secrets.THE_GRAPH_NODE_URL }} ${{ secrets.THE_GRAPH_ACCESS_TOKEN }}
+      - name: Deploy subgraph
+        run: |
+          npm run graph -- deploy --node ${{ secrets.THE_GRAPH_NODE_URL }} --ipfs ${{ secrets.THE_GRAPH_IPFS_URL }} ${{ matrix.SUBGRAPH_NAME }}
