@@ -48,7 +48,7 @@ function loadValidator(validatorId: BigInt): Validator {
     entity.deactivationEpoch = BigInt.fromI32(0)
     entity.jailEndEpoch = BigInt.fromI32(0)
     entity.liquidatedRewards = BigInt.fromI32(0)
-    entity.unstaked = false
+    entity.status = 0
     entity.commissionRate = BigInt.fromI32(0)
     entity.auctionAmount = BigInt.fromI32(0)
     entity.isInAuction = false
@@ -65,6 +65,7 @@ export function handleStaked(event: Staked): void {
   validator.totalStaked = event.params.total
   validator.signerPubKey = event.params.signerPubkey
   validator.nonce = event.params.nonce
+  validator.status = 0
 
   // save entity
   validator.save()
@@ -74,7 +75,7 @@ export function handleUnstaked(event: Unstaked): void {
   let validator = loadValidator(event.params.validatorId)
 
   // update unstaked status
-  validator.unstaked = true
+  validator.status = 1
   validator.save()
 }
 
@@ -109,6 +110,7 @@ export function handleJailed(event: Jailed): void {
 
   // save entity with jail end epoch
   validator.jailEndEpoch = event.params.exitEpoch
+  validator.status = 2
   validator.save()
 }
 
@@ -117,6 +119,7 @@ export function handleUnJailed(event: UnJailed): void {
 
   // save entity with jail end epoch
   validator.jailEndEpoch = BigInt.fromI32(0)
+  validator.status = 3
   validator.save()
 }
 

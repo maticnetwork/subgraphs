@@ -94,7 +94,13 @@ type Validator @entity {
   totalStaked: BigInt!
   commissionRate: BigInt!
   nonce: BigInt!
-  unstaked: Boolean!
+  # Meaning of status codes
+  #
+  # 0 : Staked
+  # 1 : Unstaked
+  # 2 : Jailed
+  # 3 : Unjailed
+  status: Int!
   jailEndEpoch: BigInt!
   auctionAmount: BigInt!
   isInAuction: Bool!
