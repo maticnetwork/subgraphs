@@ -1,9 +1,9 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts'
-import { 
-  Delegator, 
-  Validator, 
-  Topup, 
-  StakingParams, 
+import {
+  Delegator,
+  Validator,
+  Topup,
+  StakingParams,
 } from '../../generated/schema'
 import {
   ClaimFee,
@@ -27,6 +27,7 @@ import {
   Unstaked,
   UpdateCommissionRate,
   StartAuction,
+  ConfirmAuction,
 } from '../../generated/StakingInfo/StakingInfo'
 
 const STAKING_PARAMS_ID = 'staking:params'
@@ -306,6 +307,18 @@ export function handleStartAuction(event: StartAuction): void {
 
   validator.auctionAmount = event.params.auctionAmount
   validator.isInAuction = true
-  
+
   validator.save()
+
+}
+
+export function handleConfirmAuction(event: ConfirmAuction): void {
+
+  let validator = loadValidator(event.params.oldValidatorId)
+
+  validator.auctionAmount = BigInt.fromI32(0)
+  validator.isInAuction = false
+
+  validator.save()
+
 }
