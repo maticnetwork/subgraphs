@@ -44,6 +44,8 @@ function loadValidator(validatorId: BigInt): Validator {
     entity = new Validator(id)
     entity.validatorId = validatorId
     entity.totalStaked = BigInt.fromI32(0)
+    entity.selfStake = BigInt.fromI32(0)
+    entity.delegatedStake = BigInt.fromI32(0)
     entity.nonce = BigInt.fromI32(0)
     entity.deactivationEpoch = BigInt.fromI32(0)
     entity.jailEndEpoch = BigInt.fromI32(0)
@@ -62,7 +64,10 @@ export function handleStaked(event: Staked): void {
 
   validator.signer = event.params.signer
   validator.activationEpoch = event.params.activationEpoch
+
   validator.totalStaked = event.params.total
+  validator.selfStake = event.params.amount
+
   validator.signerPubKey = event.params.signerPubkey
   validator.nonce = event.params.nonce
   validator.status = 0
@@ -76,6 +81,7 @@ export function handleUnstaked(event: Unstaked): void {
 
   // update unstaked status
   validator.status = 1
+  validator.selfStake = 0
   validator.save()
 }
 
@@ -129,6 +135,14 @@ export function handleStakeUpdate(event: StakeUpdate): void {
   // update total staked and nonce
   validator.totalStaked = event.params.newAmount
   validator.nonce = event.params.nonce
+
+  // Updating validator's self stake
+  //
+  // We only get `totalStake` emitted from contract
+  // which is why we're subtracting delegated stake
+  // from totalStaked
+  validator.selfStake = validator.totalStaked.minus(validator.delegatedStake)
+
   validator.save()
 }
 
@@ -186,6 +200,14 @@ export function handleShareMinted(event: ShareMinted): void {
 
   // save entity
   delegator.save()
+
+  // -- Also updating delegated stake for validator
+  let validator = loadValidator(event.params.validatorId)
+
+  validator.delegatedStake = validator.delegatedStake.plus(event.params.amount)
+
+  validator.save()
+  // -- Saving updation
 }
 
 export function handleShareBurned(event: ShareBurned): void {
@@ -200,6 +222,14 @@ export function handleShareBurned(event: ShareBurned): void {
 
   // save entity
   delegator.save()
+
+  // -- Also updating delegated stake for validator
+  let validator = loadValidator(event.params.validatorId)
+
+  validator.delegatedStake = validator.delegatedStake.minus(event.params.amount)
+
+  validator.save()
+  // -- Saving updation
 }
 
 export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
