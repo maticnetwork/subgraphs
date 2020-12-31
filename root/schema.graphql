@@ -7,6 +7,8 @@ type Checkpoint @entity {
   start: BigInt!
   end: BigInt!
   root: Bytes!
+  transactionHash: Bytes!
+  timestamp: BigInt!
 }
 
 type StateSync @entity {

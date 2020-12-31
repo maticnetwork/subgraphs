@@ -17,6 +17,8 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
   entity.start = event.params.start
   entity.end = event.params.end
   entity.root = event.params.root
+  entity.transactionHash = event.transaction.hash
+  entity.timestamp = event.block.timestamp
 
   // save entity
   entity.save()
