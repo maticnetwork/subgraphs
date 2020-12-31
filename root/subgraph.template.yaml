@@ -126,8 +126,6 @@ dataSources:
           handler: handleClaimFee
         - event: ClaimRewards(indexed uint256,indexed uint256,indexed uint256)
           handler: handleClaimRewards
-        # - event: ConfirmAuction(indexed uint256,indexed uint256,indexed uint256)
-          # handler: handleConfirmAuction
         - event: DelegatorClaimedRewards(indexed uint256,indexed address,indexed uint256)
           handler: handleDelegatorClaimedRewards
         # - event: DelegatorRestaked(indexed uint256,indexed address,indexed uint256)
@@ -156,7 +154,6 @@ dataSources:
           handler: handleStakeUpdate
         - event: Staked(indexed address,indexed uint256,uint256,indexed uint256,uint256,uint256,bytes)
           handler: handleStaked
-        # - event: StartAuction(indexed uint256,indexed uint256,indexed uint256)
         - event: ThresholdChange(uint256,uint256)
           handler: handleThresholdChange
         - event: TopUpFee(indexed address,indexed uint256)
@@ -169,6 +166,10 @@ dataSources:
           handler: handleUnstaked
         - event: UpdateCommissionRate(indexed uint256,indexed uint256,indexed uint256)
           handler: handleUpdateCommissionRate
+        - event: StartAuction(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleStartAuction
+        - event: ConfirmAuction(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleConfirmAuction
       file: ./src/mappings/staking-info.ts
 
   - kind: ethereum/contract

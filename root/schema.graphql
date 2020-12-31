@@ -82,7 +82,7 @@ type Validator @entity {
   nonce: BigInt!
   unstaked: Boolean!
   jailEndEpoch: BigInt!
-    : BigInt!
+  auctionAmount: BigInt!
   isInAuction: Bool!
 }
 
