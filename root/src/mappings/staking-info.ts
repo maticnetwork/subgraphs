@@ -26,6 +26,7 @@ import {
   UnstakeInit,
   Unstaked,
   UpdateCommissionRate,
+  StartAuction,
 } from '../../generated/StakingInfo/StakingInfo'
 
 const STAKING_PARAMS_ID = 'staking:params'
@@ -48,6 +49,8 @@ function loadValidator(validatorId: BigInt): Validator {
     entity.liquidatedRewards = BigInt.fromI32(0)
     entity.unstaked = false
     entity.commissionRate = BigInt.fromI32(0)
+    entity.auctionAmount = BigInt.fromI32(0)
+    entity.isInAuction = false
   }
 
   return entity as Validator
@@ -295,4 +298,14 @@ export function handleThresholdChange(event: ThresholdChange): void {
   // save entity with validator threshold
   stakingParams.validatorThreshold = event.params.newThreshold
   stakingParams.save()
+}
+
+export function handleStartAuction(event: StartAuction): void {
+
+  let validator = loadValidator(event.params.validatorId)
+
+  validator.auctionAmount = event.params.auctionAmount
+  validator.isInAuction = true
+  
+  validator.save()
 }
