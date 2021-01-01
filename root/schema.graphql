@@ -74,18 +74,7 @@ type TokenMapping @entity {
 type Validator @entity {
   id: ID!
   validatorId: BigInt!
-  # Below could be added, but that causes one
-  # issue : In handler function how should we be able to
-  # understand which chain we're currently working with ?
-  #
-  # Because that affects our which contract should be called
-  # for checking ownership of NFT contract
-  #
-  # It's better done offline, before serving request, backend can
-  # query blockchain node for this piece of data using standard `ownerOf`
-  # function call of standard ERC721, where parameter should be passed `validatorId`
-  #
-  # owner: Bytes!
+  owner: Bytes!
   signer: Bytes!
   signerPubKey: Bytes!
   liquidatedRewards: BigInt!

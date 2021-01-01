@@ -30,6 +30,14 @@ import {
   ConfirmAuction,
 } from '../../generated/StakingInfo/StakingInfo'
 
+// using network address from config file
+// to be passed to client when creating instance
+// of contract, StakingNft, for calling `ownerOf` function
+import NetworkConfig from '../network.json'
+
+// This is the contract we're going to interact with when `Staked` event is emitted
+import {StakingNft} from '../../generated/StakingNft/StakingNft'
+
 const STAKING_PARAMS_ID = 'staking:params'
 
 
@@ -64,6 +72,11 @@ export function handleStaked(event: Staked): void {
 
   validator.signer = event.params.signer
   validator.activationEpoch = event.params.activationEpoch
+
+  // Keeping NFT owner address, to be helpful while responding
+  // client queries in staking API
+  let nft = StakingNft.bind(Address.fromString(NetworkConfig.stakingNft.address))
+  validator.owner = nft.ownerOf(event.params.validatorId)
 
   validator.totalStaked = event.params.total
   validator.selfStake = event.params.amount
