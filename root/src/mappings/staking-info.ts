@@ -75,7 +75,7 @@ export function handleStaked(event: Staked): void {
 
   // Keeping NFT owner address, to be helpful while responding
   // client queries in staking API
-  let nft = StakingNft.bind(Address.fromString(NetworkConfig.stakingNft.address))
+  let nft = StakingNft.bind(Address.fromString(NetworkConfig.contracts.stakingNft.address))
   validator.owner = nft.ownerOf(event.params.validatorId)
 
   validator.totalStaked = event.params.total
