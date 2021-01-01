@@ -7,6 +7,8 @@ type Checkpoint @entity {
   start: BigInt!
   end: BigInt!
   root: Bytes!
+  transactionHash: Bytes!
+  timestamp: BigInt!
 }
 
 type StateSync @entity {
@@ -72,16 +74,27 @@ type TokenMapping @entity {
 type Validator @entity {
   id: ID!
   validatorId: BigInt!
+  owner: Bytes!
   signer: Bytes!
   signerPubKey: Bytes!
   liquidatedRewards: BigInt!
   activationEpoch: BigInt!
   deactivationEpoch: BigInt!
   totalStaked: BigInt!
+  selfStake: BigInt!
+  delegatedStake: BigInt!
   commissionRate: BigInt!
   nonce: BigInt!
-  unstaked: Boolean!
+  # Meaning of status codes
+  #
+  # 0 : Staked
+  # 1 : Unstaked
+  # 2 : Jailed
+  # 3 : Unjailed
+  status: Int!
   jailEndEpoch: BigInt!
+  auctionAmount: BigInt!
+  isInAuction: Bool!
 }
 
 type Delegator @entity {

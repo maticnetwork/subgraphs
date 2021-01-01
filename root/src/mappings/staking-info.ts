@@ -1,9 +1,9 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts'
-import { 
-  Delegator, 
-  Validator, 
-  Topup, 
-  StakingParams, 
+import {
+  Delegator,
+  Validator,
+  Topup,
+  StakingParams,
 } from '../../generated/schema'
 import {
   ClaimFee,
@@ -26,7 +26,17 @@ import {
   UnstakeInit,
   Unstaked,
   UpdateCommissionRate,
+  StartAuction,
+  ConfirmAuction,
 } from '../../generated/StakingInfo/StakingInfo'
+
+// using network address from config file
+// to be passed to client when creating instance
+// of contract, StakingNft, for calling `ownerOf` function
+import NetworkConfig from '../network.json'
+
+// This is the contract we're going to interact with when `Staked` event is emitted
+import {StakingNft} from '../../generated/StakingNft/StakingNft'
 
 const STAKING_PARAMS_ID = 'staking:params'
 
@@ -42,12 +52,16 @@ function loadValidator(validatorId: BigInt): Validator {
     entity = new Validator(id)
     entity.validatorId = validatorId
     entity.totalStaked = BigInt.fromI32(0)
+    entity.selfStake = BigInt.fromI32(0)
+    entity.delegatedStake = BigInt.fromI32(0)
     entity.nonce = BigInt.fromI32(0)
     entity.deactivationEpoch = BigInt.fromI32(0)
     entity.jailEndEpoch = BigInt.fromI32(0)
     entity.liquidatedRewards = BigInt.fromI32(0)
-    entity.unstaked = false
+    entity.status = 0
     entity.commissionRate = BigInt.fromI32(0)
+    entity.auctionAmount = BigInt.fromI32(0)
+    entity.isInAuction = false
   }
 
   return entity as Validator
@@ -58,9 +72,18 @@ export function handleStaked(event: Staked): void {
 
   validator.signer = event.params.signer
   validator.activationEpoch = event.params.activationEpoch
+
+  // Keeping NFT owner address, to be helpful while responding
+  // client queries in staking API
+  let nft = StakingNft.bind(Address.fromString(NetworkConfig.contracts.stakingNft.address))
+  validator.owner = nft.ownerOf(event.params.validatorId)
+
   validator.totalStaked = event.params.total
+  validator.selfStake = event.params.amount
+
   validator.signerPubKey = event.params.signerPubkey
   validator.nonce = event.params.nonce
+  validator.status = 0
 
   // save entity
   validator.save()
@@ -70,7 +93,8 @@ export function handleUnstaked(event: Unstaked): void {
   let validator = loadValidator(event.params.validatorId)
 
   // update unstaked status
-  validator.unstaked = true
+  validator.status = 1
+  validator.selfStake = 0
   validator.save()
 }
 
@@ -105,6 +129,7 @@ export function handleJailed(event: Jailed): void {
 
   // save entity with jail end epoch
   validator.jailEndEpoch = event.params.exitEpoch
+  validator.status = 2
   validator.save()
 }
 
@@ -113,6 +138,7 @@ export function handleUnJailed(event: UnJailed): void {
 
   // save entity with jail end epoch
   validator.jailEndEpoch = BigInt.fromI32(0)
+  validator.status = 3
   validator.save()
 }
 
@@ -122,6 +148,14 @@ export function handleStakeUpdate(event: StakeUpdate): void {
   // update total staked and nonce
   validator.totalStaked = event.params.newAmount
   validator.nonce = event.params.nonce
+
+  // Updating validator's self stake
+  //
+  // We only get `totalStake` emitted from contract
+  // which is why we're subtracting delegated stake
+  // from totalStaked
+  validator.selfStake = validator.totalStaked.minus(validator.delegatedStake)
+
   validator.save()
 }
 
@@ -179,6 +213,14 @@ export function handleShareMinted(event: ShareMinted): void {
 
   // save entity
   delegator.save()
+
+  // -- Also updating delegated stake for validator
+  let validator = loadValidator(event.params.validatorId)
+
+  validator.delegatedStake = validator.delegatedStake.plus(event.params.amount)
+
+  validator.save()
+  // -- Saving updation
 }
 
 export function handleShareBurned(event: ShareBurned): void {
@@ -193,6 +235,14 @@ export function handleShareBurned(event: ShareBurned): void {
 
   // save entity
   delegator.save()
+
+  // -- Also updating delegated stake for validator
+  let validator = loadValidator(event.params.validatorId)
+
+  validator.delegatedStake = validator.delegatedStake.minus(event.params.amount)
+
+  validator.save()
+  // -- Saving updation
 }
 
 export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
@@ -295,4 +345,26 @@ export function handleThresholdChange(event: ThresholdChange): void {
   // save entity with validator threshold
   stakingParams.validatorThreshold = event.params.newThreshold
   stakingParams.save()
+}
+
+export function handleStartAuction(event: StartAuction): void {
+
+  let validator = loadValidator(event.params.validatorId)
+
+  validator.auctionAmount = event.params.auctionAmount
+  validator.isInAuction = true
+
+  validator.save()
+
+}
+
+export function handleConfirmAuction(event: ConfirmAuction): void {
+
+  let validator = loadValidator(event.params.oldValidatorId)
+
+  validator.auctionAmount = BigInt.fromI32(0)
+  validator.isInAuction = false
+
+  validator.save()
+
 }
