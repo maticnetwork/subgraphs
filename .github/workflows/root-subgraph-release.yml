@@ -34,8 +34,6 @@ jobs:
         run: npm run codegen
       - name: Build subgraph
         run: npm run build
-      - name: Login to thegraph server
-        run: npm run graph -- auth ${{ secrets.THE_GRAPH_NODE_URL }} ${{ secrets.THE_GRAPH_ACCESS_TOKEN }}
       - name: Deploy subgraph
         run: |
-          npm run graph -- deploy --node ${{ secrets.THE_GRAPH_NODE_URL }} --ipfs ${{ secrets.THE_GRAPH_IPFS_URL }} ${{ matrix.SUBGRAPH_NAME }}
+          npm run graph -- deploy --access-token ${{ secrets.THE_GRAPH_ACCESS_TOKEN }} --node ${{ secrets.THE_GRAPH_NODE_URL }} --ipfs ${{ secrets.THE_GRAPH_IPFS_URL }} ${{ matrix.SUBGRAPH_NAME }}
