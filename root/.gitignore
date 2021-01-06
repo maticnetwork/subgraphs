@@ -1,2 +1,2 @@
 subgraph.yaml
-src/network.json
+src/network.ts

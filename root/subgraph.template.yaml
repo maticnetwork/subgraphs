@@ -176,7 +176,7 @@ dataSources:
     name: StakingNft
     network: {{ network }}
     source:
-      address: "{{contracts.stakingNFT.address}}"
+      address: "{{contracts.stakingNft.address}}"
       abi: StakingNft
       startBlock: {{ contracts.stakingNft.startBlock }}
     mapping:

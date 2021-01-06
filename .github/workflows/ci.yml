@@ -13,17 +13,33 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        directory: [root, child]
+        include:
+          - SUBGRAPH_DIRECTORY: root
+            SUBGRAPH_NETWORK: goerli
+          - SUBGRAPH_DIRECTORY: root
+            SUBGRAPH_NETWORK: mainnet
+          - SUBGRAPH_DIRECTORY: child
+            SUBGRAPH_NETWORK: mumbai
+          - SUBGRAPH_DIRECTORY: child
+            SUBGRAPH_NETWORK: mainnet
 
     defaults:
       run:
-        working-directory: ${{ matrix.directory }}
+        working-directory: ${{ matrix.SUBGRAPH_DIRECTORY }}
 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "12"
+          node-version: "14"
           check-latest: true
-      - run: npm install
-      - run: npm run lint
+      - name: Install npm package
+        run: npm install
+      - name: Check lint
+        run: npm run lint
+      - name: Prepare subgraph for ${{ matrix.SUBGRAPH_NETWORK }}
+        run: npm run prepare:${{ matrix.SUBGRAPH_NETWORK }}
+      - name: Generate code for subgraph
+        run: npm run codegen
+      - name: Build subgraph
+        run: npm run build

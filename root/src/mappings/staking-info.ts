@@ -33,7 +33,7 @@ import {
 // using network address from config file
 // to be passed to client when creating instance
 // of contract, StakingNft, for calling `ownerOf` function
-import NetworkConfig from '../network.json'
+import {stakingNftAddress} from '../network'
 
 // This is the contract we're going to interact with when `Staked` event is emitted
 import {StakingNft} from '../../generated/StakingNft/StakingNft'
@@ -75,7 +75,7 @@ export function handleStaked(event: Staked): void {
 
   // Keeping NFT owner address, to be helpful while responding
   // client queries in staking API
-  let nft = StakingNft.bind(Address.fromString(NetworkConfig.contracts.stakingNft.address))
+  let nft = StakingNft.bind(Address.fromString(stakingNftAddress))
   validator.owner = nft.ownerOf(event.params.validatorId)
 
   validator.totalStaked = event.params.total
@@ -94,7 +94,7 @@ export function handleUnstaked(event: Unstaked): void {
 
   // update unstaked status
   validator.status = 1
-  validator.selfStake = 0
+  validator.selfStake = BigInt.fromI32(0)
   validator.save()
 }
 
