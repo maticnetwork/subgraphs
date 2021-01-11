@@ -184,7 +184,7 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Transfer
+        - StakingNFTTransfer
       abis:
         - name: StakingNft
           file: ./abis/StakingNft.json
