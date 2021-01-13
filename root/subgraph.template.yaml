@@ -121,6 +121,8 @@ dataSources:
       abis:
         - name: StakingInfo
           file: ./abis/StakingInfo.json
+        - name: StakingNft
+          file: ./abis/StakingNft.json
       eventHandlers:
         - event: ClaimFee(indexed address,indexed uint256)
           handler: handleClaimFee
