@@ -12,6 +12,8 @@ export function handleTransfer(event: Transfer): void {
   if (entity == null) {
     // if not found in store, creating new instance for this NFT
     entity = new StakingNFTTransfer(id)
+    entity.previousOwners = []
+    entity.transactionHashes = []
   }
 
   entity.tokenId = event.params.tokenId
