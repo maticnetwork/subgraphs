@@ -73,8 +73,29 @@ dataSources:
         - event: PredicateRegistered(indexed bytes32,indexed address)
           handler: handlePredicateRegistered
         - event: TokenMapped(indexed address,indexed address,indexed bytes32)
-          handler: handleTokenMapped
+          handler: handlePOSTokenMapped
       file: ./src/mappings/rootchain-manager.ts
+  
+  - kind: ethereum/contract
+    name: Registry
+    network: {{ network }}
+    source:
+      address: "{{contracts.registry.address}}"
+      abi: RootChainManager
+      startBlock: {{ contracts.registry.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - TokenMapped
+      abis:
+        - name: Registry
+          file: ./abis/Registry.json
+      eventHandlers:
+        - event: TokenMapped(indexed address,indexed address)
+          handler: handlePlasmaTokenMapped
+      file: ./src/mappings/registry.ts
 
   - kind: ethereum/contract
     name: StateSender
