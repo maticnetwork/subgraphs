@@ -67,6 +67,7 @@ type TokenMapping @entity {
   rootToken: Bytes!
   childToken: Bytes!
   tokenType: Bytes!
+  isPOS: Boolean!
   timestamp: BigInt!
   transactionHash: Bytes!
 }
