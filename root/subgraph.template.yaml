@@ -81,7 +81,7 @@ dataSources:
     network: {{ network }}
     source:
       address: "{{contracts.registry.address}}"
-      abi: RootChainManager
+      abi: Registry
       startBlock: {{ contracts.registry.startBlock }}
     mapping:
       kind: ethereum/events
