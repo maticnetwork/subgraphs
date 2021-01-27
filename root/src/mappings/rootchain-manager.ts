@@ -19,8 +19,8 @@ export function handlePredicateRegistered(event: PredicateRegistered): void {
   entity.save()
 }
 
-export function handleTokenMapped(event: TokenMapped): void {
-  let id = 'token-mapping-' + event.params.rootToken.toHexString()
+export function handlePOSTokenMapped(event: TokenMapped): void {
+  let id = 'pos-token-mapping-' + event.params.rootToken.toHexString()
 
   let entity = TokenMapping.load(id)
   if (entity == null) {
@@ -30,6 +30,7 @@ export function handleTokenMapped(event: TokenMapped): void {
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
   entity.tokenType = event.params.tokenType
+  entity.isPOS = true
 
   entity.timestamp = event.block.timestamp
   entity.transactionHash = event.transaction.hash
