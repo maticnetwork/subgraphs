@@ -1,15 +1,11 @@
 import { Address } from '@graphprotocol/graph-ts'
 
-import { TokenMapped } from '../../generated/Registry/Registry'
+import { Registry, TokenMapped } from '../../generated/Registry/Registry'
 import { TokenMapping } from '../../generated/schema'
 
 // Using contract address for creating instance of `Registry`
 // contract, to be used for checking whether token is ERC20/ ERC721
 import { registryAddress } from '../network'
-
-// This is the contract we're going to interact with when `TokenMapped` event is emitted
-// to check what kind of token it is
-import { Registry } from '../../generated/Registry/Registry'
 
 export function handlePlasmaTokenMapped(event: TokenMapped): void {
   let id = 'plasma-token-mapping-' + event.params.rootToken.toHexString()
