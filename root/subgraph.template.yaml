@@ -65,7 +65,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - PredicateRegistered
-        - TokenMapped
+        - TokenMapping
       abis:
         - name: RootChainManager
           file: ./abis/RootChainManager.json
@@ -88,7 +88,7 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - TokenMapped
+        - TokenMapping
       abis:
         - name: Registry
           file: ./abis/Registry.json

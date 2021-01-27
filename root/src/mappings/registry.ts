@@ -2,7 +2,7 @@ import { TokenMapped } from '../../generated/Registry/Registry'
 import { TokenMapping } from '../../generated/schema'
 
 export function handlePlasmaTokenMapped(event: TokenMapped): void {
-  let id = 'token-mapping-' + event.params.rootToken.toHexString()
+  let id = 'plasma-token-mapping-' + event.params.rootToken.toHexString()
 
   let entity = TokenMapping.load(id)
   if (entity == null) {

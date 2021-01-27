@@ -20,7 +20,7 @@ export function handlePredicateRegistered(event: PredicateRegistered): void {
 }
 
 export function handlePOSTokenMapped(event: TokenMapped): void {
-  let id = 'token-mapping-' + event.params.rootToken.toHexString()
+  let id = 'pos-token-mapping-' + event.params.rootToken.toHexString()
 
   let entity = TokenMapping.load(id)
   if (entity == null) {
