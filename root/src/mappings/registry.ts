@@ -27,7 +27,7 @@ export function handlePlasmaTokenMapped(event: TokenMapped): void {
     code: SubgraphSyncingFailure, 
     id: QmTFWVMke42DdRMfZyfngEFMKdhZ1xCLPeETmnbnh7e7Ag
   */
-  entity.tokenType = "unknown" as Bytes
+  entity.tokenType = 'unknown' as Bytes
 
   // Yes, this is plasma mapping handler, so it's a plasma bridge token
   entity.isPOS = false
