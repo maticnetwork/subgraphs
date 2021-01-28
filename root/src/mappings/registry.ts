@@ -1,11 +1,7 @@
-import { Address, Bytes } from '@graphprotocol/graph-ts'
+import { Bytes } from '@graphprotocol/graph-ts'
 
-import { Registry, TokenMapped } from '../../generated/Registry/Registry'
+import { TokenMapped } from '../../generated/Registry/Registry'
 import { TokenMapping } from '../../generated/schema'
-
-// Using contract address for creating instance of `Registry`
-// contract, to be used for checking whether token is ERC20/ ERC721
-import { registryAddress } from '../network'
 
 export function handlePlasmaTokenMapped(event: TokenMapped): void {
   let id = 'plasma-token-mapping-' + event.params.rootToken.toHexString()
@@ -18,15 +14,20 @@ export function handlePlasmaTokenMapped(event: TokenMapped): void {
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
 
-  // Attempting to check from `Registry` contract what kind of
-  // token it is.
-  //
-  // `tokenType` will be any of two possible values for Plasma Tokens
-  //
-  // 1. keccak256('ERC721') = 0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a
-  // 2. keccak256('ERC20') = 0x8ae85d849167ff996c04040c44924fd364217285e4cad818292c7ac37c0a345b
-  let registry = Registry.bind(Address.fromString(registryAddress))
-  entity.tokenType = (registry.isERC721(event.params.rootToken) ? '0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a' : '0x8ae85d849167ff996c04040c44924fd364217285e4cad818292c7ac37c0a345b') as Bytes
+  /*
+    Due to some strange error faced in wasm runtime, it was failing to execute 👇 instruction.
+    So I'm removing token type checker, not reading contract state anymore
+    
+    Error in wasm runtime 👇:
+
+    Subgraph instance failed to run: Heap access out of bounds. 
+    Offset: 66 Size: 3604585 wasm backtrace: 
+    0: 0x1135 - <unknown>!<wasm function 39> 
+    1: 0x1205 - <unknown>!<wasm function 40> in handler `handlePlasmaTokenMapped` at block #10168395 (baf3fe6087019f89943ead4b9e1ced78ff90ff4a90b62014a30e88bcec09ed91), 
+    code: SubgraphSyncingFailure, 
+    id: QmTFWVMke42DdRMfZyfngEFMKdhZ1xCLPeETmnbnh7e7Ag
+  */
+  entity.tokenType = "unknown" as Bytes
 
   // Yes, this is plasma mapping handler, so it's a plasma bridge token
   entity.isPOS = false
