@@ -11,26 +11,28 @@ export function handleStateSynced(event: StateSynced): void {
   entity.stateId = event.params.id
   entity.contract = event.params.contractAddress
 
-  let decoder = Decoder.bind(Address.fromString(decoderAddress))
-  let callResult = decoder.try_decodeStateSyncData(event.params.data)
-
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
 
+  let decoder = Decoder.bind(Address.fromString(decoderAddress))
+  let callResult = decoder.try_decodeStateSyncData(event.params.data)
+
   if (callResult.reverted) {
 
-    entity.syncType = ""
-    entity.depositor_or_rootToken = ""
-    entity.depositedToken_or_childToken = ""
+    entity.syncType = -1
+    entity.depositor_or_rootToken = '0x'
+    entity.depositedToken_or_childToken = '0x'
     entity.data = event.params.data
 
     return
 
   }
 
+  let decoded = callResult.value
+
   entity.syncType = decoded.value0
-  entity.depositor_or_rootToken = decoded.value1
-  entity.depositedToken_or_childToken = decoded.value2
+  entity.depositor_or_rootToken = decoded.value1.toHex()
+  entity.depositedToken_or_childToken = decoded.value2.toHex()
   entity.data = decoded.value3
 
   // save entity

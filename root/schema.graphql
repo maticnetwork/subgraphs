@@ -16,8 +16,8 @@ type StateSync @entity {
   stateId: BigInt!
   contract: Bytes!
   syncType: Int!
-  depositor_or_rootToken: Bytes!
-  depositedToken_or_childToken: Bytes!
+  depositor_or_rootToken: String!
+  depositedToken_or_childToken: String!
   data: Bytes!
   transactionHash: Bytes!
   timestamp: BigInt!
