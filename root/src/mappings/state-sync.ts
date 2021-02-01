@@ -1,11 +1,24 @@
+import { Address } from '@graphprotocol/graph-ts'
+
 import { StateSynced, NewRegistration, RegistrationUpdated } from '../../generated/StateSender/StateSender'
 import { StateRegistration, StateSync } from '../../generated/schema'
+
+import { decoderAddress } from '../network'
+import { Decoder } from '../../generated/StateSender/Decoder'
 
 export function handleStateSynced(event: StateSynced): void {
   let entity = new StateSync('statesync:' + event.params.id.toString())
   entity.stateId = event.params.id
   entity.contract = event.params.contractAddress
-  entity.data = event.params.data
+
+  let decoder = Decoder.bind(Address.fromString(decoderAddress))
+  let decoded = decoder.decodeStateSyncData(event.params.data)
+
+  entity.syncType = decoded.value0
+  entity.depositor_or_rootToken = decoded.value1
+  entity.depositedToken_or_childToken = decoded.value2
+  entity.data = decoded.value3
+
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
 
