@@ -252,6 +252,11 @@ export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
   delegator.unclaimedAmount = delegator.unclaimedAmount.minus(event.params.amount)
   // update claimed amount
   delegator.claimedAmount = delegator.claimedAmount.plus(event.params.amount)
+
+  // As delegator just unstaked, we can decrement their delegatedAmount i.e.
+  // `stake` as it's described in `staking-api`
+  delegator.delegatedAmount = delegator.delegatedAmount.minus(event.params.amount)
+
   delegator.save()
 }
 
