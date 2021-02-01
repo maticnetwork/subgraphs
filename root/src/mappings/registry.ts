@@ -26,7 +26,7 @@ export function handlePlasmaTokenMapped(event: TokenMapped): void {
   // 1. keccak256('ERC721') = 0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a
   // 2. keccak256('ERC20') = 0x8ae85d849167ff996c04040c44924fd364217285e4cad818292c7ac37c0a345b
   let registry = Registry.bind(Address.fromString(registryAddress))
-  entity.tokenType = (registry.isERC721(event.params.rootToken) ? '0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a' : '0x8ae85d849167ff996c04040c44924fd364217285e4cad818292c7ac37c0a345b') as Bytes
+  entity.tokenType = (registry.isERC721(event.params.rootToken) ? '0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a' : '0x8ae85d849167ff996c04040c44924fd364217285e4cad818292c7ac37c0a345b') as String
 
   // Yes, this is plasma mapping handler, so it's a plasma bridge token
   entity.isPOS = false

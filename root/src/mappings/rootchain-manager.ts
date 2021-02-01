@@ -29,7 +29,7 @@ export function handlePOSTokenMapped(event: TokenMapped): void {
 
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
-  entity.tokenType = event.params.tokenType
+  entity.tokenType = event.params.tokenType.toHex()
   entity.isPOS = true
 
   entity.timestamp = event.block.timestamp
