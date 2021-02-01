@@ -14,9 +14,22 @@ export function handleStateSynced(event: StateSynced): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
 
+  // Attempting to create an instance of `Decoder` smart contract
+  // to be used for decoding valid state sync data
   let decoder = Decoder.bind(Address.fromString(decoderAddress))
+  // 👇 is being done because there's a possibly decoding might fail
+  // if bad input is provided with
   let callResult = decoder.try_decodeStateSyncData(event.params.data)
 
+  // this condition will be true if during decoding
+  // decoder contract faces some issue
+  //
+  // consumer can safely ignore this state sync
+  // if they see, `syncType` = -1, because it has
+  // undecodable data
+  //
+  // but it interested client can always find out what data
+  // is by reading `data` field, where it is encoded form
   if (callResult.reverted) {
 
     entity.syncType = -1
@@ -24,10 +37,15 @@ export function handleStateSynced(event: StateSynced): void {
     entity.depositedToken_or_childToken = '0x'
     entity.data = event.params.data
 
+    // save entity
+    entity.save()
+
     return
 
   }
 
+  // Attempting to read decoded data, so that
+  // it can be stored in this entity
   let decoded = callResult.value
 
   entity.syncType = decoded.value0
