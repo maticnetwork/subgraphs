@@ -1,4 +1,4 @@
-import { Address, Bytes } from '@graphprotocol/graph-ts'
+import { Address } from '@graphprotocol/graph-ts'
 
 import { Registry, TokenMapped } from '../../generated/Registry/Registry'
 import { TokenMapping } from '../../generated/schema'
