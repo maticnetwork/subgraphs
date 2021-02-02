@@ -33,8 +33,8 @@ export function handleStateSynced(event: StateSynced): void {
   if (callResult.reverted) {
 
     entity.syncType = -1
-    entity.depositor_or_rootToken = '0x'
-    entity.depositedToken_or_childToken = '0x'
+    entity.depositorOrRootToken = '0x'
+    entity.depositedTokenOrChildToken = '0x'
     entity.data = event.params.data
 
     // save entity
@@ -49,8 +49,8 @@ export function handleStateSynced(event: StateSynced): void {
   let decoded = callResult.value
 
   entity.syncType = decoded.value0
-  entity.depositor_or_rootToken = decoded.value1.toHex()
-  entity.depositedToken_or_childToken = decoded.value2.toHex()
+  entity.depositorOrRootToken = decoded.value1.toHex()
+  entity.depositedTokenOrChildToken = decoded.value2.toHex()
   entity.data = decoded.value3
 
   // save entity
