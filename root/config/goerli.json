@@ -28,6 +28,9 @@
     "registry": {
       "address": "0xeE11713Fe713b2BfF2942452517483654078154D",
       "startBlock": 2815566
+    },
+    "decoder": {
+      "address": "0x8fcFA769D420AdA837206294eb054Ad514a7a8a0"
     }
   }
 }

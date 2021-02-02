@@ -114,6 +114,8 @@ dataSources:
       abis:
         - name: StateSender
           file: ./abis/StateSender.json
+        - name: Decoder
+          file: ./abis/Decoder.json
       eventHandlers:
         - event: StateSynced(indexed uint256,indexed address,bytes)
           handler: handleStateSynced
