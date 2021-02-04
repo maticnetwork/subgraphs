@@ -7,6 +7,7 @@ type Checkpoint @entity {
   start: BigInt!
   end: BigInt!
   root: Bytes!
+  signers: [Bytes!]!
   transactionHash: Bytes!
   timestamp: BigInt!
 }
@@ -15,6 +16,9 @@ type StateSync @entity {
   id: ID!
   stateId: BigInt!
   contract: Bytes!
+  syncType: Int!
+  depositorOrRootToken: String!
+  depositedTokenOrChildToken: String!
   data: Bytes!
   transactionHash: Bytes!
   timestamp: BigInt!
@@ -66,7 +70,7 @@ type TokenMapping @entity {
   id: ID!
   rootToken: Bytes!
   childToken: Bytes!
-  tokenType: Bytes!
+  tokenType: String!
   isPOS: Boolean!
   timestamp: BigInt!
   transactionHash: Bytes!
