@@ -25,6 +25,9 @@
       "address": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
       "startBlock": 10342574
     },
+    "stakeManager": {
+      "address": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
+    },
     "registry": {
       "address": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
       "startBlock": 10167715
