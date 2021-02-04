@@ -29,7 +29,7 @@
       "address": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
       "startBlock": 10167715
     },
-    "decoder": {
+    "decoderForPoSPortalData": {
       "address": "0x13E301F8d9563e3D8d48F1d21aE8110B22558cd5"
     },
     "decodeCheckpointSignerList": {
