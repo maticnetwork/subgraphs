@@ -1,0 +1,21 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "bytes",
+				"name": "payload",
+				"type": "bytes"
+			}
+		],
+		"name": "decode",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	}
+]
