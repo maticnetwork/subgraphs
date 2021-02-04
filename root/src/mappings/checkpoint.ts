@@ -1,9 +1,10 @@
 import { Address, BigInt, Value } from '@graphprotocol/graph-ts'
 import { NewHeaderBlock } from '../../generated/Rootchain/Rootchain'
-import { Checkpoint } from '../../generated/schema'
+import { Checkpoint, Validator } from '../../generated/schema'
 
-import { decodeCheckpointSignerListAddress } from '../network'
+import { decodeCheckpointSignerListAddress, stakeManager } from '../network'
 import { DecodeCheckpointSignerList } from '../../generated/Rootchain/DecodeCheckpointSignerList'
+import { StakeManager } from '../../generated/Rootchain/StakeManager'
 
 let MAX_DEPOSITS = BigInt.fromI32(10000)
 
@@ -56,7 +57,36 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
   }
 
   // extracted out signer list stored in entity
-  entity.signers = Value.fromAddressArray(callResult.value).toBytesArray()
+  let signers = Value.fromAddressArray(callResult.value).toBytesArray()
+
+  // Validators who signed this checkpoint
+  entity.signers = signers
+
+  // Stake manager contract instance to be used for queried
+  // validator id given their address i.e. signer address
+  let stakeManagerInstance = StakeManager.bind(Address.fromString(stakeManager))
+  // Also reading total staked value of network, to be used
+  // for calculating validator power
+  let totalStaked = stakeManagerInstance.totalStaked()
+
+  // Attempting to find out what's current power of each validator
+  // who signed this checkpoint
+  entity.powers = signers.map(v => {
+
+    // Attempting to find out what's validatorId, given their signer address
+    let validatorId = stakeManagerInstance.signerToValidator(v)
+
+    // Attempting to find validator by id
+    let validator = Validator.load("validator:" + validatorId.toString())
+    if (validator == null) {
+      return BigInt.fromI32(0)
+    }
+
+    // Calculating power of this validator at this checkpoint
+    return validator.selfStake.plus(validator.delegatedStake).div(totalStaked)
+
+  })
+
 
   // save entity
   entity.save()
