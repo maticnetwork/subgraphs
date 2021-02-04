@@ -71,7 +71,7 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
 
   // Attempting to find out what's current power of each validator
   // who signed this checkpoint
-  entity.powers = signers.map(v => {
+  let powers = signers.map(v => {
 
     // Attempting to find out what's validatorId, given their signer address
     let validatorId = stakeManagerInstance.signerToValidator(v)
@@ -86,6 +86,38 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
     return validator.selfStake.plus(validator.delegatedStake).div(totalStaked)
 
   })
+
+  entity.powers = powers
+
+  // Calculating rewards earned by each validators for signing
+  // this checkpoint
+  let rewards = signers.map((v, i) => {
+
+    // Attempting to find out what's validatorId, given their signer address
+    let validatorId = stakeManagerInstance.signerToValidator(v)
+
+    // Attempting to find validator by id
+    let validator = Validator.load("validator:" + validatorId.toString())
+    if (validator == null) {
+      return BigInt.fromI32(0)
+    }
+
+    // Calculating how much has validator stake on self divided by
+    // total staked on self
+    let selfBondRatio = validator.selfStake.div(validator.delegatedStake.plus(validator.selfStake))
+    // How much delegators has staked
+    let delegatedBondRatio = BigInt.fromI32(1).minus(selfBondRatio)
+
+    // Calculating reward obtained by this validator
+    // for signing this checkpoint
+    return event.params.reward.times(powers[i])
+      .times(selfBondRatio.plus(validator.commissionRate
+        .div(BigInt.fromI32(100)
+          .times(delegatedBondRatio))))
+
+  })
+
+  entity.rewards = rewards
 
 
   // save entity
