@@ -1,4 +1,4 @@
-import { Address, BigInt } from '@graphprotocol/graph-ts'
+import { Address, BigInt, Value } from '@graphprotocol/graph-ts'
 import { NewHeaderBlock } from '../../generated/Rootchain/Rootchain'
 import { Checkpoint } from '../../generated/schema'
 
@@ -56,7 +56,7 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
   }
 
   // extracted out signer list stored in entity
-  entity.signers = callResult.value.value0
+  entity.signers = Value.fromAddressArray(callResult.value).toBytesArray()
 
   // save entity
   entity.save()
