@@ -31,6 +31,9 @@
     },
     "decoder": {
       "address": "0x13E301F8d9563e3D8d48F1d21aE8110B22558cd5"
+    },
+    "decodeCheckpointSignerList": {
+      "address": "0x..."
     }
   }
 }
