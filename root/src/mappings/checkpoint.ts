@@ -1,4 +1,4 @@
-import { Address, BigInt, Value } from '@graphprotocol/graph-ts'
+import { Address, BigInt, Value, Bytes } from '@graphprotocol/graph-ts'
 import { NewHeaderBlock } from '../../generated/Rootchain/Rootchain'
 import { Checkpoint, Validator } from '../../generated/schema'
 
@@ -69,37 +69,38 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
   // for calculating validator power
   let totalStaked = stakeManagerInstance.totalStaked()
 
-  // Attempting to find out what's current power of each validator
-  // who signed this checkpoint
-  let powers = signers.map(v => {
+  let powers: BigInt[] = []
+
+  for (let i = 0; i < signers.length; i++) {
 
     // Attempting to find out what's validatorId, given their signer address
-    let validatorId = stakeManagerInstance.signerToValidator(v)
+    let validatorId = stakeManagerInstance.signerToValidator(Address.fromString(signers[i].toString()))
 
     // Attempting to find validator by id
     let validator = Validator.load("validator:" + validatorId.toString())
     if (validator == null) {
-      return BigInt.fromI32(0)
+      powers.push(BigInt.fromI32(0))
+      continue
     }
 
     // Calculating power of this validator at this checkpoint
-    return validator.selfStake.plus(validator.delegatedStake).div(totalStaked)
+    powers.push(validator.selfStake.plus(validator.delegatedStake).div(totalStaked))
 
-  })
+  }
 
-  entity.powers = powers
+  let rewards: BigInt[] = []
 
-  // Calculating rewards earned by each validators for signing
-  // this checkpoint
-  let rewards = signers.map((v, i) => {
+  for (let i = 0; i < signers.length; i++) {
+
 
     // Attempting to find out what's validatorId, given their signer address
-    let validatorId = stakeManagerInstance.signerToValidator(v)
+    let validatorId = stakeManagerInstance.signerToValidator(Address.fromString(signers[i].toString()))
 
     // Attempting to find validator by id
     let validator = Validator.load("validator:" + validatorId.toString())
     if (validator == null) {
-      return BigInt.fromI32(0)
+      rewards.push(BigInt.fromI32(0))
+      continue
     }
 
     // Calculating how much has validator stake on self divided by
@@ -110,13 +111,15 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
 
     // Calculating reward obtained by this validator
     // for signing this checkpoint
-    return event.params.reward.times(powers[i])
+    rewards.push(event.params.reward.times(powers[i])
       .times(selfBondRatio.plus(validator.commissionRate
         .div(BigInt.fromI32(100)
-          .times(delegatedBondRatio))))
+          .times(delegatedBondRatio)))))
 
-  })
 
+  }
+
+  entity.powers = powers
   entity.rewards = rewards
 
 
