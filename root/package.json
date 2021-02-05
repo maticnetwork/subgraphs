@@ -14,8 +14,10 @@
     "remove-local": "graph remove --node http://localhost:8020/ maticnetwork/mumbai-root-subgraphs",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs https://ipfs.infura.io:5001 maticnetwork/mumbai-root-subgraphs"
   },
+  "pre-commit": [ "lint" ],
   "dependencies": {
-    "@graphprotocol/graph-ts": "0.18.0"
+    "@graphprotocol/graph-ts": "0.18.0",
+    "pre-commit": "^1.2.2"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.18.0",
