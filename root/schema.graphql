@@ -8,8 +8,8 @@ type Checkpoint @entity {
   end: BigInt!
   root: Bytes!
   signers: [Bytes!]!
-  powers: [BigInt!]!
-  rewards: [BigInt!]!
+  powers: [BigDecimal!]!
+  rewards: [BigDecimal!]!
   transactionHash: Bytes!
   timestamp: BigInt!
 }

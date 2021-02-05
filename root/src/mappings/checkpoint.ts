@@ -1,4 +1,4 @@
-import { Address, BigInt, Value, Bytes } from '@graphprotocol/graph-ts'
+import { Address, BigDecimal, BigInt, Value } from '@graphprotocol/graph-ts'
 import { NewHeaderBlock } from '../../generated/Rootchain/Rootchain'
 import { Checkpoint, Validator } from '../../generated/schema'
 
@@ -67,9 +67,9 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
   let stakeManagerInstance = StakeManager.bind(Address.fromString(stakeManager))
   // Also reading total staked value of network, to be used
   // for calculating validator power
-  let totalStaked = stakeManagerInstance.totalStaked()
+  let totalStaked = new BigDecimal(stakeManagerInstance.totalStaked())
 
-  let powers: BigInt[] = []
+  let powers: BigDecimal[] = []
 
   for (let i = 0; i < signers.length; i++) {
 
@@ -79,16 +79,19 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
     // Attempting to find validator by id
     let validator = Validator.load("validator:" + validatorId.toString())
     if (validator == null) {
-      powers.push(BigInt.fromI32(0))
+      powers.push(BigDecimal.fromString("0.0"))
       continue
     }
 
+    let selfStake = new BigDecimal(validator.selfStake)
+    let delegatedStake = new BigDecimal(validator.delegatedStake)
+
     // Calculating power of this validator at this checkpoint
-    powers.push(validator.selfStake.plus(validator.delegatedStake).div(totalStaked))
+    powers.push(selfStake.plus(delegatedStake).div(totalStaked))
 
   }
 
-  let rewards: BigInt[] = []
+  let rewards: BigDecimal[] = []
 
   for (let i = 0; i < signers.length; i++) {
 
@@ -99,22 +102,33 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
     // Attempting to find validator by id
     let validator = Validator.load("validator:" + validatorId.toString())
     if (validator == null) {
-      rewards.push(BigInt.fromI32(0))
+      rewards.push(BigDecimal.fromString("0.0"))
       continue
     }
 
+    let selfStake = new BigDecimal(validator.selfStake)
+    let delegatedStake = new BigDecimal(validator.delegatedStake)
+
     // Calculating how much has validator stake on self divided by
     // total staked on self
-    let selfBondRatio = validator.selfStake.div(validator.delegatedStake.plus(validator.selfStake))
-    // How much delegators has staked
-    let delegatedBondRatio = BigInt.fromI32(1).minus(selfBondRatio)
+    let selfBondRatio = selfStake.div(delegatedStake.plus(selfStake))
+    // How much delegators has staked, in ratio form
+    let one = BigDecimal.fromString("1.0")
+    let delegatedBondRatio = one.minus(selfBondRatio);
+
+    let reward = new BigDecimal(event.params.reward)
+    let commissionRate = new BigDecimal(validator.commissionRate)
 
     // Calculating reward obtained by this validator
     // for signing this checkpoint
-    rewards.push(event.params.reward.times(powers[i])
-      .times(selfBondRatio.plus(validator.commissionRate
-        .div(BigInt.fromI32(100)
-          .times(delegatedBondRatio)))))
+    //
+    // 👇 check-point-reward * validator-power * ( self-bond-ratio + ( commission-rate * delegated-bond-ratio ) / 100)
+    rewards.push(reward
+      .times(powers[i])
+      .times(selfBondRatio
+        .plus(commissionRate
+          .div(BigDecimal.fromString("100.0")
+            .times(delegatedBondRatio)))))
 
 
   }
