@@ -77,9 +77,9 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
     let validatorId = stakeManagerInstance.signerToValidator(Address.fromString(signers[i].toString()))
 
     // Attempting to find validator by id
-    let validator = Validator.load("validator:" + validatorId.toString())
+    let validator = Validator.load('validator:' + validatorId.toString())
     if (validator == null) {
-      powers.push(BigDecimal.fromString("0.0"))
+      powers.push(BigDecimal.fromString('0.0'))
       continue
     }
 
@@ -100,9 +100,9 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
     let validatorId = stakeManagerInstance.signerToValidator(Address.fromString(signers[i].toString()))
 
     // Attempting to find validator by id
-    let validator = Validator.load("validator:" + validatorId.toString())
+    let validator = Validator.load('validator:' + validatorId.toString())
     if (validator == null) {
-      rewards.push(BigDecimal.fromString("0.0"))
+      rewards.push(BigDecimal.fromString('0.0'))
       continue
     }
 
@@ -113,8 +113,8 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
     // total staked on self
     let selfBondRatio = selfStake.div(delegatedStake.plus(selfStake))
     // How much delegators has staked, in ratio form
-    let one = BigDecimal.fromString("1.0")
-    let delegatedBondRatio = one.minus(selfBondRatio);
+    let one = BigDecimal.fromString('1.0')
+    let delegatedBondRatio = one.minus(selfBondRatio)
 
     let reward = new BigDecimal(event.params.reward)
     let commissionRate = new BigDecimal(validator.commissionRate)
@@ -127,7 +127,7 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
       .times(powers[i])
       .times(selfBondRatio
         .plus(commissionRate
-          .div(BigDecimal.fromString("100.0")
+          .div(BigDecimal.fromString('100.0')
             .times(delegatedBondRatio)))))
 
 
