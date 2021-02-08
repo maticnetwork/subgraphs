@@ -1,4 +1,4 @@
-import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts'
+import { Address, BigDecimal, BigInt, Bytes } from '@graphprotocol/graph-ts'
 import { NewHeaderBlock } from '../../generated/Rootchain/Rootchain'
 import { Checkpoint, Validator } from '../../generated/schema'
 
@@ -56,7 +56,7 @@ export function handleNewHeaderBlock(event: NewHeaderBlock): void {
 
   }
 
-  let signers = callResult.value
+  let signers = callResult.value as Array<Bytes>
 
   // Validators who signed this checkpoint
   entity.signers = signers
