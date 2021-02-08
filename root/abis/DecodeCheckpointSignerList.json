@@ -10,9 +10,9 @@
 		"name": "decode",
 		"outputs": [
 			{
-				"internalType": "address[]",
+				"internalType": "bytes[]",
 				"name": "",
-				"type": "address[]"
+				"type": "bytes[]"
 			}
 		],
 		"stateMutability": "pure",
