@@ -33,10 +33,10 @@ import {
 // using network address from config file
 // to be passed to client when creating instance
 // of contract, StakingNft, for calling `ownerOf` function
-import {stakingNftAddress} from '../network'
+import { stakingNftAddress } from '../network'
 
 // This is the contract we're going to interact with when `Staked` event is emitted
-import {StakingNft} from '../../generated/StakingNft/StakingNft'
+import { StakingNft } from '../../generated/StakingNft/StakingNft'
 
 const STAKING_PARAMS_ID = 'staking:params'
 
@@ -154,7 +154,10 @@ export function handleStakeUpdate(event: StakeUpdate): void {
   // We only get `totalStake` emitted from contract
   // which is why we're subtracting delegated stake
   // from totalStaked
-  validator.selfStake = validator.totalStaked.minus(validator.delegatedStake)
+  let selfStake = validator.totalStaked.minus(validator.delegatedStake)
+
+  // Self stake should never be negative
+  validator.selfStake = selfStake.lt(BigInt.fromI32(0)) ? BigInt.fromI32(0) : selfStake
 
   validator.save()
 }
@@ -230,8 +233,12 @@ export function handleShareBurned(event: ShareBurned): void {
   // it is possible to have: claimed amount < amount (when slashing happens)
   // that's why having claimedAmount would be better
   delegator.unclaimedAmount = delegator.unclaimedAmount.plus(event.params.amount)
+
   // this works until tokens are not transaferable
-  delegator.tokens = delegator.tokens.minus(event.params.tokens)
+  let tokens = delegator.tokens.minus(event.params.tokens)
+
+  // delegators token balance should never be negative
+  delegator.tokens = tokens.lt(BigInt.fromI32(0)) ? BigInt.fromI32(0) : tokens
 
   // save entity
   delegator.save()
@@ -239,7 +246,10 @@ export function handleShareBurned(event: ShareBurned): void {
   // -- Also updating delegated stake for validator
   let validator = loadValidator(event.params.validatorId)
 
-  validator.delegatedStake = validator.delegatedStake.minus(event.params.amount)
+  let delegatedStake = validator.delegatedStake.minus(event.params.amount)
+
+  // delegated stake for validator should never be negative
+  validator.delegatedStake = delegatedStake.lt(BigInt.fromI32(0)) ? BigInt.fromI32(0) : delegatedStake
 
   validator.save()
   // -- Saving updation
@@ -249,13 +259,21 @@ export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
   let delegator = loadDelegator(event.params.validatorId, event.params.user)
 
   // update unclaimed amount by deducting total unclaimed amount
-  delegator.unclaimedAmount = delegator.unclaimedAmount.minus(event.params.amount)
+  let unclaimedAmount = delegator.unclaimedAmount.minus(event.params.amount)
+
+  // unclaimed amount for delegator should never be negative
+  delegator.unclaimedAmount = unclaimedAmount.lt(BigInt.fromI32(0)) ? BigInt.fromI32(0) : unclaimedAmount
+
   // update claimed amount
   delegator.claimedAmount = delegator.claimedAmount.plus(event.params.amount)
 
   // As delegator just unstaked, we can decrement their delegatedAmount i.e.
   // `stake` as it's described in `staking-api`
-  delegator.delegatedAmount = delegator.delegatedAmount.minus(event.params.amount)
+
+  let delegatedAmount = delegator.delegatedAmount.minus(event.params.amount)
+
+  // delegated amount should never be negative
+  delegator.delegatedAmount = delegatedAmount.lt(BigInt.fromI32(0)) ? BigInt.fromI32(0) : delegatedAmount
 
   delegator.save()
 }
