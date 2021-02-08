@@ -1,4 +1,4 @@
-import { Address, BigDecimal, BigInt, Bytes, Value } from '@graphprotocol/graph-ts'
+import { Address, BigDecimal, BigInt, Value } from '@graphprotocol/graph-ts'
 import { NewHeaderBlock } from '../../generated/Rootchain/Rootchain'
 import { Checkpoint, Validator } from '../../generated/schema'
 
