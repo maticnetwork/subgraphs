@@ -3,7 +3,7 @@ import { Address } from '@graphprotocol/graph-ts'
 import { StateSynced, NewRegistration, RegistrationUpdated } from '../../generated/StateSender/StateSender'
 import { StateRegistration, StateSync } from '../../generated/schema'
 
-import { decoderForPoSPortalData } from '../network'
+import { decoderAddress } from '../network'
 import { Decoder } from '../../generated/StateSender/Decoder'
 
 export function handleStateSynced(event: StateSynced): void {
@@ -16,7 +16,7 @@ export function handleStateSynced(event: StateSynced): void {
 
   // Attempting to create an instance of `Decoder` smart contract
   // to be used for decoding valid state sync data
-  let decoder = Decoder.bind(Address.fromString(decoderForPoSPortalData))
+  let decoder = Decoder.bind(Address.fromString(decoderAddress))
   // 👇 is being done because there's a possibly decoding might fail
   // if bad input is provided with
   let callResult = decoder.try_decodeStateSyncData(event.params.data)
