@@ -213,6 +213,7 @@ function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
   let id = 'delegator:' + validatorId.toString() + ':' + delegator.toHexString()
   let entity = Delegator.load(id)
   if (entity == null) {
+
     entity = new Delegator(id)
     entity.validatorId = validatorId
     entity.address = delegator
@@ -222,20 +223,25 @@ function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
     entity.tokens = BigInt.fromI32(0)
     entity.claimedRewards = BigInt.fromI32(0)
 
-    // try to get what's current global delegator counter's state
+    // -- Attempting to perform global state updation
+    //
+    // Try to get what's current global delegator counter's state
     // when called for very first time, it'll be `0`
     let counter = getGlobalDelegatorCounter()
+    let updated = counter.current.plus(BigInt.fromI32(1))
 
-    // increment global delegator identifier by 1
-    // when this delegator is seen for very first time
-    entity.counter = counter.current.plus(1)
+    // Updating global counter's state
+    counter.current = updated
 
-    // updating global counter's state
-    counter.current = counter.current.plus(1)
-
-    // saving this state, so that updated state can be
+    // Saving this state, so that updated state can be
     // used next time we see a new delegator
     counter.save()
+    //
+    // -- Done, with global state updation
+
+    // Increment global delegator identifier by 1
+    // when this delegator is seen for very first time
+    entity.counter = updated
 
   }
 
