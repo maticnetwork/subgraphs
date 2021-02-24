@@ -4,6 +4,7 @@ import {
   Validator,
   Topup,
   StakingParams,
+  GlobalDelegatorCounter,
 } from '../../generated/schema'
 import {
   ClaimFee,
@@ -33,10 +34,10 @@ import {
 // using network address from config file
 // to be passed to client when creating instance
 // of contract, StakingNft, for calling `ownerOf` function
-import {stakingNftAddress} from '../network'
+import { stakingNftAddress } from '../network'
 
 // This is the contract we're going to interact with when `Staked` event is emitted
-import {StakingNft} from '../../generated/StakingNft/StakingNft'
+import { StakingNft } from '../../generated/StakingNft/StakingNft'
 
 const STAKING_PARAMS_ID = 'staking:params'
 
@@ -180,6 +181,28 @@ export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
   // save validator entity with new commission rate
   validator.commissionRate = event.params.newCommissionRate
   validator.save()
+}
+
+// Either attempt to read global delegator counter's value
+// or create if it's first time being called
+//
+// Only one entry will be present in `GlobalDelegatorCounter` entity
+// Sole purpose of this entity is to keep a global state variable
+// which can be used when new delegator comes into picture
+function getGlobalDelegatorCounter(): GlobalDelegatorCounter {
+
+  // Only one entry will be kept in this entity
+  let id = 'global-delegator-counter'
+  let entity = GlobalDelegatorCounter.load(id)
+  if (entity == null) {
+
+    entity = new GlobalDelegatorCounter(id)
+    entity.current = 0
+
+  }
+
+  return entity as GlobalDelegatorCounter
+
 }
 
 //
