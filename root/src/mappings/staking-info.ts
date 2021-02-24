@@ -183,6 +183,10 @@ export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
   validator.save()
 }
 
+//
+// Delegator related handlers
+//
+
 // Either attempt to read global delegator counter's value
 // or create if it's first time being called
 //
@@ -204,10 +208,6 @@ function getGlobalDelegatorCounter(): GlobalDelegatorCounter {
   return entity as GlobalDelegatorCounter
 
 }
-
-//
-// Delegator related handlers
-//
 
 function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
   let id = 'delegator:' + validatorId.toString() + ':' + delegator.toHexString()

@@ -103,7 +103,7 @@ type Validator @entity {
 
 # Keeps track of current delegator counter i.e. how many
 # delegators are present as of now
-type GlobalDelegatorCounter {
+type GlobalDelegatorCounter @entity {
   id: ID!
   current: BigInt!
 }
