@@ -101,8 +101,16 @@ type Validator @entity {
   isInAuction: Boolean!
 }
 
+# Keeps track of current delegator counter i.e. how many
+# delegators are present as of now
+type GlobalDelegatorCounter @entity {
+  id: ID!
+  current: BigInt!
+}
+
 type Delegator @entity {
   id: ID!
+  counter: BigInt! # this field can be used for traversing through large number of delegator list
   validatorId: BigInt!
   address: Bytes!
   # total delegated amount

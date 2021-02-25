@@ -4,6 +4,7 @@ import {
   Validator,
   Topup,
   StakingParams,
+  GlobalDelegatorCounter,
 } from '../../generated/schema'
 import {
   ClaimFee,
@@ -33,10 +34,10 @@ import {
 // using network address from config file
 // to be passed to client when creating instance
 // of contract, StakingNft, for calling `ownerOf` function
-import {stakingNftAddress} from '../network'
+import { stakingNftAddress } from '../network'
 
 // This is the contract we're going to interact with when `Staked` event is emitted
-import {StakingNft} from '../../generated/StakingNft/StakingNft'
+import { StakingNft } from '../../generated/StakingNft/StakingNft'
 
 const STAKING_PARAMS_ID = 'staking:params'
 
@@ -186,10 +187,33 @@ export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
 // Delegator related handlers
 //
 
+// Either attempt to read global delegator counter's value
+// or create if it's first time being called
+//
+// Only one entry will be present in `GlobalDelegatorCounter` entity
+// Sole purpose of this entity is to keep a global state variable
+// which can be used when new delegator comes into picture
+function getGlobalDelegatorCounter(): GlobalDelegatorCounter {
+
+  // Only one entry will be kept in this entity
+  let id = 'global-delegator-counter'
+  let entity = GlobalDelegatorCounter.load(id)
+  if (entity == null) {
+
+    entity = new GlobalDelegatorCounter(id)
+    entity.current = BigInt.fromI32(0)
+
+  }
+
+  return entity as GlobalDelegatorCounter
+
+}
+
 function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
   let id = 'delegator:' + validatorId.toString() + ':' + delegator.toHexString()
   let entity = Delegator.load(id)
   if (entity == null) {
+
     entity = new Delegator(id)
     entity.validatorId = validatorId
     entity.address = delegator
@@ -198,6 +222,27 @@ function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
     entity.unclaimedAmount = BigInt.fromI32(0)
     entity.tokens = BigInt.fromI32(0)
     entity.claimedRewards = BigInt.fromI32(0)
+
+    // -- Attempting to perform global state updation
+    //
+    // Try to get what's current global delegator counter's state
+    // when called for very first time, it'll be `0`
+    let counter = getGlobalDelegatorCounter()
+    let updated = counter.current.plus(BigInt.fromI32(1))
+
+    // Updating global counter's state
+    counter.current = updated
+
+    // Saving this state, so that updated state can be
+    // used next time we see a new delegator
+    counter.save()
+    //
+    // -- Done, with global state updation
+
+    // Increment global delegator identifier by 1
+    // when this delegator is seen for very first time
+    entity.counter = updated
+
   }
 
   return entity as Delegator
