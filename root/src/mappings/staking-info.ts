@@ -11,12 +11,14 @@ import {
   ClaimRewards,
   DelegatorClaimedRewards,
   DelegatorUnstaked,
+  DelegatorUnstakeWithId,
   DynastyValueChange,
   Jailed,
   OwnershipTransferred,
   ProposerBonusChange,
   Restaked,
   ShareBurned,
+  ShareBurnedWithId,
   ShareMinted,
   SignerChange,
   StakeUpdate,
@@ -277,6 +279,30 @@ export function handleShareBurned(event: ShareBurned): void {
   delegator.unclaimedAmount = delegator.unclaimedAmount.plus(event.params.amount)
   // this works until tokens are not transaferable
   delegator.tokens = delegator.tokens.minus(event.params.tokens)
+  delegator.delegatedAmount = delegator.delegatedAmount.minus(event.params.amount)
+
+  // save entity
+  delegator.save()
+
+  // -- Also updating delegated stake for validator
+  let validator = loadValidator(event.params.validatorId)
+
+  validator.delegatedStake = validator.delegatedStake.minus(event.params.amount)
+
+  validator.save()
+  // -- Saving updation
+}
+
+export function handleShareBurnedWithId(event: ShareBurnedWithId): void {
+  let delegator = loadDelegator(event.params.validatorId, event.params.user)
+
+  // update claimedAmount and tokens
+  // it is possible to have: claimed amount < amount (when slashing happens)
+  // that's why having claimedAmount would be better
+  delegator.unclaimedAmount = delegator.unclaimedAmount.plus(event.params.amount)
+  // this works until tokens are not transaferable
+  delegator.tokens = delegator.tokens.minus(event.params.tokens)
+  delegator.delegatedAmount = delegator.delegatedAmount.minus(event.params.amount)
 
   // save entity
   delegator.save()
@@ -298,9 +324,16 @@ export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
   // update claimed amount
   delegator.claimedAmount = delegator.claimedAmount.plus(event.params.amount)
 
-  // As delegator just unstaked, we can decrement their delegatedAmount i.e.
-  // `stake` as it's described in `staking-api`
-  delegator.delegatedAmount = delegator.delegatedAmount.minus(event.params.amount)
+  delegator.save()
+}
+
+export function handleDelegatorUnstakeWithId(event: DelegatorUnstakeWithId): void {
+  let delegator = loadDelegator(event.params.validatorId, event.params.user)
+
+  // update unclaimed amount by deducting total unclaimed amount
+  delegator.unclaimedAmount = delegator.unclaimedAmount.minus(event.params.amount)
+  // update claimed amount
+  delegator.claimedAmount = delegator.claimedAmount.plus(event.params.amount)
 
   delegator.save()
 }

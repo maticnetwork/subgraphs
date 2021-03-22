@@ -170,6 +170,10 @@ dataSources:
         # - event: RewardUpdate(uint256,uint256)
         - event: ShareBurned(indexed uint256,indexed address,indexed uint256,uint256)
           handler: handleShareBurned
+        - event: ShareBurnedWithId(indexed uint256,indexed address,indexed uint256,uint256,uint256)
+          handler: handleShareBurnedWithId
+        - event: DelegatorUnstakeWithId(indexed uint256,indexed address,uint256,uint256)
+          handler: handleDelegatorUnstakeWithId
         - event: ShareMinted(indexed uint256,indexed address,indexed uint256,uint256)
           handler: handleShareMinted
         - event: SignerChange(indexed uint256,uint256,indexed address,indexed address,bytes)
