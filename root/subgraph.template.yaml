@@ -157,6 +157,8 @@ dataSources:
         #   handler: handleDelegatorRestaked
         - event: DelegatorUnstaked(indexed uint256,indexed address,uint256)
           handler: handleDelegatorUnstaked
+        - event: DelegatorUnstakeWithId(indexed uint256,indexed address,uint256,uint256)
+          handler: handleDelegatorUnstakeWithId
         - event: DynastyValueChange(uint256,uint256)
           handler: handleDynastyValueChange
         - event: Jailed(indexed uint256,indexed uint256,indexed address)
@@ -172,8 +174,6 @@ dataSources:
           handler: handleShareBurned
         - event: ShareBurnedWithId(indexed uint256,indexed address,indexed uint256,uint256,uint256)
           handler: handleShareBurnedWithId
-        - event: DelegatorUnstakeWithId(indexed uint256,indexed address,uint256,uint256)
-          handler: handleDelegatorUnstakeWithId
         - event: ShareMinted(indexed uint256,indexed address,indexed uint256,uint256)
           handler: handleShareMinted
         - event: SignerChange(indexed uint256,uint256,indexed address,indexed address,bytes)
