@@ -15,7 +15,7 @@
     },
     "eventsHub": {
       "address": "0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95",
-      "startBlock": 999999999999
+      "startBlock": 99999999
     },
     "rootChainManager": {
       "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
