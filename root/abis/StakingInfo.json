@@ -159,37 +159,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "validatorId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "nonce",
-        "type": "uint256"
-      }
-    ],
-    "name": "DelegatorUnstakeWithId",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": false,
         "internalType": "uint256",
         "name": "newDynasty",
@@ -341,43 +310,6 @@
       }
     ],
     "name": "ShareBurned",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "validatorId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "tokens",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "nonce",
-        "type": "uint256"
-      }
-    ],
-    "name": "ShareBurnedWithId",
     "type": "event"
   },
   {
@@ -1434,41 +1366,6 @@
       },
       {
         "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokens",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "nonce",
-        "type": "uint256"
-      }
-    ],
-    "name": "logShareBurnedWithId",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "validatorId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
         "name": "rewards",
         "type": "uint256"
       }
@@ -1524,36 +1421,6 @@
       }
     ],
     "name": "logDelegatorUnstaked",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "validatorId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "nonce",
-        "type": "uint256"
-      }
-    ],
-    "name": "logDelegatorUnstakedWithId",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
