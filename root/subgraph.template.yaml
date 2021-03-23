@@ -146,8 +146,6 @@ dataSources:
           file: ./abis/StakingInfo.json
         - name: StakingNft
           file: ./abis/StakingNft.json
-        - name: EventsHub
-          file: ./abis/EventsHub.json
       eventHandlers:
         - event: ClaimFee(indexed address,indexed uint256)
           handler: handleClaimFee
@@ -159,8 +157,6 @@ dataSources:
         #   handler: handleDelegatorRestaked
         - event: DelegatorUnstaked(indexed uint256,indexed address,uint256)
           handler: handleDelegatorUnstaked
-        - event: DelegatorUnstakeWithId(indexed uint256,indexed address,uint256,uint256)
-          handler: handleDelegatorUnstakeWithId
         - event: DynastyValueChange(uint256,uint256)
           handler: handleDynastyValueChange
         - event: Jailed(indexed uint256,indexed uint256,indexed address)
@@ -174,8 +170,6 @@ dataSources:
         # - event: RewardUpdate(uint256,uint256)
         - event: ShareBurned(indexed uint256,indexed address,indexed uint256,uint256)
           handler: handleShareBurned
-        - event: ShareBurnedWithId(indexed uint256,indexed address,indexed uint256,uint256,uint256)
-          handler: handleShareBurnedWithId
         - event: ShareMinted(indexed uint256,indexed address,indexed uint256,uint256)
           handler: handleShareMinted
         - event: SignerChange(indexed uint256,uint256,indexed address,indexed address,bytes)
@@ -223,3 +217,27 @@ dataSources:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: ./src/mappings/staking-nft.ts
+    
+  - kind: ethereum/contract
+    name: EventsHub
+    network: {{ network }}
+    source:
+      address: "{{contracts.eventsHub.address}}"
+      abi: EventsHub
+      startBlock: {{ contracts.eventsHub.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Validator
+        - Delegator
+      abis:
+        - name: EventsHub
+          file: ./abis/EventsHub.json
+      eventHandlers:
+        - event: DelegatorUnstakeWithId(indexed uint256,indexed address,uint256,uint256)
+          handler: handleDelegatorUnstakeWithId
+        - event: ShareBurnedWithId(indexed uint256,indexed address,indexed uint256,uint256,uint256)
+          handler: handleShareBurnedWithId
+      file: ./src/mappings/staking-info.ts

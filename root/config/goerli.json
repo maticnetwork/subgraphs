@@ -25,6 +25,10 @@
       "address": "0x532c7020E0F3666f9440B8B9d899A9763BCc5dB7",
       "startBlock": 2917904
     },
+    "eventsHub": {
+      "address": "0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95",
+      "startBlock": 4269970
+    },
     "registry": {
       "address": "0xeE11713Fe713b2BfF2942452517483654078154D",
       "startBlock": 2815566

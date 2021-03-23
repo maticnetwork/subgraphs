@@ -11,14 +11,12 @@ import {
   ClaimRewards,
   DelegatorClaimedRewards,
   DelegatorUnstaked,
-  DelegatorUnstakeWithId,
   DynastyValueChange,
   Jailed,
   OwnershipTransferred,
   ProposerBonusChange,
   Restaked,
   ShareBurned,
-  ShareBurnedWithId,
   ShareMinted,
   SignerChange,
   StakeUpdate,
@@ -32,7 +30,10 @@ import {
   StartAuction,
   ConfirmAuction,
 } from '../../generated/StakingInfo/StakingInfo'
-
+import {
+  DelegatorUnstakeWithId,
+  ShareBurnedWithId,
+} from '../../generated/EventsHub/EventsHub'
 // using network address from config file
 // to be passed to client when creating instance
 // of contract, StakingNft, for calling `ownerOf` function
