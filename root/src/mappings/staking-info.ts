@@ -26,13 +26,13 @@ import {
   UnJailed,
   UnstakeInit,
   Unstaked,
-  UpdateCommissionRate,
   StartAuction,
   ConfirmAuction,
 } from '../../generated/StakingInfo/StakingInfo'
 import {
   DelegatorUnstakeWithId,
   ShareBurnedWithId,
+  UpdateCommissionRate,
 } from '../../generated/EventsHub/EventsHub'
 // using network address from config file
 // to be passed to client when creating instance
