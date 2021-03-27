@@ -98,8 +98,8 @@ export function handleUnstaked(event: Unstaked): void {
 
   // update unstaked status
   validator.status = 1
-  validator.totalStaked = validator.totalStaked.minus(validator.selfStake)
-  validator.selfStake = BigInt.fromI32(0)
+  validator.totalStaked = event.params.total
+  validator.selfStake = validator.selfStake.minus(event.params.amount)
   validator.save()
 }
 
