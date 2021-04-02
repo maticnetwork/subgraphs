@@ -26,8 +26,8 @@ export function handleTransfer(event: Transfer): void {
   let transactionHashes = entity.transactionHashes
   transactionHashes.push(event.transaction.hash)
   entity.transactionHashes = transactionHashes
-
-  let validator = Validator.load(event.params.tokenId)
+  let validatorId = "validator:" + event.params.tokenId.toString()
+  let validator = Validator.load(validatorId)
   validator.owner = event.params.to
 
   // save entity
