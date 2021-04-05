@@ -98,7 +98,8 @@ export function handleUnstaked(event: Unstaked): void {
 
   // update unstaked status
   validator.status = 1
-  validator.selfStake = BigInt.fromI32(0)
+  validator.totalStaked = event.params.total
+  validator.selfStake = validator.selfStake.minus(event.params.amount)
   validator.save()
 }
 
@@ -289,6 +290,7 @@ export function handleShareBurned(event: ShareBurned): void {
   let validator = loadValidator(event.params.validatorId)
 
   validator.delegatedStake = validator.delegatedStake.minus(event.params.amount)
+  validator.totalStaked = validator.totalStaked.minus(event.params.amount)
 
   validator.save()
   // -- Saving updation
@@ -312,6 +314,7 @@ export function handleShareBurnedWithId(event: ShareBurnedWithId): void {
   let validator = loadValidator(event.params.validatorId)
 
   validator.delegatedStake = validator.delegatedStake.minus(event.params.amount)
+  validator.totalStaked = validator.totalStaked.minus(event.params.amount)
 
   validator.save()
   // -- Saving updation
