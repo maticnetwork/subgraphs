@@ -38,6 +38,7 @@ type StateRegistration @entity {
 type PlasmaExit @entity {
   # id always created using `plasma-exit-${exitId}`
   id: ID!
+  counter: BigInt! # this field can be used to know where the exitStarted transaction happened.
   exitId: BigInt!
   exitInitiator: Bytes
   exitCompleter: Bytes
@@ -104,6 +105,12 @@ type Validator @entity {
 # Keeps track of current delegator counter i.e. how many
 # delegators are present as of now
 type GlobalDelegatorCounter @entity {
+  id: ID!
+  current: BigInt!
+}
+
+# This can be used to get the count of the plasma exits and till where have the process exits been processed.
+type GlobalPlasmaExitCounter @entity {
   id: ID!
   current: BigInt!
 }
