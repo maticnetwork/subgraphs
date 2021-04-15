@@ -18,7 +18,7 @@ function getGlobalPlasmaExitCounter(): GlobalPlasmaExitCounter {
 export function handleExitStarted(event: ExitStarted): void {
   let id = 'plasma-exit-' + event.params.exitId.toHexString()
 
-  // Try to get what's current global delegator counter's state
+  // Try to get what's current global plasma counter's state
   // when called for very first time, it'll be `0`
   let counter = getGlobalPlasmaExitCounter()
   let updated = counter.current.plus(BigInt.fromI32(1))
