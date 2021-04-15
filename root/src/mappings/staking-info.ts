@@ -198,7 +198,6 @@ export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
 // Sole purpose of this entity is to keep a global state variable
 // which can be used when new delegator comes into picture
 function getGlobalDelegatorCounter(): GlobalDelegatorCounter {
-
   // Only one entry will be kept in this entity
   let id = 'global-delegator-counter'
   let entity = GlobalDelegatorCounter.load(id)
@@ -208,9 +207,7 @@ function getGlobalDelegatorCounter(): GlobalDelegatorCounter {
     entity.current = BigInt.fromI32(0)
 
   }
-
   return entity as GlobalDelegatorCounter
-
 }
 
 function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
