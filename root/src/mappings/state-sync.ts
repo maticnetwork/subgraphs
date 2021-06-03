@@ -35,7 +35,7 @@ export function handleStateSynced(event: StateSynced): void {
     entity.syncType = -1
     entity.depositorOrRootToken = '0x'
     entity.depositedTokenOrChildToken = '0x'
-    entity.data = event.params.data.toString()
+    entity.data = event.params.data.toHexString()
 
     // save entity
     entity.save()
@@ -51,7 +51,7 @@ export function handleStateSynced(event: StateSynced): void {
   entity.syncType = decoded.value0
   entity.depositorOrRootToken = decoded.value1.toHex()
   entity.depositedTokenOrChildToken = decoded.value2.toHex()
-  entity.data = decoded.value3.toString()
+  entity.data = decoded.value3.toHexString()
 
   // save entity
   entity.save()
