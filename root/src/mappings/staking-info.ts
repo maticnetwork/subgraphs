@@ -251,7 +251,7 @@ function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
 }
 
 function loadDelegatorUnbond(validatorId: BigInt, delegator: Address, nonce: BigInt): DelegatorUnbond {
-  let id = 'delegatorUnbond:' + delegator.toHexString() + ":" + validatorId.toString() + ":" + nonce.toString()
+  let id = 'delegatorUnbond:' + delegator.toHexString() + ':' + validatorId.toString() + ':' + nonce.toString()
   let entity = DelegatorUnbond.load(id)
   if (entity == null) {
     entity = new DelegatorUnbond(id)
