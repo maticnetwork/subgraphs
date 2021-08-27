@@ -5,6 +5,7 @@ import {
   Topup,
   StakingParams,
   GlobalDelegatorCounter,
+  DelegatorUnbond,
 } from '../../generated/schema'
 import {
   ClaimFee,
@@ -249,6 +250,21 @@ function loadDelegator(validatorId: BigInt, delegator: Address): Delegator {
   return entity as Delegator
 }
 
+function loadDelegatorUnbond(validatorId: BigInt, delegator: Address, nonce: BigInt): DelegatorUnbond {
+  let id = 'delegatorUnbond:' + delegator.toHexString() + ':' + validatorId.toString() + ':' + nonce.toString()
+  let entity = DelegatorUnbond.load(id)
+  if (entity == null) {
+    entity = new DelegatorUnbond(id)
+    entity.validatorId = validatorId
+    entity.user = delegator
+    entity.nonce = nonce
+    entity.amount = BigInt.fromI32(0)
+    entity.tokens = BigInt.fromI32(0)
+    entity.completed = false
+  }
+  return entity as DelegatorUnbond
+}
+
 export function handleShareMinted(event: ShareMinted): void {
   let delegator = loadDelegator(event.params.validatorId, event.params.user)
 
@@ -315,6 +331,14 @@ export function handleShareBurnedWithId(event: ShareBurnedWithId): void {
 
   validator.save()
   // -- Saving updation
+
+  // save unbond details with nonce value
+  let delegatorUnbond = loadDelegatorUnbond(event.params.validatorId, event.params.user, event.params.nonce)
+  delegatorUnbond.amount = event.params.amount
+  delegatorUnbond.tokens = event.params.tokens
+
+  // save entity
+  delegatorUnbond.save()
 }
 
 export function handleDelegatorUnstaked(event: DelegatorUnstaked): void {
@@ -337,6 +361,13 @@ export function handleDelegatorUnstakeWithId(event: DelegatorUnstakeWithId): voi
   delegator.claimedAmount = delegator.claimedAmount.plus(event.params.amount)
 
   delegator.save()
+
+  // save unbond details with completed as false
+  let delegatorUnbond = loadDelegatorUnbond(event.params.validatorId, event.params.user, event.params.nonce)
+  delegatorUnbond.completed = true
+
+  // save entity
+  delegatorUnbond.save()
 }
 
 export function handleDelegatorClaimedRewards(event: DelegatorClaimedRewards): void {

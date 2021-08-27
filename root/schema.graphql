@@ -158,3 +158,13 @@ type StakingNFTTransfer @entity {
   previousOwners: [Bytes!]!
   transactionHashes: [Bytes!]!
 }
+
+type DelegatorUnbond @entity {
+  id: ID!
+  nonce: BigInt!
+  validatorId: BigInt!
+  user: Bytes!
+  amount: BigInt!
+  tokens: BigInt!
+  completed: Boolean!
+}
