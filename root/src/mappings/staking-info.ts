@@ -336,6 +336,8 @@ export function handleShareBurnedWithId(event: ShareBurnedWithId): void {
   let delegatorUnbond = loadDelegatorUnbond(event.params.validatorId, event.params.user, event.params.nonce)
   delegatorUnbond.amount = event.params.amount
   delegatorUnbond.tokens = event.params.tokens
+  delegatorUnbond.unbondStartedTxHash = event.transaction.hash
+  delegatorUnbond.unbondStartedTimeStamp = event.block.timestamp
 
   // save entity
   delegatorUnbond.save()
@@ -365,6 +367,8 @@ export function handleDelegatorUnstakeWithId(event: DelegatorUnstakeWithId): voi
   // save unbond details with completed as false
   let delegatorUnbond = loadDelegatorUnbond(event.params.validatorId, event.params.user, event.params.nonce)
   delegatorUnbond.completed = true
+  delegatorUnbond.unbondClaimedTxHash = event.transaction.hash
+  delegatorUnbond.unbondClaimedTimeStamp = event.block.timestamp
 
   // save entity
   delegatorUnbond.save()

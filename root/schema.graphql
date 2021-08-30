@@ -167,4 +167,8 @@ type DelegatorUnbond @entity {
   amount: BigInt!
   tokens: BigInt!
   completed: Boolean!
+  unbondStartedTxHash: Bytes
+  unbondStartedTimeStamp: BigInt
+  unbondClaimedTxHash: Bytes
+  unbondClaimedTimeStamp: BigInt
 }
