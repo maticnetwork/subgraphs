@@ -76,6 +76,52 @@ type TokenMapping @entity {
   transactionHash: Bytes!
 }
 
+type FxERC20TokenMapping @entity {
+  id: ID!
+  counter: BigInt!
+  rootToken: Bytes!
+  childToken: Bytes!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FxERC20TokenMappingCounter @entity {
+  id: ID!
+  current: BigInt!
+}
+
+type FxERC20Deposit @entity {
+  id: ID!
+  counter: BigInt!
+  rootToken: Bytes!
+  depositor: Bytes!
+  userAddress: Bytes!
+  amount: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FxERC20DepositCounter @entity {
+  id: ID!
+  current: BigInt!
+}
+
+type FxERC20Withdraw @entity {
+  id: ID!
+  counter: BigInt!
+  rootToken: Bytes!
+  childToken: Bytes!
+  userAddress: Bytes!
+  amount: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FxERC20WithdrawCounter @entity {
+  id: ID!
+  current: BigInt!
+}
+
 type Validator @entity {
   id: ID!
   validatorId: BigInt!
