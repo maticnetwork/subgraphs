@@ -296,3 +296,29 @@ dataSources:
         - event: FxWithdrawERC721(indexed address,indexed address,indexed address,uint256)
           handler: handleFxWithdrawERC721
       file: ./src/mappings/fx-erc721.ts
+
+  - kind: ethereum/contract
+    name: FxERC1155Events
+    network: {{ network }}
+    source:
+      abi: FxERC1155RootTunnel
+      startBlock: {{ contracts.fxERC1155RootTunnel.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - FxERC1155TokenMapping
+        - FxERC1155Deposit
+        - FxERC1155Withdraw
+      abis:
+        - name: FxERC1155RootTunnel
+          file: ./abis/FxERC1155RootTunnel.json
+      eventHandlers:
+        - event: TokenMappedERC1155(indexed address,indexed address)
+          handler: handleTokenMappedERC1155
+        - event: FxDepositERC1155(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleFxDepositERC1155
+        - event: FxWithdrawERC1155(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleFxWithdrawERC1155
+      file: ./src/mappings/fx-erc1155.ts

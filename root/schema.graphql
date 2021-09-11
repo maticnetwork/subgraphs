@@ -168,6 +168,53 @@ type FxERC721WithdrawCounter @entity {
   current: BigInt!
 }
 
+type FxERC1155TokenMapping @entity {
+  id: ID!
+  counter: BigInt!
+  rootToken: Bytes!
+  childToken: Bytes!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FxERC1155TokenMappingCounter @entity {
+  id: ID!
+  current: BigInt!
+}
+
+type FxERC1155Deposit @entity {
+  id: ID!
+  counter: BigInt!
+  rootToken: Bytes!
+  depositor: Bytes!
+  userAddress: Bytes!
+  tokenId: BigInt!
+  amount: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FxERC1155DepositCounter @entity {
+  id: ID!
+  current: BigInt!
+}
+
+type FxERC1155Withdraw @entity {
+  id: ID!
+  counter: BigInt!
+  rootToken: Bytes!
+  childToken: Bytes!
+  userAddress: Bytes!
+  tokenId: BigInt!
+  amount: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FxERC1155WithdrawCounter @entity {
+  id: ID!
+  current: BigInt!
+}
 
 type Validator @entity {
   id: ID!
