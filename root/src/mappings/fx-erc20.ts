@@ -89,6 +89,7 @@ export function handleFxDepositERC20(event: FxDepositERC20): void {
   entity.rootToken = event.params.rootToken
   entity.userAddress = event.params.userAddress
   entity.depositor = event.params.depositor
+  entity.amount = event.params.amount
 
   // save entity
   entity.save()

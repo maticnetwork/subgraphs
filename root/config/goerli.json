@@ -38,6 +38,9 @@
     },
     "fxERC20RootTunnel": {
       "startBlock": 5433435
+    },
+    "fxERC721RootTunnel": {
+      "startBlock": 5433435
     }
   }
 }
