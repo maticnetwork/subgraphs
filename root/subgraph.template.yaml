@@ -261,7 +261,7 @@ dataSources:
         - FxERC20Withdraw
       abis:
         - name: FxERC20RootTunnel
-          file: ./abis/FxERC20RootTunnel.json
+          file: ./abis/FxErc20RootTunnel.json
       eventHandlers:
         - event: TokenMappedERC20(indexed address,indexed address)
           handler: handleTokenMappedERC20
@@ -287,7 +287,7 @@ dataSources:
         - FxERC721Withdraw
       abis:
         - name: FxERC721RootTunnel
-          file: ./abis/FxERC721RootTunnel.json
+          file: ./abis/FxErc721RootTunnel.json
       eventHandlers:
         - event: TokenMappedERC721(indexed address,indexed address)
           handler: handleTokenMappedERC721
@@ -313,7 +313,7 @@ dataSources:
         - FxERC1155Withdraw
       abis:
         - name: FxERC1155RootTunnel
-          file: ./abis/FxERC1155RootTunnel.json
+          file: ./abis/FxErc1155RootTunnel.json
       eventHandlers:
         - event: TokenMappedERC1155(indexed address,indexed address)
           handler: handleTokenMappedERC1155
