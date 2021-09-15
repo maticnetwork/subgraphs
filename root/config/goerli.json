@@ -35,6 +35,15 @@
     },
     "decoderForPoSPortalData": {
       "address": "0x8fcFA769D420AdA837206294eb054Ad514a7a8a0"
+    },
+    "fxERC20RootTunnel": {
+      "startBlock": 5433435
+    },
+    "fxERC721RootTunnel": {
+      "startBlock": 5433435
+    },
+    "fxERC1155RootTunnel": {
+      "startBlock": 5433435
     }
   }
 }
