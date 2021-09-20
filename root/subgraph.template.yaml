@@ -256,9 +256,9 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - FxERC20TokenMapping
-        - FxERC20Deposit
-        - FxERC20Withdraw
+        - FxTokenMapping
+        - FxDeposit
+        - FxWithdraw
       abis:
         - name: FxERC20RootTunnel
           file: ./abis/FxErc20RootTunnel.json
@@ -282,9 +282,9 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - FxERC721TokenMapping
-        - FxERC721Deposit
-        - FxERC721Withdraw
+        - FxTokenMapping
+        - FxDeposit
+        - FxWithdraw
       abis:
         - name: FxERC721RootTunnel
           file: ./abis/FxErc721RootTunnel.json
@@ -308,9 +308,9 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - FxERC1155TokenMapping
-        - FxERC1155Deposit
-        - FxERC1155Withdraw
+        - FxTokenMapping
+        - FxDeposit
+        - FxWithdraw
       abis:
         - name: FxERC1155RootTunnel
           file: ./abis/FxErc1155RootTunnel.json

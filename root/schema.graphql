@@ -76,142 +76,53 @@ type TokenMapping @entity {
   transactionHash: Bytes!
 }
 
-type FxERC20TokenMapping @entity {
+type FxTokenMapping @entity {
   id: ID!
   counter: BigInt!
   rootToken: Bytes!
   childToken: Bytes!
+  tokenType: String!
   timestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type FxERC20TokenMappingCounter @entity {
+type FxTokenMappingCounter @entity {
   id: ID!
   current: BigInt!
 }
 
-type FxERC20Deposit @entity {
+type FxDeposit @entity {
   id: ID!
   counter: BigInt!
   rootToken: Bytes!
+  tokenType: String!
   depositor: Bytes!
   userAddress: Bytes!
   amount: BigInt!
+  tokenId: BigInt!
   timestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type FxERC20DepositCounter @entity {
+type FxDepositCounter @entity {
   id: ID!
   current: BigInt!
 }
 
-type FxERC20Withdraw @entity {
+type FxWithdraw @entity {
   id: ID!
   counter: BigInt!
   rootToken: Bytes!
   childToken: Bytes!
+  tokenType: String!
   userAddress: Bytes!
   amount: BigInt!
-  timestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FxERC20WithdrawCounter @entity {
-  id: ID!
-  current: BigInt!
-}
-
-type FxERC721TokenMapping @entity {
-  id: ID!
-  counter: BigInt!
-  rootToken: Bytes!
-  childToken: Bytes!
-  timestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FxERC721TokenMappingCounter @entity {
-  id: ID!
-  current: BigInt!
-}
-
-type FxERC721Deposit @entity {
-  id: ID!
-  counter: BigInt!
-  rootToken: Bytes!
-  depositor: Bytes!
-  userAddress: Bytes!
   tokenId: BigInt!
   timestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type FxERC721DepositCounter @entity {
-  id: ID!
-  current: BigInt!
-}
-
-type FxERC721Withdraw @entity {
-  id: ID!
-  counter: BigInt!
-  rootToken: Bytes!
-  childToken: Bytes!
-  userAddress: Bytes!
-  tokenId: BigInt!
-  timestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FxERC721WithdrawCounter @entity {
-  id: ID!
-  current: BigInt!
-}
-
-type FxERC1155TokenMapping @entity {
-  id: ID!
-  counter: BigInt!
-  rootToken: Bytes!
-  childToken: Bytes!
-  timestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FxERC1155TokenMappingCounter @entity {
-  id: ID!
-  current: BigInt!
-}
-
-type FxERC1155Deposit @entity {
-  id: ID!
-  counter: BigInt!
-  rootToken: Bytes!
-  depositor: Bytes!
-  userAddress: Bytes!
-  tokenId: BigInt!
-  amount: BigInt!
-  timestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FxERC1155DepositCounter @entity {
-  id: ID!
-  current: BigInt!
-}
-
-type FxERC1155Withdraw @entity {
-  id: ID!
-  counter: BigInt!
-  rootToken: Bytes!
-  childToken: Bytes!
-  userAddress: Bytes!
-  tokenId: BigInt!
-  amount: BigInt!
-  timestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FxERC1155WithdrawCounter @entity {
+type FxWithdrawCounter @entity {
   id: ID!
   current: BigInt!
 }
