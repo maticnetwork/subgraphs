@@ -1,61 +1,61 @@
 import { BigInt } from '@graphprotocol/graph-ts'
 
 import { TokenMappedERC1155, FxDepositERC1155, FxWithdrawERC1155 } from '../../generated/FxERC1155Events/FxERC1155RootTunnel'
-import { FxERC1155TokenMapping, FxERC1155Deposit, FxERC1155Withdraw,
-  FxERC1155TokenMappingCounter, FxERC1155DepositCounter, FxERC1155WithdrawCounter } from '../../generated/schema'
+import { FxTokenMapping, FxDeposit, FxWithdraw,
+  FxTokenMappingCounter, FxDepositCounter, FxWithdrawCounter } from '../../generated/schema'
 
-function getFxERC1155TokenMappingCounter(): FxERC1155TokenMappingCounter {
+function getFxTokenMappingCounter(): FxTokenMappingCounter {
   // Only one entry will be kept in this entity
-  let id = 'fx-erc1155-token-mapping-counter'
-  let entity = FxERC1155TokenMappingCounter.load(id)
+  let id = 'fx-token-mapping-counter'
+  let entity = FxTokenMappingCounter.load(id)
   if (entity == null) {
 
-    entity = new FxERC1155TokenMappingCounter(id)
+    entity = new FxTokenMappingCounter(id)
     entity.current = BigInt.fromI32(0)
 
   }
-  return entity as FxERC1155TokenMappingCounter
+  return entity as FxTokenMappingCounter
 }
 
-function getFxERC1155DepositCounter(): FxERC1155DepositCounter {
+function getFxDepositCounter(): FxDepositCounter {
   // Only one entry will be kept in this entity
-  let id = 'fx-erc1155-deposit-counter'
-  let entity = FxERC1155DepositCounter.load(id)
+  let id = 'fx-deposit-counter'
+  let entity = FxDepositCounter.load(id)
   if (entity == null) {
 
-    entity = new FxERC1155DepositCounter(id)
+    entity = new FxDepositCounter(id)
     entity.current = BigInt.fromI32(0)
 
   }
-  return entity as FxERC1155DepositCounter
+  return entity as FxDepositCounter
 }
 
-function getFxERC1155WithdrawCounter(): FxERC1155WithdrawCounter {
+function getFxWithdrawCounter(): FxWithdrawCounter {
   // Only one entry will be kept in this entity
-  let id = 'fx-erc1155-withdraw-counter'
-  let entity = FxERC1155WithdrawCounter.load(id)
+  let id = 'fx-withdraw-counter'
+  let entity = FxWithdrawCounter.load(id)
   if (entity == null) {
 
-    entity = new FxERC1155WithdrawCounter(id)
+    entity = new FxWithdrawCounter(id)
     entity.current = BigInt.fromI32(0)
 
   }
-  return entity as FxERC1155WithdrawCounter
+  return entity as FxWithdrawCounter
 }
 
 export function handleTokenMappedERC1155(event: TokenMappedERC1155): void {
-  let counter = getFxERC1155TokenMappingCounter()
+  let counter = getFxTokenMappingCounter()
   let updated = counter.current.plus(BigInt.fromI32(1))
 
-  let id = 'fx-erc1155-mapping:' + counter.current.toString()
+  let id = 'fx-token-mapping:' + counter.current.toString()
 
   // Updating global counter's state
   counter.current = updated
   counter.save()
 
-  let entity = FxERC1155TokenMapping.load(id)
+  let entity = FxTokenMapping.load(id)
   if (entity == null) {
-    entity = new FxERC1155TokenMapping(id)
+    entity = new FxTokenMapping(id)
   }
 
   entity.transactionHash = event.transaction.hash
@@ -63,30 +63,32 @@ export function handleTokenMappedERC1155(event: TokenMappedERC1155): void {
   entity.counter = counter.current
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
+  entity.tokenType = 'ERC1155'
 
   // save entity
   entity.save()
 }
 
 export function handleFxDepositERC1155(event: FxDepositERC1155): void {
-  let counter = getFxERC1155DepositCounter()
+  let counter = getFxDepositCounter()
   let updated = counter.current.plus(BigInt.fromI32(1))
 
-  let id = 'fx-erc1155-deposit:' + counter.current.toString()
+  let id = 'fx-deposit:' + counter.current.toString()
 
   // Updating global counter's state
   counter.current = updated
   counter.save()
 
-  let entity = FxERC1155Deposit.load(id)
+  let entity = FxDeposit.load(id)
   if (entity == null) {
-    entity = new FxERC1155Deposit(id)
+    entity = new FxDeposit(id)
   }
 
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
   entity.rootToken = event.params.rootToken
+  entity.tokenType = 'ERC1155'
   entity.userAddress = event.params.userAddress
   entity.depositor = event.params.depositor
   entity.tokenId = event.params.id
@@ -97,18 +99,18 @@ export function handleFxDepositERC1155(event: FxDepositERC1155): void {
 }
 
 export function handleFxWithdrawERC1155(event: FxWithdrawERC1155): void {
-  let counter = getFxERC1155WithdrawCounter()
+  let counter = getFxWithdrawCounter()
   let updated = counter.current.plus(BigInt.fromI32(1))
 
-  let id = 'fx-erc1155-withdraw:' + counter.current.toString()
+  let id = 'fx-withdraw:' + counter.current.toString()
 
   // Updating global counter's state
   counter.current = updated
   counter.save()
 
-  let entity = FxERC1155Withdraw.load(id)
+  let entity = FxWithdraw.load(id)
   if (entity == null) {
-    entity = new FxERC1155Withdraw(id)
+    entity = new FxWithdraw(id)
   }
 
   entity.transactionHash = event.transaction.hash
@@ -116,6 +118,7 @@ export function handleFxWithdrawERC1155(event: FxWithdrawERC1155): void {
   entity.counter = counter.current
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
+  entity.tokenType = 'ERC1155'
   entity.userAddress = event.params.userAddress
   entity.tokenId = event.params.id
   entity.amount = event.params.amount
