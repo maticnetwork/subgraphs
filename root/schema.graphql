@@ -98,8 +98,8 @@ type FxDeposit @entity {
   tokenType: String!
   depositor: Bytes!
   userAddress: Bytes!
-  amount: BigInt!
-  tokenId: BigInt!
+  amount: BigInt
+  tokenId: BigInt
   timestamp: BigInt!
   transactionHash: Bytes!
 }
@@ -116,8 +116,8 @@ type FxWithdraw @entity {
   childToken: Bytes!
   tokenType: String!
   userAddress: Bytes!
-  amount: BigInt!
-  tokenId: BigInt!
+  amount: BigInt
+  tokenId: BigInt
   timestamp: BigInt!
   transactionHash: Bytes!
 }
