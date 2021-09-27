@@ -63,7 +63,7 @@ export function handleTokenMappedERC721(event: TokenMappedERC721): void {
   entity.counter = counter.current
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
-  entity.tokenType = 'ERC20'
+  entity.tokenType = 'ERC721'
 
   // save entity
   entity.save()
