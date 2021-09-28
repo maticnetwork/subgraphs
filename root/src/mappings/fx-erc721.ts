@@ -61,6 +61,7 @@ export function handleTokenMappedERC721(event: TokenMappedERC721): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
+  entity.contractAddress = event.address
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
   entity.tokenType = 'ERC721'
@@ -87,6 +88,7 @@ export function handleFxDepositERC721(event: FxDepositERC721): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
+  entity.contractAddress = event.address
   entity.rootToken = event.params.rootToken
   entity.tokenType = 'ERC721'
   entity.userAddress = event.params.userAddress
@@ -115,6 +117,7 @@ export function handleFxWithdrawERC721(event: FxWithdrawERC721): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
+  entity.contractAddress = event.address
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
   entity.tokenType = 'ERC721'

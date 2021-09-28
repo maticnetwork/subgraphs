@@ -61,6 +61,7 @@ export function handleTokenMappedERC1155(event: TokenMappedERC1155): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
+  entity.contractAddress = event.address
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
   entity.tokenType = 'ERC1155'
@@ -87,6 +88,7 @@ export function handleFxDepositERC1155(event: FxDepositERC1155): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
+  entity.contractAddress = event.address
   entity.rootToken = event.params.rootToken
   entity.tokenType = 'ERC1155'
   entity.userAddress = event.params.userAddress
@@ -116,6 +118,7 @@ export function handleFxWithdrawERC1155(event: FxWithdrawERC1155): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
+  entity.contractAddress = event.address
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
   entity.tokenType = 'ERC1155'

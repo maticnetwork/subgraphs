@@ -61,6 +61,7 @@ export function handleTokenMappedERC20(event: TokenMappedERC20): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
+  entity.contractAddress = event.address
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
   entity.tokenType = 'ERC20'
@@ -87,6 +88,7 @@ export function handleFxDepositERC20(event: FxDepositERC20): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
+  entity.contractAddress = event.address
   entity.rootToken = event.params.rootToken
   entity.tokenType = 'ERC20'
   entity.userAddress = event.params.userAddress
@@ -115,6 +117,7 @@ export function handleFxWithdrawERC20(event: FxWithdrawERC20): void {
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
   entity.counter = counter.current
+  entity.contractAddress = event.address
   entity.rootToken = event.params.rootToken
   entity.childToken = event.params.childToken
   entity.tokenType = 'ERC20'
