@@ -79,6 +79,7 @@ type TokenMapping @entity {
 type FxTokenMapping @entity {
   id: ID!
   counter: BigInt!
+  contractAddress: Bytes!
   rootToken: Bytes!
   childToken: Bytes!
   tokenType: String!
@@ -94,6 +95,7 @@ type FxTokenMappingCounter @entity {
 type FxDeposit @entity {
   id: ID!
   counter: BigInt!
+  contractAddress: Bytes!
   rootToken: Bytes!
   tokenType: String!
   depositor: Bytes!
@@ -112,6 +114,7 @@ type FxDepositCounter @entity {
 type FxWithdraw @entity {
   id: ID!
   counter: BigInt!
+  contractAddress: Bytes!
   rootToken: Bytes!
   childToken: Bytes!
   tokenType: String!
