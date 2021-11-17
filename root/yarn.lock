@@ -556,7 +556,6 @@
     "safer-buffer" "~2.1.0"
 
 "assemblyscript@https://github.com/AssemblyScript/assemblyscript#36040d5b5312f19a025782b5e36663823494c2f3":
-  "integrity" "sha512-ItS76VmVvmu5TBXa81wzL7DzyF1cjOt/hx9T3JrJn6GZd6e67lrBZ1qXv4tQ1osdPtdYVXf9E6u1W6qPtOsang=="
   "resolved" "git+ssh://git@github.com/AssemblyScript/assemblyscript.git#36040d5b5312f19a025782b5e36663823494c2f3"
   "version" "0.6.0"
   dependencies:
@@ -1012,7 +1011,6 @@
     "typedarray" "^0.0.6"
 
 "concat-stream@github:hugomrdias/concat-stream#feat/smaller":
-  "integrity" "sha512-GBrsRGcg6w3ac6B49frS/FGwdeuWMognaZIGxLfZ93vP2z3bIhaI/Bgn3rrS49lI7lrFznULlNUjWYP4soqgvw=="
   "resolved" "git+ssh://git@github.com/hugomrdias/concat-stream.git#057bc7b5d6d8df26c8cf00a3f151b6721a0a8034"
   "version" "2.0.0"
   dependencies:
@@ -2879,7 +2877,6 @@
   "version" "1.4.0"
 
 "ndjson@github:hugomrdias/ndjson#feat/readable-stream3":
-  "integrity" "sha512-4HWirDBroNYRKoq+8A7y0uvXlO0dF4p7URRRdqvPSgGjQFVpxpE4uasORXNxeRBMHQnXbTnUBVLXXagwKFH6AQ=="
   "resolved" "git+ssh://git@github.com/hugomrdias/ndjson.git#4db16da6b42e5b39bf300c3a7cde62abb3fa3a11"
   "version" "1.5.0"
   dependencies:
