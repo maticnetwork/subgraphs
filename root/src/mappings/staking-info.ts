@@ -34,6 +34,7 @@ import {
   DelegatorUnstakeWithId,
   ShareBurnedWithId,
   UpdateCommissionRate,
+  SharesTransfer,
 } from '../../generated/EventsHub/EventsHub'
 // using network address from config file
 // to be passed to client when creating instance
@@ -380,6 +381,18 @@ export function handleDelegatorClaimedRewards(event: DelegatorClaimedRewards): v
   // update total claimed rewards by current event's rewards
   delegator.claimedRewards = delegator.claimedRewards.plus(event.params.rewards)
   delegator.save()
+}
+
+export function handleSharesTransfer(event: SharesTransfer): void {
+  let fromDelegator = loadDelegator(event.params.validatorId, event.params.from)
+  let toDelegator = loadDelegator(event.params.validatorId, event.params.to)
+
+  fromDelegator.delegatedAmount = fromDelegator.delegatedAmount.minus(event.params.value)
+  // update claimed amount
+  toDelegator.delegatedAmount = toDelegator.delegatedAmount.plus(event.params.value)
+
+  fromDelegator.save()
+  toDelegator.save()
 }
 
 //

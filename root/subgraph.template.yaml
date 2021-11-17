@@ -243,6 +243,8 @@ dataSources:
           handler: handleShareBurnedWithId
         - event: UpdateCommissionRate(indexed uint256,indexed uint256,indexed uint256)
           handler: handleUpdateCommissionRate
+        - event: SharesTransfer(indexed uint256,indexed address,indexed address,uint256)
+          handler: handleSharesTransfer
       file: ./src/mappings/staking-info.ts
 
   - kind: ethereum/contract
