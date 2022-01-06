@@ -1,0 +1,40 @@
+name: Child subgraph release
+
+on:
+  release:
+    types: [created]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - SUBGRAPH_NETWORK: mumbai
+            SUBGRAPH_NAME: maticnetwork/mumbai-child-subgraphs
+          - SUBGRAPH_NETWORK: matic
+            SUBGRAPH_NAME: maticnetwork/mainnet-child-subgraphs
+
+    defaults:
+      run:
+        working-directory: child
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          check-latest: true
+      - run: npm install
+      - name: Prepare subgraph for ${{ matrix.SUBGRAPH_NETWORK }}
+        run: npm run prepare:${{ matrix.SUBGRAPH_NETWORK }}
+      - name: Generate code for subgraph
+        run: npm run codegen
+      - name: Build subgraph
+        run: npm run build
+      - name: Deploy subgraph
+        run: |
+          npm run graph -- deploy --access-token ${{ secrets.THE_GRAPH_ACCESS_TOKEN }} --node ${{ secrets.THE_GRAPH_NODE_URL }} --ipfs ${{ secrets.THE_GRAPH_IPFS_URL }} ${{ matrix.SUBGRAPH_NAME }}
+                                          
