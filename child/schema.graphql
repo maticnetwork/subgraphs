@@ -9,6 +9,7 @@ type TransactionEntity @entity {
   block: BigInt!
   timestamp: BigInt!
   transaction: Bytes!
+  isPos: Boolean
 }
 
 type User @entity {

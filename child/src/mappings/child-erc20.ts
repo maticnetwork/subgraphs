@@ -34,7 +34,7 @@ export function handleWithdraw(event: Withdraw): void {
   transactionEntity.transaction = event.transaction.hash
   transactionEntity.token = event.address
   transactionEntity.type = 'withdraw'
-
+  transactionEntity.isPos = false
   transactionEntity.save()
 }
 
@@ -51,6 +51,7 @@ export function handleBurnTransfer(event: Transfer): void {
     transactionEntity.transaction = event.transaction.hash
     transactionEntity.token = event.address
     transactionEntity.type = 'withdraw'
+    transactionEntity.isPos = true
     transactionEntity.save()
   }
 }
