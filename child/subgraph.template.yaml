@@ -6,7 +6,6 @@ dataSources:
     name: ChildERC20
     network: {{network}}
     source:
-      address: "{{contracts.maticToken.address}}"
       abi: ChildERC20
       startBlock: {{ contracts.maticToken.startBlock }}
     mapping:
@@ -22,5 +21,7 @@ dataSources:
       eventHandlers:
         - event: LogTransfer(indexed address,indexed address,indexed address,uint256,uint256,uint256,uint256,uint256)
           handler: handleLogTransfer
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleBurnTransfer
         - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
           handler: handleWithdraw

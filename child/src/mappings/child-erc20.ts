@@ -1,4 +1,4 @@
-import { LogTransfer, Withdraw } from '../../generated/ChildERC20/ChildERC20'
+import { LogTransfer, Withdraw, Transfer } from '../../generated/ChildERC20/ChildERC20'
 import { TransactionEntity } from '../../generated/schema'
 import { toDecimal } from '../helpers/numbers'
 
@@ -36,4 +36,21 @@ export function handleWithdraw(event: Withdraw): void {
   transactionEntity.type = 'withdraw'
 
   transactionEntity.save()
+}
+
+export function handleBurnTransfer(event: Transfer): void {
+
+  if (event.params.to.toHex() == ZERO_ADDRESS) {
+    let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-withdraw')
+
+    transactionEntity.from = event.params.from
+    transactionEntity.to = event.params.to
+    transactionEntity.value = toDecimal(event.params.value, 18)
+    transactionEntity.block = event.block.number
+    transactionEntity.timestamp = event.block.timestamp
+    transactionEntity.transaction = event.transaction.hash
+    transactionEntity.token = event.address
+    transactionEntity.type = 'withdraw'
+    transactionEntity.save()
+  }
 }
