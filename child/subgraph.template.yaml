@@ -6,7 +6,9 @@ dataSources:
     name: ChildERC20
     network: {{network}}
     source:
+      address: "{{contracts.maticToken.address}}"
       abi: ChildERC20
+      startBlock: {{ contracts.maticToken.startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
