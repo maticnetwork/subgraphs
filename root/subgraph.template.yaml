@@ -49,7 +49,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/maticTransfer.ts
+      file: ./src/mappings/matic-transfer.ts
 
   - kind: ethereum/contract
     name: WithdrawManager
