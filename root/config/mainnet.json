@@ -1,5 +1,7 @@
 {
   "network": "mainnet",
+  "subgraphId": "QmQTfDsLaqbT8VzCAE8zLDi4jjzXxDSkgw79r6VeLemv7b",
+  "graftingStartBlock": 13977920,
   "contracts": {
     "rootChain": {
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
@@ -28,6 +30,10 @@
     "stakingNft": {
       "address": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
       "startBlock": 10342574
+    },
+    "maticTokenContract": {
+      "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+      "startBlock": 13977920
     },
     "registry": {
       "address": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
