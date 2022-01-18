@@ -28,7 +28,6 @@
     "graphql",
     "graph"
   ],
-  "author": "Angela Gilhotra <angela.gilhotra@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/maticnetwork/subgraphs/issues"

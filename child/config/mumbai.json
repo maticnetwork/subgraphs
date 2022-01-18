@@ -1,3 +1,9 @@
 {
-  "network": "mumbai"
+  "network": "mumbai",
+  "contracts": {
+    "maticToken": {
+      "address": "0x0000000000000000000000000000000000001010",
+      "startBlock": 1
+    }
+  }
 }
