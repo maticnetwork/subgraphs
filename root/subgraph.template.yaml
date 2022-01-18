@@ -1,5 +1,10 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 description: Indexes checkpoints and new deposits on root chain
+features:
+  - grafting
+graft:
+  base: {{ subgraphId }}
+  block: {{ graftingStartBlock }}
 repository: https://github.com/maticnetwork/subgraphs
 schema:
   file: ./schema.graphql
@@ -13,7 +18,7 @@ dataSources:
       startBlock: {{ contracts.rootChain.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - NewHeaderBlock
@@ -26,6 +31,27 @@ dataSources:
       file: ./src/mappings/checkpoint.ts
 
   - kind: ethereum/contract
+    name: TestToken
+    network: {{ network }}
+    source:
+      address: "{{contracts.maticTokenContract.address}}"
+      abi: TestToken
+      startBlock: {{ contracts.maticTokenContract.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - MaticTransfer
+      abis:
+        - name: TestToken
+          file: ./abis/TestToken.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/matic-transfer.ts
+
+  - kind: ethereum/contract
     name: WithdrawManager
     network: {{ network }}
     source:
@@ -34,7 +60,7 @@ dataSources:
       startBlock: {{ contracts.withdrawManager.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - ExitStarted
@@ -61,7 +87,7 @@ dataSources:
       startBlock: {{ contracts.rootChainManager.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - PredicateRegistered
@@ -85,7 +111,7 @@ dataSources:
       startBlock: {{ contracts.registry.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - TokenMapping
@@ -106,7 +132,7 @@ dataSources:
       startBlock: {{ contracts.stateSender.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - StateSync
@@ -134,7 +160,7 @@ dataSources:
       startBlock: {{ contracts.stakingInfo.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - Validator
@@ -206,7 +232,7 @@ dataSources:
       startBlock: {{ contracts.stakingNft.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - StakingNFTTransfer
@@ -228,7 +254,7 @@ dataSources:
       startBlock: {{ contracts.eventsHub.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - Validator
@@ -255,7 +281,7 @@ dataSources:
       startBlock: {{ contracts.fxERC20RootTunnel.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - FxTokenMapping
@@ -281,7 +307,7 @@ dataSources:
       startBlock: {{ contracts.fxERC721RootTunnel.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - FxTokenMapping
@@ -307,7 +333,7 @@ dataSources:
       startBlock: {{ contracts.fxERC1155RootTunnel.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - FxTokenMapping

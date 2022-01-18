@@ -3,7 +3,7 @@
   "contracts": {
     "maticToken": {
       "address": "0x0000000000000000000000000000000000001010",
-      "startBlock": 1
+      "startBlock": 23557300
     }
   }
 }

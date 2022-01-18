@@ -1,5 +1,7 @@
 {
   "network": "goerli",
+  "subgraphId": "QmPuwKiewn7sczRV6LwGPWuNtDZTscKECz6NB6V1gE57bm",
+  "graftingStartBlock": 5996697,
   "contracts": {
     "rootChain": {
       "address": "0x2890bA17EfE978480615e330ecB65333b880928e",
@@ -24,6 +26,10 @@
     "stakingNft": {
       "address": "0x532c7020E0F3666f9440B8B9d899A9763BCc5dB7",
       "startBlock": 2917904
+    },
+    "maticTokenContract": {
+      "address": "0x499d11E0b6eAC7c0593d8Fb292DCBbF815Fb29Ae",
+      "startBlock": 5996697
     },
     "eventsHub": {
       "address": "0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95",

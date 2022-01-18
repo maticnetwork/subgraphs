@@ -226,3 +226,14 @@ type DelegatorUnbond @entity {
   unbondClaimedTxHash: Bytes
   unbondClaimedTimeStamp: BigInt
 }
+
+type MaticTransfer @entity {
+  id: ID!
+  token: Bytes!
+  from: Bytes!
+  to: Bytes!
+  value: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
