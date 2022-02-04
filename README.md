@@ -3,6 +3,12 @@ Subgraph for Matic contracts
 
 Please take a look at [Graph protocol](https://github.com/graphprotocol/graph-node) for more information.
 
+## Polygon hosted node endpoints
+
+**Root**
+- Mainnet: `https://thegraph.com/hosted-service/subgraph/maticnetwork/mainnet-root-subgraphs`
+- Goerli: `https://thegraph.com/hosted-service/subgraph/maticnetwork/mumbai-root-subgraphs`
+
 ## For Mumbai hosted node endpoints
 - Graph node: `https://mumbai-graph.matic.today`
 - GraphQL endpoint: `https://api.mumbai-graph.matic.today/subgraphs/name/<YOUR_GITHUB_USERNAME>/<SUBGRAPH_NAME>/graphql`
