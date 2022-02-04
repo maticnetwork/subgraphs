@@ -13,6 +13,8 @@ export function handleStateSynced(event: StateSynced): void {
 
   entity.transactionHash = event.transaction.hash
   entity.timestamp = event.block.timestamp
+  entity.blockNumber = event.block.number
+  entity.logIndex = event.logIndex.toString()
 
   // Attempting to create an instance of `Decoder` smart contract
   // to be used for decoding valid state sync data
