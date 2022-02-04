@@ -1,7 +1,7 @@
 {
   "network": "mainnet",
   "subgraphId": "QmQTfDsLaqbT8VzCAE8zLDi4jjzXxDSkgw79r6VeLemv7b",
-  "graftingStartBlock": 13977920,
+  "graftingStartBlock": 10167760,
   "contracts": {
     "rootChain": {
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
