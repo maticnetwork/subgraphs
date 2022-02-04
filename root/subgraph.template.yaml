@@ -1,10 +1,10 @@
 specVersion: 0.0.4
 description: Indexes checkpoints and new deposits on root chain
-features:
-  - grafting
-graft:
-  base: {{ subgraphId }}
-  block: {{ graftingStartBlock }}
+# features:
+#   - grafting
+# graft:
+#   base: {{ subgraphId }}
+#   block: {{ graftingStartBlock }}
 repository: https://github.com/maticnetwork/subgraphs
 schema:
   file: ./schema.graphql
