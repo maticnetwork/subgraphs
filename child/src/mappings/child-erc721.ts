@@ -44,8 +44,8 @@ export function handleTransfer(event: Transfer): void {
 
   const isWithdraw = event.params.to.toHex() === ZERO_ADDRESS || event.params.to === event.address ? true : false
 
-  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw  ? '-withdraw' : '-transfer'))
-  transactionEntity.type = isWithdraw  ? 'withdraw' : 'transfer'
+  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw ? '-withdraw' : '-transfer'))
+  transactionEntity.type = isWithdraw ? 'withdraw' : 'transfer'
   transactionEntity.from = event.params.from
   transactionEntity.to = event.params.to
   transactionEntity.tokenId = event.params.tokenId

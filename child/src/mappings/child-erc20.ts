@@ -35,7 +35,7 @@ export function handleLogTransfer(event: LogTransfer): void {
 
 export function handleWithdraw(event: Withdraw): void {
 
-   // Try to get what's current globalcounter's state
+  // Try to get what's current globalcounter's state
   // when called for very first time, it'll be `0`
   let counter = getGlobalTransferCounter()
   let updated = counter.current.plus(BigInt.fromI32(1))
@@ -60,7 +60,6 @@ export function handleWithdraw(event: Withdraw): void {
 }
 
 export function handleTransfer(event: Transfer): void {
-
   // Try to get what's current global counter's state
   // when called for very first time, it'll be `0`
   let counter = getGlobalTransferCounter()
@@ -71,7 +70,7 @@ export function handleTransfer(event: Transfer): void {
   counter.save()
 
   const isWithdraw = event.params.to.toHex() === ZERO_ADDRESS || event.params.to === event.address ? true : false
-  
+
   let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw ? '-withdraw' : '-transfer'))
   transactionEntity.type = isWithdraw ? 'withdraw' : 'transfer'
   transactionEntity.from = event.params.from
