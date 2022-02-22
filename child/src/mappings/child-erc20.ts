@@ -1,7 +1,6 @@
 import { BigInt, Address } from '@graphprotocol/graph-ts'
 import { LogTransfer, Withdraw, Transfer } from '../../generated/ChildERC20/ChildERC20'
 import { TransactionEntity, GlobalTransferCounter } from '../../generated/schema'
-import { toDecimal } from '../helpers/numbers'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -36,7 +35,7 @@ export function handleLogTransfer(event: LogTransfer): void {
 
 export function handleWithdraw(event: Withdraw): void {
 
-   // Try to get what's current global plasma counter's state
+   // Try to get what's current globalcounter's state
   // when called for very first time, it'll be `0`
   let counter = getGlobalTransferCounter()
   let updated = counter.current.plus(BigInt.fromI32(1))
@@ -55,14 +54,14 @@ export function handleWithdraw(event: Withdraw): void {
   transactionEntity.transaction = event.transaction.hash
   transactionEntity.token = event.address
   transactionEntity.type = 'withdraw'
-  transactionEntity.tokenType = "ERC20"
+  transactionEntity.tokenType = 'ERC20'
   transactionEntity.isPos = false
   transactionEntity.save()
 }
 
 export function handleTransfer(event: Transfer): void {
 
-  // Try to get what's current global transfer counter's state
+  // Try to get what's current global counter's state
   // when called for very first time, it'll be `0`
   let counter = getGlobalTransferCounter()
   let updated = counter.current.plus(BigInt.fromI32(1))
@@ -82,7 +81,7 @@ export function handleTransfer(event: Transfer): void {
   transactionEntity.timestamp = event.block.timestamp
   transactionEntity.transaction = event.transaction.hash
   transactionEntity.token = event.address
-  transactionEntity.tokenType = "ERC20"
+  transactionEntity.tokenType = 'ERC20'
   transactionEntity.isPos = true
   transactionEntity.save()
 }

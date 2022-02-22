@@ -2,7 +2,6 @@ import { BigInt } from '@graphprotocol/graph-ts'
 import { Transfer } from '../../generated/ChildERC721/ChildERC721'
 import { TransactionEntity, GlobalTransferCounter } from '../../generated/schema'
 //import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
-import { toDecimal } from '../helpers/numbers'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -34,7 +33,7 @@ function getGlobalTransferCounter(): GlobalTransferCounter {
 
 export function handleTransfer(event: Transfer): void {
 
-  // Try to get what's current global plasma counter's state
+  // Try to get what's current global counter's state
   // when called for very first time, it'll be `0`
   let counter = getGlobalTransferCounter()
   let updated = counter.current.plus(BigInt.fromI32(1))
@@ -54,7 +53,7 @@ export function handleTransfer(event: Transfer): void {
   transactionEntity.timestamp = event.block.timestamp
   transactionEntity.transaction = event.transaction.hash
   transactionEntity.token = event.address
-  transactionEntity.tokenType = "ERC721"
+  transactionEntity.tokenType = 'ERC721'
   transactionEntity.isPos = true
   transactionEntity.save()
 }
