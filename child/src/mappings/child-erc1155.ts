@@ -27,7 +27,7 @@ export function handleSingleTransfer(event: TransferSingle): void {
   counter.current = updated
   counter.save()
 
-  const isWithdraw = event.params.to.toHex() === ZERO_ADDRESS || event.params.to === event.address ? true : false
+  const isWithdraw = event.params.to.toHex() == ZERO_ADDRESS || event.params.to == event.address ? true : false
 
   let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw ? '-withdraw' : '-transfer'))
   transactionEntity.type = isWithdraw ? 'withdraw' : 'transfer'
