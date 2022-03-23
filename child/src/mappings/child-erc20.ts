@@ -45,7 +45,7 @@ export function handleWithdraw(event: Withdraw): void {
   counter.save()
 
   // Transaction Entity part
-  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + '-withdraw')
+  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + '-burn')
   transactionEntity.from = event.params.from
   transactionEntity.to = Address.fromString(ZERO_ADDRESS)
   transactionEntity.amount = event.params.amount
@@ -53,7 +53,7 @@ export function handleWithdraw(event: Withdraw): void {
   transactionEntity.timestamp = event.block.timestamp
   transactionEntity.transaction = event.transaction.hash
   transactionEntity.token = event.address
-  transactionEntity.type = 'withdraw'
+  transactionEntity.type = 'burn'
   transactionEntity.tokenType = 'ERC20'
   transactionEntity.isPos = false
   transactionEntity.save()
@@ -72,8 +72,8 @@ export function handleTransfer(event: Transfer): void {
   const isWithdraw = event.params.to.toHex() == ZERO_ADDRESS  ? true : false
   const isMint = event.params.from.toHex() == ZERO_ADDRESS  ? true : false
 
-  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw ? '-withdraw' : isMint ? '-mint' : '-transfer'))
-  transactionEntity.type = isWithdraw ? 'withdraw' : isMint ? 'mint' : 'transfer'
+  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw ? '-burn' : isMint ? '-mint' : '-transfer'))
+  transactionEntity.type = isWithdraw ? 'burn' : isMint ? 'mint' : 'transfer'
   transactionEntity.from = event.params.from
   transactionEntity.to = event.params.to
   transactionEntity.amount = event.params.value
