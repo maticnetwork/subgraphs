@@ -7,7 +7,7 @@ dataSources:
     network: {{network}}
     source:
       abi: ChildERC20
-      startBlock: {{ contracts.maticToken.startBlock }}
+      startBlock: 25506515
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -31,7 +31,7 @@ dataSources:
     network: {{network}}
     source:
       abi: ChildERC721
-      startBlock: {{ contracts.maticToken.startBlock }}
+      startBlock: 25506515
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -51,7 +51,7 @@ dataSources:
     network: {{network}}
     source:
       abi: ChildERC1155
-      startBlock: {{ contracts.maticToken.startBlock }}
+      startBlock: 25506515
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

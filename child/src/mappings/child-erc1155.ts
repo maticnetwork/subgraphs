@@ -27,10 +27,11 @@ export function handleSingleTransfer(event: TransferSingle): void {
   counter.current = updated
   counter.save()
 
-  const isWithdraw = event.params.to.toHex() == ZERO_ADDRESS || event.params.to == event.address ? true : false
+  const isWithdraw = event.params.to.toHex() == ZERO_ADDRESS ? true : false
+  const isMint = event.params.from.toHex() == ZERO_ADDRESS ? true : false
 
-  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw ? '-withdraw' : '-transfer'))
-  transactionEntity.type = isWithdraw ? 'withdraw' : 'transfer'
+  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw ? '-withdraw' : isMint ? '-mint' :  '-transfer'))
+  transactionEntity.type = isWithdraw ? 'withdraw' : isMint ? 'mint' : 'transfer'
   transactionEntity.from = event.params.from
   transactionEntity.to = event.params.to
   transactionEntity.amount = event.params.value
@@ -54,11 +55,12 @@ export function handleBatchTransfer(event: TransferBatch): void {
   counter.current = updated
   counter.save()
 
-  const isWithdraw = event.params.to.toHex() === ZERO_ADDRESS || event.params.to === event.address ? true : false
+  const isWithdraw = event.params.to.toHex() == ZERO_ADDRESS ? true : false
+  const isMint = event.params.from.toHex() == ZERO_ADDRESS ? true : false
 
-  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw ? '-withdraw' : '-transfer'))
+  let transactionEntity = new TransactionEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString() + (isWithdraw ? '-withdraw' : isMint ? '-mint' : '-transfer'))
 
-  transactionEntity.type = isWithdraw ? 'withdraw' : 'transfer'
+  transactionEntity.type = isWithdraw ? 'withdraw' : isMint ? 'mint' : 'transfer'
   transactionEntity.from = event.params.from
   transactionEntity.to = event.params.to
   transactionEntity.amounts = event.params.values
