@@ -158,6 +158,16 @@ type Validator @entity {
   isInAuction: Boolean!
 }
 
+type StakeUpdate @entity {
+  id: ID!
+  validatorId: BigInt!
+  totalStaked: BigInt!
+  block: BigInt!
+  nonce: BigInt!
+  transactionHash: Bytes!
+  logIndex: BigInt!
+}
+
 # Keeps track of current delegator counter i.e. how many
 # delegators are present as of now
 type GlobalDelegatorCounter @entity {

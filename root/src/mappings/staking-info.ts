@@ -6,6 +6,7 @@ import {
   StakingParams,
   GlobalDelegatorCounter,
   DelegatorUnbond,
+  StakeUpdate as StakeUpdateEntity,
 } from '../../generated/schema'
 import {
   ClaimFee,
@@ -163,7 +164,17 @@ export function handleStakeUpdate(event: StakeUpdate): void {
   // from totalStaked
   validator.selfStake = validator.totalStaked.minus(validator.delegatedStake)
 
+  //Stake update entity 
+  let stakeUpdate = new StakeUpdateEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
+  stakeUpdate.totalStaked = event.params.newAmount
+  stakeUpdate.nonce = event.params.nonce
+  stakeUpdate.block = event.block.number
+  stakeUpdate.transactionHash = event.transaction.hash
+  stakeUpdate.validatorId = event.params.validatorId
+  stakeUpdate.logIndex = event.logIndex
+
   validator.save()
+  stakeUpdate.save()
 }
 
 export function handleClaimRewards(event: ClaimRewards): void {
