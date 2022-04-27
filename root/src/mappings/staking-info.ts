@@ -152,7 +152,7 @@ export function handleUnJailed(event: UnJailed): void {
 
 export function handleStakeUpdate(event: StakeUpdate): void {
   let validator = loadValidator(event.params.validatorId)
-  
+
   // update total staked and nonce
   validator.totalStaked = event.params.newAmount
   validator.nonce = event.params.nonce
@@ -171,7 +171,7 @@ export function handleStakeUpdate(event: StakeUpdate): void {
   stakeUpdate.block = event.block.number
   stakeUpdate.transactionHash = event.transaction.hash
   stakeUpdate.validatorId = event.params.validatorId
-  stakeUpdate.logIndex = event.logIndex;
+  stakeUpdate.logIndex = event.logIndex
 
   validator.save()
   stakeUpdate.save()
