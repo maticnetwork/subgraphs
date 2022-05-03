@@ -19,6 +19,7 @@ type StateSync @entity {
   depositorOrRootToken: String!
   depositedTokenOrChildToken: String!
   data: String!
+  rawData: String!
   logIndex: String!
   transactionHash: Bytes!
   timestamp: BigInt!

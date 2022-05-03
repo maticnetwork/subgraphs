@@ -54,6 +54,7 @@ export function handleStateSynced(event: StateSynced): void {
   entity.depositorOrRootToken = decoded.value1.toHex()
   entity.depositedTokenOrChildToken = decoded.value2.toHex()
   entity.data = decoded.value3.toHexString()
+  entity.rawData = event.params.data.toHexString()
 
   // save entity
   entity.save()
