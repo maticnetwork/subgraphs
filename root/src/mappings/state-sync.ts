@@ -15,6 +15,7 @@ export function handleStateSynced(event: StateSynced): void {
   entity.timestamp = event.block.timestamp
   entity.blockNumber = event.block.number
   entity.logIndex = event.logIndex.toString()
+  entity.rawData = event.params.data.toHexString()
 
   // Attempting to create an instance of `Decoder` smart contract
   // to be used for decoding valid state sync data
@@ -54,7 +55,6 @@ export function handleStateSynced(event: StateSynced): void {
   entity.depositorOrRootToken = decoded.value1.toHex()
   entity.depositedTokenOrChildToken = decoded.value2.toHex()
   entity.data = decoded.value3.toHexString()
-  entity.rawData = event.params.data.toHexString()
 
   // save entity
   entity.save()
