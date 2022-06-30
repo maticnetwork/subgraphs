@@ -1,10 +1,12 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts'
 import {
   Delegator,
+  Delegation,
   Validator,
   Topup,
   StakingParams,
   GlobalDelegatorCounter,
+  GlobalDelegationCounter,
   DelegatorUnbond,
   StakeUpdate as StakeUpdateEntity,
 } from '../../generated/schema'
@@ -277,6 +279,19 @@ function loadDelegatorUnbond(validatorId: BigInt, delegator: Address, nonce: Big
   return entity as DelegatorUnbond
 }
 
+function getGlobalDelegationCounter(): GlobalDelegationCounter {
+  // Only one entry will be kept in this entity
+  let id = 'global-delegation-counter'
+  let entity = GlobalDelegationCounter.load(id)
+  if (entity == null) {
+
+    entity = new GlobalDelegationCounter(id)
+    entity.current = BigInt.fromI32(0)
+
+  }
+  return entity as GlobalDelegationCounter
+}
+
 export function handleShareMinted(event: ShareMinted): void {
   let delegator = loadDelegator(event.params.validatorId, event.params.user)
 
@@ -294,6 +309,24 @@ export function handleShareMinted(event: ShareMinted): void {
   validator.delegatedStake = validator.delegatedStake.plus(event.params.amount)
 
   validator.save()
+
+  // entity for single delegation
+  let globalDelegationCounter = getGlobalDelegationCounter()
+  let updated = globalDelegationCounter.current.plus(BigInt.fromI32(1))
+  globalDelegationCounter.current = updated
+  globalDelegationCounter.save()
+
+  let id = event.transaction.hash.toHexString()
+  let delegation = new Delegation(id)
+  delegation.counter = updated
+  delegation.validatorId = event.params.validatorId
+  delegation.address = event.params.user
+  delegation.block = event.block.number
+  delegation.timestamp = event.block.timestamp
+  delegation.transactionHash = event.transaction.hash
+  delegation.amount = event.params.amount
+
+  delegation.save()
   // -- Saving updation
 }
 
