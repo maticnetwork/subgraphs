@@ -251,3 +251,20 @@ type MaticTransfer @entity {
   timestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type GlobalDelegationCounter @entity {
+  id: ID!
+  current: BigInt!
+}
+
+type Delegation @entity {
+  id: ID!
+  counter: BigInt! # this field can be used for traversing through large number of delegations list
+  validatorId: BigInt!
+  address: Bytes!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+  # delegated amount in that transaction
+  amount: BigInt!
+  block: BigInt!
+}
