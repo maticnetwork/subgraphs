@@ -325,6 +325,7 @@ export function handleShareMinted(event: ShareMinted): void {
   delegation.timestamp = event.block.timestamp
   delegation.transactionHash = event.transaction.hash
   delegation.amount = event.params.amount
+  delegation.activeStake = delegator.delegatedAmount
 
   delegation.save()
   // -- Saving updation
@@ -383,6 +384,7 @@ export function handleShareBurnedWithId(event: ShareBurnedWithId): void {
   delegatorUnbond.tokens = event.params.tokens
   delegatorUnbond.unbondStartedTxHash = event.transaction.hash
   delegatorUnbond.unbondStartedTimeStamp = event.block.timestamp
+  delegatorUnbond.activeStake = delegator.delegatedAmount
 
   // save entity
   delegatorUnbond.save()
