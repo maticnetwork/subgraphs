@@ -239,6 +239,7 @@ type DelegatorUnbond @entity {
   unbondStartedTimeStamp: BigInt
   unbondClaimedTxHash: Bytes
   unbondClaimedTimeStamp: BigInt
+  activeStake: BigInt!
 }
 
 type MaticTransfer @entity {
@@ -267,4 +268,5 @@ type Delegation @entity {
   # delegated amount in that transaction
   amount: BigInt!
   block: BigInt!
+  activeStake: BigInt!
 }
