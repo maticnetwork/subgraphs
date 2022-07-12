@@ -208,7 +208,9 @@ type Topup @entity {
 }
 
 # Staking Params across all validators
-type StakingParams @entity {
+type StakingParams
+  @queryFields(singular: "stakingParams", plural: "allStakingParams")
+  @entity {
   id: ID!
   owner: Bytes
   validatorThreshold: BigInt!
