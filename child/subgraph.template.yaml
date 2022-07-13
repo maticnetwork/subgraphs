@@ -6,12 +6,11 @@ dataSources:
     name: ChildERC20
     network: {{network}}
     source:
-      address: "{{contracts.maticToken.address}}"
       abi: ChildERC20
-      startBlock: {{ contracts.maticToken.startBlock }}
+      startBlock: 25506515
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/child-erc20.ts
       entities:
@@ -22,5 +21,49 @@ dataSources:
       eventHandlers:
         - event: LogTransfer(indexed address,indexed address,indexed address,uint256,uint256,uint256,uint256,uint256)
           handler: handleLogTransfer
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
         - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
           handler: handleWithdraw
+
+  - kind: ethereum/contract
+    name: ChildERC721
+    network: {{network}}
+    source:
+      abi: ChildERC721
+      startBlock: 25506515
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/child-erc721.ts
+      entities:
+        - TransactionEntity
+      abis:
+        - name: ChildERC721
+          file: ./abis/ChildErc721.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+
+  - kind: ethereum/contract
+    name: ChildERC1155
+    network: {{network}}
+    source:
+      abi: ChildERC1155
+      startBlock: 25506515
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/child-erc1155.ts
+      entities:
+        - TransactionEntity
+      abis:
+        - name: ChildERC1155
+          file: ./abis/ChildErc1155.json
+      eventHandlers:
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleSingleTransfer
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleBatchTransfer

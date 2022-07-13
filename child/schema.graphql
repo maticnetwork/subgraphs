@@ -4,15 +4,25 @@ type TransactionEntity @entity {
   token: Bytes!
   from: Bytes!
   to: Bytes!
-  value: BigDecimal!
+  amount: BigInt
+  tokenId: BigInt
+  tokenIds: [BigInt!]
+  amounts: [BigInt!]
   type: String! # deposit, transfer or withdrawal
   block: BigInt!
   timestamp: BigInt!
   transaction: Bytes!
+  tokenType: String
+  isPos: Boolean
 }
 
 type User @entity {
   id: ID!
   address: Bytes!
   amount: BigInt!
+}
+
+type GlobalTransferCounter @entity {
+  id: ID!
+  current: BigInt!
 }

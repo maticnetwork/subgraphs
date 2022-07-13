@@ -10,7 +10,7 @@ export function handleTransfer(event: Transfer): void {
   if (event.params.to != ZERO_ADDRESS) {
     let userToID = event.params.to.toHex()
     let userTo = User.load(userToID)
-    if (userTo == null) {
+    if (userTo === null) {
       userTo = new User(userToID)
       userTo.address = event.params.to
       userTo.amount = BigInt.fromI32(0)
@@ -22,7 +22,7 @@ export function handleTransfer(event: Transfer): void {
   if (event.params.from != ZERO_ADDRESS) {
     let userFromID = event.params.from.toHex()
     let userFrom = User.load(userFromID)
-    if (userFrom == null) {
+    if (userFrom === null) {
       userFrom = new User(userFromID)
       userFrom.address = event.params.from
       userFrom.amount = BigInt.fromI32(0)

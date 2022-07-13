@@ -9,7 +9,8 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "create": "graph create --node https://mumbai-graph.matic.today/ nglglhtr/token-subgraph",
-    "deploy": "graph deploy --node https://mumbai-graph.matic.today/ --ipfs https://ipfs.infura.io:5001/ nglglhtr/token-subgraph",
+    "deploy": "graph deploy --debug --access-token 37a06dbad49045bc9b07ee81d3cf2ad6 --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ vibhurajeev/burn",
+    "deploy2": "graph deploy --debug --access-token 37a06dbad49045bc9b07ee81d3cf2ad6 --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ vibhurajeev/burn2",
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
     "prepare:mumbai": "mustache config/mumbai.json subgraph.template.yaml > subgraph.yaml",
     "create-local": "graph create --node http://localhost:8020/ maticnetwork/mumbai-child-subgraphs",
@@ -34,16 +35,16 @@
   },
   "homepage": "https://github.com/maticnetwork/subgraph#readme",
   "devDependencies": {
-    "@graphprotocol/graph-cli": "0.18.0",
+    "@graphprotocol/graph-cli": "^0.26.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^7.16.0",
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-unicorn": "^24.0.0",
     "mustache": "4.0.1",
-    "typescript": "^4.1.3"
+    "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@graphprotocol/graph-ts": "0.18.0"
+    "@graphprotocol/graph-ts": "^0.24.1"
   }
 }
