@@ -1,6 +1,6 @@
 {
   "network": "goerli",
-  "subgraphId": "QmNcSW8KahtQmFYCKCw58oYNGT7J7V7Q4eZAMgsDYNitYc",
+  "subgraphId": "QmeSvFuhyvsJXRegNk81n42aptZzzAcR54r15rjoEfU6FS",
   "graftingStartBlock": 7212400,
   "contracts": {
     "rootChain": {
