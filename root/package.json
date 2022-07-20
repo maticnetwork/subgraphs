@@ -13,7 +13,7 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ shibaswaparmy/testnet-root-subgraphs",
     "create-local": "graph create --node http://localhost:8020/ shibaswaparmy/testnet-root-subgraphs",
     "remove-local": "graph remove --node http://localhost:8020/ shibaswaparmy/testnet-root-subgraphs",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs https://ipfs.infura.io:5001 shibaswaparmy/testnet-root-subgraphs"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://127.0.0.1:5001 shibaswaparmy/testnet-root-subgraphs"
   },
   "dependencies": {
     "@graphprotocol/graph-ts": "^0.24.1"
