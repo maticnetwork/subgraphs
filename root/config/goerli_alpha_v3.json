@@ -1,0 +1,46 @@
+{
+  "network": "goerli",
+  "subgraphId": "QmNcSW8KahtQmFYCKCw58oYNGT7J7V7Q4eZAMgsDYNitYc",
+  "graftingStartBlock": 7212400,
+  "contracts": {
+    "rootChain": {
+      "address": "0x86ea86DeBd4E219Da11Ce765D75B5C84EC0145b8",
+      "startBlock": 7212445
+    },
+    "stateSender": {
+      "address": "0xd8AeE982658f85e97A4f9004CB816E285402B652",
+      "startBlock": 7212462
+    },
+    "withdrawManager": {
+      "address": "0xb71387F060d58bA9943619C08fA450Fbf6D20219",
+      "startBlock": 7212467
+    },
+    "rootChainManager": {
+      "address": "0x8D2A3ac67E80374B9B73C55Da3eeF6B4a7E52757",
+      "startBlock": 7246537
+    },
+    "stakingInfo": {
+      "address": "0x29F804b573C0df4423ABE9027dF2E53ACDb4C05b",
+      "startBlock": 7212447
+    },
+    "stakingNft": {
+      "address": "0xE3570151628DC3fEb887363A13c515db0c844F4b",
+      "startBlock": 7212450
+    },
+    "maticTokenContract": {
+      "address": "0x809bbf767883277f6fdB8f378489B259A02fD7a7",
+      "startBlock": 7212451
+    },
+    "eventsHub": {
+      "address": "0xeE50AeDa51A6C106a324a0535042946F24ecF463",
+      "startBlock": 7212470
+    },
+    "registry": {
+      "address": "0x446eAA6Ca8B098D7adF6DB1778193111bfcf1c56",
+      "startBlock": 7212443
+    },
+    "decoderForPoSPortalData": {
+      "address": "0x8fcFA769D420AdA837206294eb054Ad514a7a8a0"
+    }
+  }
+}
