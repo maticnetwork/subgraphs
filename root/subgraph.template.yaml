@@ -167,6 +167,8 @@ dataSources:
         - Delegator
         - StakingParams
         - Topup
+        - ValidatorClaimReward
+        - ValidatorRestake
       abis:
         - name: StakingInfo
           file: ./abis/StakingInfo.json
