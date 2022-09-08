@@ -272,3 +272,45 @@ type Delegation @entity {
   block: BigInt!
   activeStake: BigInt!
 }
+
+type ValidatorClaimReward @entity {
+  id: ID!
+  validatorId: BigInt!
+  address: Bytes!
+  amount: BigInt!
+  totalAmount: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ValidatorRestake @entity {
+  id: ID!
+  validatorId: BigInt!
+  address: Bytes!
+  amount: BigInt!
+  totalAmount: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type DelegatorClaimReward @entity {
+  id: ID!
+  validatorId: BigInt!
+  user: Bytes!
+  rewards: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type DelegatorRestake @entity {
+  id: ID!
+  validatorId: BigInt!
+  user: Bytes!
+  totalStaked: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
