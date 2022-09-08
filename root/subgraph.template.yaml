@@ -169,6 +169,8 @@ dataSources:
         - Topup
         - ValidatorClaimReward
         - ValidatorRestake
+        - DelegatorClaimedReward
+        - DelegatorRestake
       abis:
         - name: StakingInfo
           file: ./abis/StakingInfo.json
@@ -181,8 +183,8 @@ dataSources:
           handler: handleClaimRewards
         - event: DelegatorClaimedRewards(indexed uint256,indexed address,indexed uint256)
           handler: handleDelegatorClaimedRewards
-        # - event: DelegatorRestaked(indexed uint256,indexed address,indexed uint256)
-        #   handler: handleDelegatorRestaked
+        - event: DelegatorRestaked(indexed uint256,indexed address,indexed uint256)
+          handler: handleDelegatorRestaked
         - event: DelegatorUnstaked(indexed uint256,indexed address,uint256)
           handler: handleDelegatorUnstaked
         - event: DynastyValueChange(uint256,uint256)

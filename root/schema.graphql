@@ -294,3 +294,23 @@ type ValidatorRestake @entity {
   timestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type DelegatorClaimReward @entity {
+  id: ID!
+  validatorId: BigInt!
+  user: Bytes!
+  rewards: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type DelegatorRestake @entity {
+  id: ID!
+  validatorId: BigInt!
+  user: Bytes!
+  totalStaked: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
