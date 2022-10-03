@@ -1,5 +1,5 @@
 # Subgraphs
-Subgraph for Shibarium contracts
+Subgraph for Matic contracts
 
 Please take a look at [Graph protocol](https://github.com/graphprotocol/graph-node) for more information.
 
