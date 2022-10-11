@@ -68,3 +68,7 @@ typings/
 
 # DS Store
 .DS_Store
+
+# IDEs
+.vscode
+.idea

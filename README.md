@@ -1,5 +1,5 @@
 # Subgraphs
-Subgraph for Matic contracts
+Subgraph for Shibarium contracts
 
 Please take a look at [Graph protocol](https://github.com/graphprotocol/graph-node) for more information.
 
@@ -17,7 +17,7 @@ Please take a look at [Graph protocol](https://github.com/graphprotocol/graph-no
 
 ## Subgraphs
 
-This repository contains subgraphs for two chains: `root` (Ethereum) and `child` (Matic) with respective testnets. 
+This repository contains subgraphs for two chains: `root` (Ethereum) and `child` (Shibarium) with respective testnets. 
 
 **To prepare root (Ethereum) subgraphs**
 
