@@ -13,9 +13,9 @@ jobs:
       matrix:
         include:
           - SUBGRAPH_NETWORK: mumbai
-            SUBGRAPH_NAME: maticnetwork/mumbai-child-subgraphs
-          - SUBGRAPH_NETWORK: matic
-            SUBGRAPH_NAME: maticnetwork/mainnet-child-subgraphs
+            SUBGRAPH_NAME: shibariumnetwork/mumbai-child-subgraphs
+          - SUBGRAPH_NETWORK: shibarium
+            SUBGRAPH_NAME: shibariumnetwork/mainnet-child-subgraphs
 
     defaults:
       run:

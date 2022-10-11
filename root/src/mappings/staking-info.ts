@@ -9,12 +9,17 @@ import {
   GlobalDelegationCounter,
   DelegatorUnbond,
   StakeUpdate as StakeUpdateEntity,
+  ValidatorClaimReward,
+  ValidatorRestake,
+  DelegatorClaimReward,
+  DelegatorRestake,
 } from '../../generated/schema'
 import {
   ClaimFee,
   ClaimRewards,
   DelegatorClaimedRewards,
   DelegatorUnstaked,
+  DelegatorRestaked,
   DynastyValueChange,
   Jailed,
   OwnershipTransferred,
@@ -132,6 +137,17 @@ export function handleRestaked(event: Restaked): void {
   // update total staked
   validator.totalStaked = event.params.total
   validator.save()
+
+  // save restake
+  let restake = new ValidatorRestake(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
+  restake.validatorId = event.params.validatorId
+  restake.address = event.transaction.from
+  restake.amount = event.params.amount
+  restake.totalAmount = event.params.total
+  restake.block = event.block.number
+  restake.timestamp = event.block.timestamp
+  restake.transactionHash = event.transaction.hash
+  restake.save()
 }
 
 export function handleJailed(event: Jailed): void {
@@ -166,7 +182,7 @@ export function handleStakeUpdate(event: StakeUpdate): void {
   // from totalStaked
   validator.selfStake = validator.totalStaked.minus(validator.delegatedStake)
 
-  //Stake update entity 
+  //Stake update entity
   let stakeUpdate = new StakeUpdateEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
   stakeUpdate.totalStaked = event.params.newAmount
   stakeUpdate.nonce = event.params.nonce
@@ -190,9 +206,18 @@ export function handleClaimRewards(event: ClaimRewards): void {
   let stakingParams = loadStakingParams()
   stakingParams.liquidatedRewards = event.params.totalAmount
   stakingParams.save()
+
+  // save claim
+  let claim = new ValidatorClaimReward(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
+  claim.validatorId = event.params.validatorId
+  claim.address = event.transaction.from
+  claim.amount = event.params.amount
+  claim.totalAmount = event.params.totalAmount
+  claim.block = event.block.number
+  claim.timestamp = event.block.timestamp
+  claim.transactionHash = event.transaction.hash
+  claim.save()
 }
-
-
 
 export function handleUpdateCommissionRate(event: UpdateCommissionRate): void {
   let validator = loadValidator(event.params.validatorId)
@@ -427,6 +452,16 @@ export function handleDelegatorClaimedRewards(event: DelegatorClaimedRewards): v
   // update total claimed rewards by current event's rewards
   delegator.claimedRewards = delegator.claimedRewards.plus(event.params.rewards)
   delegator.save()
+
+  // save claim
+  let claim = new DelegatorClaimReward(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
+  claim.validatorId = event.params.validatorId
+  claim.user = event.params.user
+  claim.rewards = event.params.rewards
+  claim.block = event.block.number
+  claim.timestamp = event.block.timestamp
+  claim.transactionHash = event.transaction.hash
+  claim.save()
 }
 
 export function handleSharesTransfer(event: SharesTransfer): void {
@@ -439,6 +474,18 @@ export function handleSharesTransfer(event: SharesTransfer): void {
 
   fromDelegator.save()
   toDelegator.save()
+}
+
+export function handleDelegatorRestaked(event: DelegatorRestaked): void {
+  // just save restake event
+  let restake = new DelegatorRestake(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
+  restake.validatorId = event.params.validatorId
+  restake.user = event.params.user
+  restake.totalStaked = event.params.totalStaked
+  restake.block = event.block.number
+  restake.timestamp = event.block.timestamp
+  restake.transactionHash = event.transaction.hash
+  restake.save()
 }
 
 //
