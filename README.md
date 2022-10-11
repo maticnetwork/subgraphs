@@ -1,13 +1,13 @@
 # Subgraphs
-Subgraph for Matic contracts
+Subgraph for Shibarium contracts
 
 Please take a look at [Graph protocol](https://github.com/graphprotocol/graph-node) for more information.
 
 ## Polygon hosted node endpoints
 
 **Root**
-- Mainnet: `https://thegraph.com/hosted-service/subgraph/maticnetwork/mainnet-root-subgraphs`
-- Goerli: `https://thegraph.com/hosted-service/subgraph/maticnetwork/mumbai-root-subgraphs`
+- Mainnet: `https://thegraph.com/hosted-service/subgraph/shibariumnetwork/mainnet-root-subgraphs`
+- Goerli: `https://thegraph.com/hosted-service/subgraph/shibariumnetwork/mumbai-root-subgraphs`
 
 ## For Mumbai hosted node endpoints
 - Graph node: `https://mumbai-graph.matic.today`
@@ -68,7 +68,7 @@ npm run build
 npm run graph -- create --node http://localhost:8020/ nglglhtr/goerli-matic-subgraph
 
 # deploy sub graph locally
-npm run graph -- deploy --node http://localhost:8020/ --ipfs https://ipfs.infura.io:5001/ nglglhtr/goerli-matic-subgraph 
+npm run graph -- deploy --node http://localhost:8020/ --ipfs https://ipfs.infura.io:5001/ nglglhtr/goerli-shibarium-subgraph 
 ```
 
 ### Deploy on Graph's hosted node
@@ -77,20 +77,20 @@ npm run graph -- deploy --node http://localhost:8020/ --ipfs https://ipfs.infura
 
 ```bash
 # create sub graph in local node
-npm run graph -- create --node https://api.thegraph.com/deploy/  nglglhtr/goerli-matic-subgraph
+npm run graph -- create --node https://api.thegraph.com/deploy/  nglglhtr/goerli-shibarium-subgraph
 
 # deploy sub graph locally
-npm run graph -- deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ nglglhtr/goerli-matic-subgraph 
+npm run graph -- deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ nglglhtr/goerli-shibarium-subgraph 
 ```
 
 **For mumbai**
 
 ```bash
 # create sub graph in local node
-npm run graph -- create --node https://mumbai-graph.matic.today  nglglhtr/mumbai-matic-subgraph
+npm run graph -- create --node https://mumbai-graph.shibarium.today  nglglhtr/mumbai-shibarium-subgraph
 
 # deploy sub graph locally
-npm run graph -- deploy --node https://mumbai-graph.matic.today --ipfs https://ipfs.infura.io:5001/ nglglhtr/mumbai-matic-subgraph
+npm run graph -- deploy --node https://mumbai-graph.shibarium.today --ipfs https://ipfs.infura.io:5001/ nglglhtr/mumbai-shibarium-subgraph
 ```
 
 ## Run local graph node
