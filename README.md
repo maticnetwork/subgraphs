@@ -65,10 +65,10 @@ npm run build
 
 ```bash
 # create sub graph in local node
-npm run graph -- create --node http://localhost:8020/ nglglhtr/goerli-matic-subgraph
+npm run graph -- create --node http://localhost:8020/ maticnetwork/goerli-matic-subgraph
 
 # deploy sub graph locally
-npm run graph -- deploy --node http://localhost:8020/ --ipfs https://ipfs.infura.io:5001/ nglglhtr/goerli-matic-subgraph 
+npm run graph -- deploy --node http://localhost:8020/ --ipfs https://ipfs.infura.io:5001/ maticnetwork/goerli-matic-subgraph 
 ```
 
 ### Deploy on Graph's hosted node
@@ -77,10 +77,10 @@ npm run graph -- deploy --node http://localhost:8020/ --ipfs https://ipfs.infura
 
 ```bash
 # create sub graph in local node
-npm run graph -- create --node https://api.thegraph.com/deploy/  nglglhtr/goerli-matic-subgraph
+npm run graph -- create --node https://api.thegraph.com/deploy/  maticnetwork/goerli-matic-subgraph
 
 # deploy sub graph locally
-npm run graph -- deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ nglglhtr/goerli-matic-subgraph 
+npm run graph -- deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ maticnetwork/goerli-matic-subgraph 
 ```
 
 **For mumbai**
