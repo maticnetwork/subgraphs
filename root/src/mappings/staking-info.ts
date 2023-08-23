@@ -9,6 +9,7 @@ import {
   GlobalDelegationCounter,
   DelegatorUnbond,
   StakeUpdate as StakeUpdateEntity,
+  UnstakeInit as UnstakeInitEntity,
 } from '../../generated/schema'
 import {
   ClaimFee,
@@ -114,7 +115,20 @@ export function handleUnstakeInit(event: UnstakeInit): void {
   // set deactivation epoch
   validator.deactivationEpoch = event.params.deactivationEpoch
   validator.nonce = event.params.nonce
+
+  // UnstakeInit entity 
+  let unstakeInit = new UnstakeInitEntity(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
+  unstakeInit.validatorId = event.params.validatorId
+  unstakeInit.user = event.params.user
+  unstakeInit.amount = event.params.amount
+  unstakeInit.block = event.block.number
+  unstakeInit.nonce = event.params.nonce
+  unstakeInit.transactionHash = event.transaction.hash
+  unstakeInit.logIndex = event.logIndex
+  unstakeInit.deactivationEpoch = event.params.deactivationEpoch
+
   validator.save()
+  unstakeInit.save()
 }
 
 export function handleSignerChange(event: SignerChange): void {
