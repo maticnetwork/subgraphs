@@ -1,4 +1,4 @@
-specVersion: 0.0.4
+specVersion: 0.0.6
 description: Indexes checkpoints and new deposits on root chain
 # features:
 #   - grafting

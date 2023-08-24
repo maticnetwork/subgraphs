@@ -15,10 +15,10 @@
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs https://ipfs.infura.io:5001 maticnetwork/mumbai-root-subgraphs"
   },
   "dependencies": {
-    "@graphprotocol/graph-ts": "^0.24.1"
+    "@graphprotocol/graph-ts": "^0.31.0"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.25.3",
+    "@graphprotocol/graph-cli": "^0.55.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^7.16.0",

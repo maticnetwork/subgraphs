@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/maticnetwork/subgraph#readme",
   "devDependencies": {
-    "@graphprotocol/graph-cli": "0.18.0",
+    "@graphprotocol/graph-cli": "^0.55.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^7.16.0",
@@ -44,6 +44,6 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@graphprotocol/graph-ts": "0.18.0"
+    "@graphprotocol/graph-ts": "^0.31.0"
   }
 }
