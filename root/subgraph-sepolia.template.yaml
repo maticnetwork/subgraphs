@@ -1,0 +1,274 @@
+specVersion: 0.0.6
+description: Indexes checkpoints and new deposits on root chain
+# features:
+#   - grafting
+# graft:
+#   base: {{ subgraphId }}
+#   block: {{ graftingStartBlock }}
+repository: https://github.com/maticnetwork/subgraphs
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Rootchain
+    network: {{ network }}
+    source:
+      address: "{{contracts.rootChain.address}}"
+      abi: Rootchain
+      startBlock: {{ contracts.rootChain.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - NewHeaderBlock
+      abis:
+        - name: Rootchain
+          file: ./abis/Rootchain.json
+      eventHandlers:
+        - event: NewHeaderBlock(indexed address,indexed uint256,indexed uint256,uint256,uint256,bytes32)
+          handler: handleNewHeaderBlock
+      file: ./src/mappings/checkpoint.ts
+
+  - kind: ethereum/contract
+    name: TestToken
+    network: {{ network }}
+    source:
+      address: "{{contracts.maticTokenContract.address}}"
+      abi: TestToken
+      startBlock: {{ contracts.maticTokenContract.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - MaticTransfer
+      abis:
+        - name: TestToken
+          file: ./abis/TestToken.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/matic-transfer.ts
+
+  - kind: ethereum/contract
+    name: WithdrawManager
+    network: {{ network }}
+    source:
+      address: "{{contracts.withdrawManager.address}}"
+      abi: WithdrawManager
+      startBlock: {{ contracts.withdrawManager.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ExitStarted
+        - ExitCancelled
+        - Withdraw
+      abis:
+        - name: WithdrawManager
+          file: ./abis/WithdrawManager.json
+      eventHandlers:
+        - event: ExitStarted(indexed address,indexed uint256,indexed address,uint256,bool)
+          handler: handleExitStarted
+        - event: ExitCancelled(indexed uint256)
+          handler: handleExitCancelled
+        - event: Withdraw(indexed uint256,indexed address,indexed address,uint256)
+          handler: handleWithdraw
+      file: ./src/mappings/withdraw-manager.ts
+  
+  - kind: ethereum/contract
+    name: RootChainManager
+    network: {{ network }}
+    source:
+      address: "{{contracts.rootChainManager.address}}"
+      abi: RootChainManager
+      startBlock: {{ contracts.rootChainManager.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - PredicateRegistered
+        - TokenMapping
+      abis:
+        - name: RootChainManager
+          file: ./abis/RootChainManager.json
+      eventHandlers:
+        - event: PredicateRegistered(indexed bytes32,indexed address)
+          handler: handlePredicateRegistered
+        - event: TokenMapped(indexed address,indexed address,indexed bytes32)
+          handler: handlePOSTokenMapped
+      file: ./src/mappings/rootchain-manager.ts
+  
+  - kind: ethereum/contract
+    name: Registry
+    network: {{ network }}
+    source:
+      address: "{{contracts.registry.address}}"
+      abi: Registry
+      startBlock: {{ contracts.registry.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenMapping
+      abis:
+        - name: Registry
+          file: ./abis/Registry.json
+      eventHandlers:
+        - event: TokenMapped(indexed address,indexed address)
+          handler: handlePlasmaTokenMapped
+      file: ./src/mappings/registry.ts
+
+  - kind: ethereum/contract
+    name: StateSender
+    network: {{ network }}
+    source:
+      address: "{{contracts.stateSender.address}}"
+      abi: StateSender
+      startBlock: {{ contracts.stateSender.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - StateSync
+        - StateRegistration
+      abis:
+        - name: StateSender
+          file: ./abis/StateSender.json
+        - name: Decoder
+          file: ./abis/Decoder.json
+      eventHandlers:
+        - event: StateSynced(indexed uint256,indexed address,bytes)
+          handler: handleStateSynced
+        - event: NewRegistration(indexed address,indexed address,indexed address)
+          handler: handleNewRegistration
+        - event: RegistrationUpdated(indexed address,indexed address,indexed address)
+          handler: handleRegistrationUpdated
+      file: ./src/mappings/state-sync.ts
+
+  - kind: ethereum/contract
+    name: StakingInfo
+    network: {{ network }}
+    source:
+      address: "{{contracts.stakingInfo.address}}"
+      abi: StakingInfo
+      startBlock: {{ contracts.stakingInfo.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Validator
+        - Delegator
+        - StakingParams
+        - Topup
+      abis:
+        - name: StakingInfo
+          file: ./abis/StakingInfo.json
+        - name: StakingNft
+          file: ./abis/StakingNft.json
+      eventHandlers:
+        - event: ClaimFee(indexed address,indexed uint256)
+          handler: handleClaimFee
+        - event: ClaimRewards(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleClaimRewards
+        - event: DelegatorClaimedRewards(indexed uint256,indexed address,indexed uint256)
+          handler: handleDelegatorClaimedRewards
+        # - event: DelegatorRestaked(indexed uint256,indexed address,indexed uint256)
+        #   handler: handleDelegatorRestaked
+        - event: DelegatorUnstaked(indexed uint256,indexed address,uint256)
+          handler: handleDelegatorUnstaked
+        - event: DynastyValueChange(uint256,uint256)
+          handler: handleDynastyValueChange
+        - event: Jailed(indexed uint256,indexed uint256,indexed address)
+          handler: handleJailed
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: ProposerBonusChange(uint256,uint256)
+          handler: handleProposerBonusChange
+        - event: Restaked(indexed uint256,uint256,uint256)
+          handler: handleRestaked
+        # - event: RewardUpdate(uint256,uint256)
+        - event: ShareBurned(indexed uint256,indexed address,indexed uint256,uint256)
+          handler: handleShareBurned
+        - event: ShareMinted(indexed uint256,indexed address,indexed uint256,uint256)
+          handler: handleShareMinted
+        - event: SignerChange(indexed uint256,uint256,indexed address,indexed address,bytes)
+          handler: handleSignerChange
+        # - event: Slashed(indexed uint256,indexed uint256)
+        - event: StakeUpdate(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleStakeUpdate
+        - event: Staked(indexed address,indexed uint256,uint256,indexed uint256,uint256,uint256,bytes)
+          handler: handleStaked
+        - event: ThresholdChange(uint256,uint256)
+          handler: handleThresholdChange
+        - event: TopUpFee(indexed address,indexed uint256)
+          handler: handleTopUpFee
+        - event: UnJailed(indexed uint256,indexed address)
+          handler: handleUnJailed
+        - event: UnstakeInit(indexed address,indexed uint256,uint256,uint256,indexed uint256)
+          handler: handleUnstakeInit
+        - event: Unstaked(indexed address,indexed uint256,uint256,uint256)
+          handler: handleUnstaked
+        - event: UpdateCommissionRate(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleUpdateCommissionRate
+        - event: StartAuction(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleStartAuction
+        - event: ConfirmAuction(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleConfirmAuction
+      file: ./src/mappings/staking-info.ts
+
+  - kind: ethereum/contract
+    name: StakingNft
+    network: {{ network }}
+    source:
+      address: "{{contracts.stakingNft.address}}"
+      abi: StakingNft
+      startBlock: {{ contracts.stakingNft.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - StakingNFTTransfer
+        - Validator
+      abis:
+        - name: StakingNft
+          file: ./abis/StakingNft.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mappings/staking-nft.ts
+    
+  - kind: ethereum/contract
+    name: EventsHub
+    network: {{ network }}
+    source:
+      address: "{{contracts.eventsHub.address}}"
+      abi: EventsHub
+      startBlock: {{ contracts.eventsHub.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Validator
+        - Delegator
+      abis:
+        - name: EventsHub
+          file: ./abis/EventsHub.json
+      eventHandlers:
+        - event: DelegatorUnstakeWithId(indexed uint256,indexed address,uint256,uint256)
+          handler: handleDelegatorUnstakeWithId
+        - event: ShareBurnedWithId(indexed uint256,indexed address,indexed uint256,uint256,uint256)
+          handler: handleShareBurnedWithId
+        - event: UpdateCommissionRate(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleUpdateCommissionRate
+        - event: SharesTransfer(indexed uint256,indexed address,indexed address,uint256)
+          handler: handleSharesTransfer
+      file: ./src/mappings/staking-info.ts
