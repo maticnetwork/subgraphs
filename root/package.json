@@ -9,6 +9,7 @@
     "build": "graph build",
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && mustache config/mainnet.json src/network.template.ts > src/network.ts",
     "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml && mustache config/goerli.json src/network.template.ts > src/network.ts",
+    "prepare:sepolia": "mustache config/sepolia.json subgraph-sepolia.template.yaml > subgraph.yaml && mustache config/sepolia.json src/network.template.ts > src/network.ts",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ maticnetwork/mumbai-root-subgraphs",
     "create-local": "graph create --node http://localhost:8020/ maticnetwork/mumbai-root-subgraphs",
     "remove-local": "graph remove --node http://localhost:8020/ maticnetwork/mumbai-root-subgraphs",
@@ -18,7 +19,7 @@
     "@graphprotocol/graph-ts": "^0.24.1"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.25.3",
+    "@graphprotocol/graph-cli": "^0.46.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^7.16.0",

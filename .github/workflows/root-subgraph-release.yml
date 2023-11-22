@@ -16,6 +16,8 @@ jobs:
             SUBGRAPH_NAME: maticnetwork/mumbai-root-subgraphs
           - SUBGRAPH_NETWORK: mainnet
             SUBGRAPH_NAME: maticnetwork/mainnet-root-subgraphs
+          - SUBGRAPH_NETWORK: sepolia
+            SUBGRAPH_NAME: maticnetwork/amoy-root-subgraphs
 
     defaults:
       run:
